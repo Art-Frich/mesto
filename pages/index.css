@@ -351,6 +351,15 @@
   object-fit: cover;
 }
 
+.places__grid-item-like_active {
+  background: url(../images/Union.svg);
+  background-size: cover;
+}
+
+.places__grid-item-like:hover {
+  opacity: .5;
+}
+
 .footer {
   width: 100%;
   max-width: 880px;
@@ -471,6 +480,7 @@
     width: 20px;
     height: 20px;
     
+    /* ПОЧЕМУ 36, ПОЧЕМУ НЕ 41? (25 паддинг + 16px над окном по макету) */
     top: -36px;
     right: 0;
 
