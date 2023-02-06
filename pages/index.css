@@ -1,0 +1,367 @@
+@import url(../vendor/normalize.css);
+@import url(../vendor/fonts/fonts.css);
+
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 45px;
+
+  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+  background: #000;
+}
+
+.header {
+  max-width: 880px;
+  width: 100%;
+  min-height: 74px;
+  /* отступ до main */
+  margin-bottom: 40px;
+
+  border-bottom: 1px solid #545454;
+}
+
+/* этот блок кода вообще нужен? */
+.header__logo {
+  display: block;
+  width: 142px;
+  height: 33px;
+  object-fit: cover;
+}
+
+.main {
+  max-width: 880px;
+  width: 100%;
+}
+
+.profile  {
+  display: flex;
+  flex-direction: row;
+  /* only для выравнивания кнопки */
+  align-items: center;
+  gap: 30px;
+
+  /* отступ до следующей секции */
+  margin-bottom: 50px;
+}
+
+/* этот блок кода вообще нужен? */
+.profile__avatar {
+  width: 120px;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+
+.profile__text-about {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 16px;
+
+  /* "если можешшь, займи вдвое больше места, чем другеие блоки" - растянет блок */
+  flex-grow: 2;
+}
+
+.profile__title-container {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+.profile__title-name {
+  margin: 0;
+  padding: 0;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 42px;
+  line-height: 48px;
+
+  vertical-align: bottom;
+
+  color: #fff;
+}
+
+/* кнопка редактирования профиля */
+.profile__btn-edit {
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+
+  /* чтобы она была не под блоком, а рядом с ним */
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  margin-left: 18px;
+
+  /* выравнить на уровне текста */
+  vertical-align: baseline;
+  background: url(../images/Edit\ Button.svg);
+  cursor: pointer;
+}
+
+.profile__btn-edit:hover {
+  opacity: .6;
+}
+
+.profile__subtitle {
+  margin: 0;
+  padding: 0;
+
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+
+  color: #fff;
+}
+
+.profile__btn-add {
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+
+  width: 150px;
+  height: 50px;
+
+  background-image: url(../images/Add\ Button.png);
+  background-clip: border-box;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.profile__btn-add:hover {
+  opacity: .6;
+}
+
+.popup {
+  display: none;
+
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+
+  background: rgba(0, 0, 0, .5);
+}
+
+.popup__opened {
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+}
+
+.popup__container {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 430px;
+  max-height: 330px;
+
+  padding: 34px 36px 37px;
+
+  background: #fff;
+  border-radius: 10px;
+}
+
+.popup__btn-close-edit {
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+
+  width: 32px;
+  /* почему-то aspect-ratio не работает */
+  height: 32px;
+
+  /* т.к. внутренний padding игнорируется position: absolute, будем учитывать не только смещение по макету (8px) но и смещение относительно внутреннего паддинга (36 и 34 px) */
+  /* pixel perfect и dew tools убедили, что кто-то сделал херню и оно считает криво, вручную пришлось исправить доп. значения */
+  /* вообще не ебу почему 4, а не 8 */
+  /* "ума не приложу" */
+  position: absolute;
+  right: calc(-36px - 4px);
+  top: calc(-34px - 6px);
+
+  background: url(../images/Close\ Icon.png);
+  cursor: pointer;
+}
+
+.popup__btn-close-edit:hover {
+  opacity: .6;
+}
+
+.popup__title {
+  /* по макету */
+  height: 23px;
+
+  margin: 0;
+  margin-bottom: 54px;
+
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+  color: #000;
+}
+
+.popup__input-container {
+  /* отрисовка границ внутри блока */
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 27px;
+
+  border-bottom: 1px solid rgba( 0,0,0, .5);
+}
+
+.popup__input {
+  /* обнуляем встроенные отступы */
+  padding: 0;
+  border: none;
+
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  
+  color: #000;
+}
+
+.popup__input:focus {
+  /* убираем рамку при вводе в окно */
+  outline: none;
+}
+
+/* стили и база на случай, если js чутка сломается,
+мб лучше удалить... */
+.popup__input::placeholder {
+  display: inline-block;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000;
+}
+
+/* отступ между input */
+.popup__input-container:first-of-type {
+  margin-bottom: 30px;
+}
+
+/* отступ до btn-save */
+.popup__input-container:last-of-type {
+  margin-bottom: 48px;
+}
+
+.popup__btn-save-edit {
+  width: 100%;
+
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  color: #fff;
+
+  
+  border: none;
+  border-radius: 2px;
+  aspect-ratio: 358/50;
+  background: #000;
+  cursor: pointer;
+}
+
+.popup__btn-save-edit:hover {
+  opacity: .8;
+}
+
+.places {
+  margin-bottom: 66px;
+}
+
+.places__grid {
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px 17px ;
+}
+
+.places__grid-item {
+  list-style: none;
+
+  max-width: 282px;
+  max-height: 361px;
+
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.places__grid-item-photo {
+  /* убрать элемент между символами */
+  display: block;
+  max-width: 282px;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+
+.places__grid-item-figcaption {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+
+  margin: 25px 15px 31px 21px;
+  /* убрать отступы между inline элементами внутри */
+  font-size: 0;
+}
+
+.places__grid-item-title {
+  margin: 0;
+  padding: 0;
+
+  /* для соответствия макету длины наименований */
+  display: inline-block;
+  max-width: 188px;
+
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+  color: #000;
+
+  /* Для появления "..." у слишком длинных наименований */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.places__grid-item-like {
+  max-width: 22px;
+  max-height: 19px;
+  object-fit: cover;
+}
+
+.footer {
+  width: 100%;
+  max-width: 880px;
+
+  margin-bottom: 60px;
+}
+
+.footer__author {
+  margin: 0;
+
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  color: #545454;
+}

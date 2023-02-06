@@ -4,127 +4,148 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./pages/index.css" />
     <title>Mesto Russia</title>
   </head>
-  <body clacc="body">
 
+  <body class="body">
     <header class="header">
-      <img 
-      src="./images/logo.svg" 
-      alt="Логотип Mesto Russia" 
-      class="header__logo" />
+      <img
+        src="./images/logo.svg"
+        alt="Логотип Mesto Russia"
+        class="header__logo"
+      />
     </header>
-
 
     <main class="main">
       <section class="profile">
-        <img src="./images/Avatar.png" alt="Ваше изображение" class="profile__avatar">
+        <img
+          src="./images/Avatar.png"
+          alt="Ваше изображение"
+          class="profile__avatar"
+        />
         <div class="profile__text-about">
-          <h1 class="profile__title-name">Жак-Ив Кусто</h1>
+          <div class="profile__title-container">
+            <h1 class="profile__title-name">Жак-Ив Кусто</h1>
+            <button class="profile__btn-edit"></button>
+          </div>
           <p class="profile__subtitle">Исследователь океана</p>
         </div>
         <button class="profile__btn-add"></button>
       </section>
 
-      <section class="popup">
-        <h2 class="popup__title">Редактировать профиль</h2>
-        <div class="popup__name-container">
-          <input class="popum__name" placeholder="Жак-Ив Кусто"></input>
+      <section class="popup popup__opened">
+        <div class="popup__container">
+          <h2 class="popup__title">Редактировать профиль</h2>
+          <div class="popup__input-container">
+            <input class="popup__input" placeholder="Жак-Ив Кусто" />
+          </div>
+          <div class="popup__input-container">
+            <input class="popup__input" placeholder="Исследователь океана" />
+          </div>
+          <button class="popup__btn-save-edit">Сохранить</button>
+          <button class="popup__btn-close-edit"></button>
         </div>
-        <div class="popum_about-container">
-          <input class="popup__about" placeholder="Исследователь океана"></input>
-        </div>
-        <button class="popum__btn-save-edit">Сохранить</button>
       </section>
 
       <section class="places">
         <ul class="places__grid">
           <li class="places__grid-item">
-            <img 
-            src="./images/photo-grid-1.png" 
-            alt="Картинка с изображением..." 
-            class="places__grid-item-photo" />
+            <img
+              src="./images/photo-grid-1.png"
+              alt="Картинка с изображением..."
+              class="places__grid-item-photo"
+            />
             <div class="places__grid-item-figcaption">
               <h2 class="places__grid-item-title">Карачаевск</h2>
-              <img 
-              src="images/like.svg" 
-              alt="Иконка, чтобы поставить лайк" 
-              class="places__grid-item-like">
+              <img
+                src="images/like.svg"
+                alt="Иконка, чтобы поставить лайк"
+                class="places__grid-item-like"
+              />
             </div>
           </li>
           <li class="places__grid-item">
-            <img 
-            src="./images/photo-grid-2.png" 
-            alt="Картинка с изображением..." 
-            class="places__grid-item-photo" />
+            <img
+              src="./images/photo-grid-2.png"
+              alt="Картинка с изображением..."
+              class="places__grid-item-photo"
+            />
             <div class="places__grid-item-figcaption">
               <h2 class="places__grid-item-title">Гора Эльбрус</h2>
-              <img 
-              src="images/like.svg" 
-              alt="Иконка, чтобы поставить лайк" 
-              class="places__grid-item-like">
+              <img
+                src="images/like.svg"
+                alt="Иконка, чтобы поставить лайк"
+                class="places__grid-item-like"
+              />
             </div>
           </li>
           <li class="places__grid-item">
-            <img 
-            src="./images/photo-grid-3.png" 
-            alt="Картинка с изображением..." 
-            class="places__grid-item-photo" />
+            <img
+              src="./images/photo-grid-3.png"
+              alt="Картинка с изображением..."
+              class="places__grid-item-photo"
+            />
             <div class="places__grid-item-figcaption">
               <h2 class="places__grid-item-title">Домбай</h2>
-              <img 
-              src="images/like.svg" 
-              alt="Иконка, чтобы поставить лайк" 
-              class="places__grid-item-like">
+              <img
+                src="images/like.svg"
+                alt="Иконка, чтобы поставить лайк"
+                class="places__grid-item-like"
+              />
             </div>
           </li>
           <li class="places__grid-item">
-            <img 
-            src="./images/photo-grid-4.png" 
-            alt="Картинка с изображением..." 
-            class="places__grid-item-photo" />
+            <img
+              src="./images/photo-grid-4.png"
+              alt="Картинка с изображением..."
+              class="places__grid-item-photo"
+            />
             <div class="places__grid-item-figcaption">
               <h2 class="places__grid-item-title">Гора Эльбрус</h2>
-              <img 
-              src="images/like.svg" 
-              alt="Иконка, чтобы поставить лайк" 
-              class="places__grid-item-like">
+              <img
+                src="images/like.svg"
+                alt="Иконка, чтобы поставить лайк"
+                class="places__grid-item-like"
+              />
             </div>
           </li>
           <li class="places__grid-item">
-            <img 
-            src="./images/photo-grid-5.png" 
-            alt="Картинка с изображением..." 
-            class="places__grid-item-photo" />
+            <img
+              src="./images/photo-grid-5.png"
+              alt="Картинка с изображением..."
+              class="places__grid-item-photo"
+            />
             <div class="places__grid-item-figcaption">
               <h2 class="places__grid-item-title">Домбай</h2>
-              <img 
-              src="images/like.svg" 
-              alt="Иконка, чтобы поставить лайк" 
-              class="places__grid-item-like">
+              <img
+                src="images/like.svg"
+                alt="Иконка, чтобы поставить лайк"
+                class="places__grid-item-like"
+              />
             </div>
           </li>
           <li class="places__grid-item">
-            <img 
-            src="./images/photo-grid-6.png" 
-            alt="Картинка с изображением..." 
-            class="places__grid-item-photo" />
+            <img
+              src="./images/photo-grid-6.png"
+              alt="Картинка с изображением..."
+              class="places__grid-item-photo"
+            />
             <div class="places__grid-item-figcaption">
-              <h2 class="places__grid-item-title">Карачаево-Ч...</h2>
-              <img 
-              src="images/like.svg" 
-              alt="Иконка, чтобы поставить лайк" 
-              class="places__grid-item-like">
+              <h2 class="places__grid-item-title">Карачаево-Черкессия</h2>
+              <img
+                src="images/like.svg"
+                alt="Иконка, чтобы поставить лайк"
+                class="places__grid-item-like"
+              />
             </div>
           </li>
         </ul>
       </section>
     </main>
 
-
     <footer class="footer">
       <p class="footer__author">&copy; 2023 Art Frich</p>
     </footer>
-
   </body>
 </html>
