@@ -7,7 +7,9 @@
   align-items: center;
   padding-top: 45px;
 
-  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+  margin: 0 100px;
+
+  font-family: "Inter", "Arial", "Helvetica", sans-serif;
   background: #000;
 }
 
@@ -34,12 +36,11 @@
   width: 100%;
 }
 
-.profile  {
+.profile {
   display: flex;
   flex-direction: row;
   /* only для выравнивания кнопки */
   align-items: center;
-  gap: 30px;
 
   /* отступ до следующей секции */
   margin-bottom: 50px;
@@ -53,6 +54,8 @@
 }
 
 .profile__text-about {
+  margin-left: 30px;
+
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -103,7 +106,7 @@
 }
 
 .profile__btn-edit:hover {
-  opacity: .6;
+  opacity: 0.6;
 }
 
 .profile__subtitle {
@@ -134,7 +137,7 @@
 }
 
 .profile__btn-add:hover {
-  opacity: .6;
+  opacity: 0.6;
 }
 
 .popup {
@@ -146,11 +149,11 @@
   top: 0;
   bottom: 0;
 
-  background: rgba(0, 0, 0, .5);
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .popup__opened {
-  /* display: flex; */
+  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -191,7 +194,7 @@
 }
 
 .popup__btn-close-edit:hover {
-  opacity: .6;
+  opacity: 0.6;
 }
 
 .popup__title {
@@ -214,7 +217,7 @@
   width: 100%;
   min-height: 27px;
 
-  border-bottom: 1px solid rgba( 0,0,0, .5);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
 }
 
 .popup__input {
@@ -226,7 +229,7 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-  
+
   color: #000;
 }
 
@@ -266,7 +269,6 @@
   text-align: center;
   color: #fff;
 
-  
   border: none;
   border-radius: 2px;
   aspect-ratio: 358/50;
@@ -275,7 +277,7 @@
 }
 
 .popup__btn-save-edit:hover {
-  opacity: .8;
+  opacity: 0.8;
 }
 
 .places {
@@ -290,7 +292,7 @@
   justify-content: center;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 20px 17px ;
+  gap: 20px 17px;
 }
 
 .places__grid-item {
@@ -318,7 +320,7 @@
   justify-content: space-between;
   align-items: baseline;
 
-  margin: 25px 15px 31px 21px;
+  margin: 25px 20px 31px 21px;
   /* убрать отступы между inline элементами внутри */
   font-size: 0;
 }
@@ -364,4 +366,128 @@
   font-size: 18px;
   line-height: 22px;
   color: #545454;
+}
+
+@media screen and (max-width: 965px) {
+  .profile {
+    flex-direction: column;
+    margin-bottom: 36px;
+  }
+
+  .profile__text-about {
+    margin-left: 0;
+    margin-top: 30px;
+    margin-bottom: 36px;
+    align-items: center;
+  }
+
+  .profile__title-container {
+    /* т.к. имя должно быть по центру, а кнопка справа...
+    то учитываем ее размер и смещаем */
+    position: relative;
+    right: -21px;
+  }
+
+  .profile__btn-add {
+    width: 282px;
+    background: url(../images/Add\ Button\ Big.png);
+  }
+}
+
+@media screen and (max-width: 535px) {
+  .body {
+    max-width: 320px;
+    padding-top: 28px;
+    margin: 0 auto;
+  }
+
+  .header {
+    min-height: 56px;
+    margin-bottom: 42px;
+  }
+
+  .header__logo {
+    margin-left: 27px;
+    width: 103.74px;
+    height: 24.4px;
+    object-fit: fill;
+  }
+
+  .profile__title-name {
+    font-size: 27px;
+    line-height: 33px;
+    max-height: 26px;
+  }
+
+  .profile__subtitle {
+    font-size: 14px;
+    line-height: 17px;
+    max-height: 14px;
+  }
+
+  .profile__text-about {
+    /* расстояние до аватарки */
+    margin-top: 26px;
+    /* расстояние между именем и описанием */
+    gap: 14px;
+  }
+
+  .profile__title-container {
+    right: -14px;
+  }
+
+  .profile__btn-edit {
+    margin-left: 10px;
+    width: 18px;
+    height: 18px;
+
+    background-size: cover;
+  }
+
+  .popup__container {
+    max-width: 282px;
+    max-height: 322px;
+
+    padding: 25px 22px;
+  }
+
+  .popup__title {
+    font-size: 18px;
+    line-height: 22px;
+    margin-bottom: 75px;
+  }
+
+  .popup__input-container:last-of-type {
+    margin-bottom: 45px;
+  }
+
+  .popup__btn-save-edit {
+    min-height: 46px;
+    font-size: 14px;
+    line-height: 17px;
+  }
+
+  .popup__btn-close-edit {
+    width: 20px;
+    height: 20px;
+    
+    top: -36px;
+    right: 0;
+
+    background-size: cover;
+  }
+
+  .places {
+    margin-bottom: 48px;
+  }
+
+  .footer {
+    margin-bottom: 36px;
+  }
+
+  .footer__author {
+    margin-left: 19px;
+    font-size: 14px;
+    line-height: 17px;
+  }
 }
