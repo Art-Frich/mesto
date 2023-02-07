@@ -1,0 +1,14 @@
+.places__grid-item-like {
+  padding: 0;
+  border: 0;
+
+  width: 22px;
+  height: 19px;
+
+  background: url(../../../images/like.svg);
+  object-fit: cover;
+}
+
+.places__grid-item-like:hover {
+  opacity: 0.5;
+}

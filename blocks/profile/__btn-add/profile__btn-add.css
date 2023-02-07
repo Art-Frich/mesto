@@ -7,7 +7,7 @@
   width: 150px;
   height: 50px;
 
-  background-image: url(../../../images/AddButton.png);
+  background-image: url(../../../images/add-button-small.svg);
   background-clip: border-box;
   background-color: transparent;
   cursor: pointer;
@@ -20,6 +20,6 @@
 @media screen and (max-width: 965px) {
   .profile__btn-add {
     width: 282px;
-    background: url(../../../images/AddButtonBig.png);
+    background: url(../../../images/add-button-big.svg);
   }
 }

@@ -1,9 +1,0 @@
-.places__grid-item-like {
-  max-width: 22px;
-  max-height: 19px;
-  object-fit: cover;
-}
-
-.places__grid-item-like:hover {
-  opacity: 0.5;
-}

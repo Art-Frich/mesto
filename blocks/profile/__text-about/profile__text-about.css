@@ -24,7 +24,8 @@
   .profile__text-about {
     /* расстояние до аватарки */
     margin-top: 26px;
+    margin-bottom: 33px;
     /* расстояние между именем и описанием */
-    gap: 14px;
+    gap: 7px;
   }
 } 

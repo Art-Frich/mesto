@@ -2,17 +2,20 @@
   /* обнуляем встроенные отступы */
   padding: 0;
   border: none;
-
-  /* чтобы данные, которые вводит пользователь 
-  были на всю ширину блока ввода */
+  
   width: 100%;
+  min-height: 27px;
+  /* чтобы приподнять текст и прижать его к верхней границе блока */
+  padding-bottom: 7px;
 
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-
   color: #000;
+
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .popup__input:focus {
@@ -28,5 +31,21 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-  color: #000;
+  color: #545454;
 }
+
+/* отступ между input */
+.popup__input:first-of-type {
+  margin-bottom: 30px;
+}
+
+/* отступ до btn-save */
+.popup__input:last-of-type {
+  margin-bottom: 48px;
+}
+
+@media screen and (max-width: 535px) {
+  .popup__input:last-of-type {
+    margin-bottom: 45px;
+  }
+} 

@@ -1,9 +1,6 @@
 .popup__title {
-  /* по макету */
-  height: 23px;
-
   margin: 0;
-  margin-bottom: 54px;
+  margin-bottom: 48px;
 
   font-style: normal;
   font-weight: 900;

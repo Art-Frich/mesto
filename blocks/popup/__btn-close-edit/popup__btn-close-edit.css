@@ -16,7 +16,7 @@
   right: calc(-36px - 4px);
   top: calc(-34px - 6px);
 
-  background: url(../../../images/CloseIcon.png);
+  background: url(../../../images/close-icon.svg);
   cursor: pointer;
 }
 

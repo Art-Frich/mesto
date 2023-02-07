@@ -21,16 +21,6 @@
 @import url(../blocks/profile/__subtitle/profile__subtitle.css);
 @import url(../blocks/profile/__btn-add/profile__btn-add.css);
 
-/* блок всплывающего окна изменения перс. данных */
-@import url(../blocks/popup/popup.css);
-@import url(../blocks/popup/_opened/popup_opened.css);
-@import url(../blocks/popup/__container/popup__container.css);
-@import url(../blocks/popup/__btn-close-edit/popup__btn-close-edit.css);
-@import url(../blocks/popup/__title/popup__title.css);
-@import url(../blocks/popup/__input-container/popup__input-container.css);
-@import url(../blocks/popup/__input/popup__input.css);
-@import url(../blocks/popup/__btn-save-edit/popup__btn-save-edit.css);
-
 /* блок "мест" = сетка из фоток и описаний */
 @import url(../blocks/places/places.css);
 @import url(../blocks/places/__grid/places__grid.css);
@@ -39,10 +29,19 @@
 @import url(
   ../blocks/places/__grid-item-figcaption/places__grid-item-figcaption.css);
 @import url(../blocks/places/__grid-item-title/places__grid-item-title.css);
-@import url(../blocks/places/__grid-item-like/__grid-item-like.css);
+@import url(../blocks/places/__grid-item-like/places__grid-item-like.css);
 @import url(
   ../blocks/places/__grid-item-like/_active/places__grid-item-like_active.css);
 
 /* стили подвала */
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__author/footer__author.css);
+
+/* блок всплывающего окна изменения перс. данных */
+@import url(../blocks/popup/popup.css);
+@import url(../blocks/popup/_opened/popup_opened.css);
+@import url(../blocks/popup/__container/popup__container.css);
+@import url(../blocks/popup/__btn-close-edit/popup__btn-close-edit.css);
+@import url(../blocks/popup/__title/popup__title.css);
+@import url(../blocks/popup/__input/popup__input.css);
+@import url(../blocks/popup/__btn-save-edit/popup__btn-save-edit.css);
