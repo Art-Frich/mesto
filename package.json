@@ -1,0 +1,24 @@
+{
+  "name": "mesto",
+  "version": "1.0.0",
+  "description": "Проект служит для отработки работы с ванильным js, добавлени базового функционала страничке, закрепление навыков верстки и адаптации. Дополнительно работа служит для отработки грамотной работы с git: создание ветвей main, develop, hotxes, features ситуативно в ходе работы, практика в оптимальном наименовании коммитов.",
+  "main": "index.js",
+  "scripts": {
+    "start": "css-to-bem-file-structure ./pages/index.css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Art-Frich/mesto.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Art-Frich/mesto/issues"
+  },
+  "homepage": "https://github.com/Art-Frich/mesto#readme",
+  "devDependencies": {
+    "css-to-bem-file-structure": "^0.0.2"
+  }
+}

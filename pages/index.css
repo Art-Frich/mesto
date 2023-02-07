@@ -161,7 +161,7 @@
   background: rgba(0, 0, 0, 0.5);
 }
 
-.popup__opened {
+.popup_opened {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -370,7 +370,7 @@
 }
 
 .places__grid-item-like:hover {
-  opacity: .5;
+  opacity: 0.5;
 }
 
 .footer {
@@ -500,7 +500,7 @@
   .popup__btn-close-edit {
     width: 20px;
     height: 20px;
-    
+
     /* ПОЧЕМУ 36, ПОЧЕМУ НЕ 41? (25 паддинг + 16px над окном по макету) */
     top: -36px;
     right: 0;
