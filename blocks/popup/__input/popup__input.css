@@ -1,0 +1,32 @@
+.popup__input {
+  /* обнуляем встроенные отступы */
+  padding: 0;
+  border: none;
+
+  /* чтобы данные, которые вводит пользователь 
+  были на всю ширину блока ввода */
+  width: 100%;
+
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+
+  color: #000;
+}
+
+.popup__input:focus {
+  /* убираем рамку при вводе в окно */
+  outline: none;
+}
+
+/* стили и база на случай, если js чутка сломается,
+мб лучше удалить... */
+.popup__input::placeholder {
+  display: inline-block;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000;
+}

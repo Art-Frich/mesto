@@ -1,0 +1,28 @@
+.popup__btn-save-edit {
+  width: 100%;
+
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  color: #fff;
+
+  border: none;
+  border-radius: 2px;
+  aspect-ratio: 358/50;
+  background: #000;
+  cursor: pointer;
+}
+
+.popup__btn-save-edit:hover {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 535px) {
+  .popup__btn-save-edit {
+    min-height: 46px;
+    font-size: 14px;
+    line-height: 17px;
+  }
+} 

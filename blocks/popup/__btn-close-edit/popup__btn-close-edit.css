@@ -1,0 +1,38 @@
+.popup__btn-close-edit {
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+
+  width: 32px;
+  /* почему-то aspect-ratio не работает */
+  height: 32px;
+
+  /* т.к. внутренний padding игнорируется position: absolute, будем учитывать не только смещение по макету (8px) но и смещение относительно внутреннего паддинга (36 и 34 px) */
+  /* pixel perfect и dew tools убедили, что кто-то сделал херню и оно считает криво, вручную пришлось исправить доп. значения */
+  /* вообще не ебу почему 4, а не 8 */
+  /* "ума не приложу" */
+  position: absolute;
+  right: calc(-36px - 4px);
+  top: calc(-34px - 6px);
+
+  background: url(../../../images/CloseIcon.png);
+  cursor: pointer;
+}
+
+.popup__btn-close-edit:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 535px) {
+  .popup__btn-close-edit {
+    width: 20px;
+    height: 20px;
+
+    /* ПОЧЕМУ 36, ПОЧЕМУ НЕ 41? (25 паддинг + 16px над окном по макету) */
+    top: -36px;
+    right: 0;
+
+    background-size: cover;
+  }
+}

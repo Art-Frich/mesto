@@ -1,0 +1,7 @@
+.places__grid-item-photo {
+  /* убрать элемент между символами */
+  display: block;
+  max-width: 282px;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}

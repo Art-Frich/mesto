@@ -1,0 +1,10 @@
+.places__grid-item-figcaption {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+
+  margin: 25px 20px 31px 21px;
+  /* убрать отступы между inline элементами внутри */
+  font-size: 0;
+}
