@@ -1,9 +1,4 @@
 .popup__btn-close-edit {
-  margin: 0;
-  padding: 0;
-  border: none;
-  outline: none;
-
   width: 32px;
   /* почему-то aspect-ratio не работает */
   height: 32px;
