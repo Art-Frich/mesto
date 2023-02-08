@@ -1,11 +1,10 @@
 let btnEdit = document.querySelector('.profile__btn-edit');
 let btnCloseEdit = document.querySelector('.popup__btn-close-edit');
 
-let formPopup = document.querySelector('.popup__container')
+let forms = document.querySelector('.forms')
 let popup = document.querySelector('.popup');
-let popupInput = popup.querySelectorAll('.popup__input');
-let nameInput = popupInput[0];
-let jobInput = popupInput[1];
+let nameInput = popup.querySelector('.popup__input_type_name');
+let aboutInput = popup.querySelector('.popup__input_type_about');
 
 let profile = document.querySelector('.profile');
 let nameUser = profile.querySelector('.profile__title-name');
@@ -15,7 +14,7 @@ let classPopupOpened = 'popup_opened'
 
 function openPopup () {
   nameInput.value = nameUser.textContent;
-  jobInput.value = nameAbout.textContent;
+  aboutInput.value = nameAbout.textContent;
   popup.classList.add(classPopupOpened);
 }
 
@@ -30,8 +29,8 @@ function handleFormSubmit (event) {
     event.preventDefault()    
 
     nameUser.textContent = nameInput.value;
-    nameAbout.textContent = jobInput.value;
-    popup.classList.remove(classPopupOpened);
+    nameAbout.textContent = aboutInput.value;
+    closePopup ();
 }
 
 
@@ -43,4 +42,4 @@ btnCloseEdit.addEventListener('click', closePopup);
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
-formPopup.addEventListener('submit', handleFormSubmit);
+forms.addEventListener('submit', handleFormSubmit);

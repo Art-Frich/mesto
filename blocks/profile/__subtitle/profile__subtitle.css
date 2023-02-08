@@ -1,5 +1,6 @@
 .profile__subtitle {
-  max-width: 40vw;
+  width: 40vw;
+  max-width: 500px;
   margin: 0;
   padding: 0;
 

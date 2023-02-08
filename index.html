@@ -143,34 +143,33 @@
     </footer>
 
     <div class="popup">
-      <form
-        class="popup__container"
-        name="popupForm"
-      >
-        <h2 class="popup__title">Редактировать профиль</h2>
-        <input
-          class="popup__input"
-          name="nameUser"
-          placeholder="Имя или то, что вам его заменит"
-        />
-        <input
-          class="popup__input"
-          name="aboutUser"
-          placeholder="Кто вы? Можете оставить это место пустым =)"
-        />
-        <button
-          class="popup__btn-save-edit button-zeroing transition-opacity"
-          type="submit"
-          name="Сохранить внесенные изменения"
-        >
-          Сохранить
-        </button>
+      <div class="popup__container">
+        <form class="forms" name="editProfileText">
+          <h2 class="popup__title">Редактировать профиль</h2>
+          <input
+            class="popup__input popup__input_type_name"
+            name="nameUser"
+            placeholder="Имя или то, что вам его заменит"
+          />
+          <input
+            class="popup__input popup__input_type_about"
+            name="aboutUser"
+            placeholder="Кто вы? Можете оставить это место пустым =)"
+          />
+          <button
+            class="popup__btn-save-edit button-zeroing transition-opacity"
+            type="submit"
+            name="Сохранить внесенные изменения"
+          >
+            Сохранить
+          </button>
+        </form>
         <button
           class="popup__btn-close-edit button-zeroing transition-opacity"
-          type="reset"
+          type="button"
           name="Закрыть окно формы"
         ></button>
-      </form>
+      </div>
     </div>
 
     <script src="./scripts/index.js"></script>
