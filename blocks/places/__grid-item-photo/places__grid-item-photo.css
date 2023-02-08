@@ -1,5 +1,4 @@
 .places__grid-item-photo {
-  /* убрать элемент между символами */
   display: block;
   width: 282px;
   aspect-ratio: 1/1;
