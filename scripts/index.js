@@ -87,6 +87,9 @@ function addPlace(item) {
   placeElement.querySelector('.places__grid-item-photo').src = item.link;
   placeElement.querySelector('.places__grid-item-title').textContent = 
     item.name;
+  placeElement.querySelector('.places__grid-item-like').addEventListener('click', (ev) => {
+    ev.target.classList.toggle('places__grid-item-like_active');
+  })
   placesGrid.prepend(placeElement);
 }
 
@@ -95,9 +98,9 @@ initialCards.forEach(addPlace);
 
 // кнопка изменения данных профиля
 btnEdit.addEventListener('click', () => {
+  openPopup(popupEditProfile);
   nameUserInput.value = nameUser.textContent;
   aboutInput.value = nameAbout.textContent;
-  openPopup(popupEditProfile);
 });
 
 // кнопка добавления нового места
@@ -109,12 +112,14 @@ btnAddPlace.addEventListener('click', () => {
 btnCloseEdit.addEventListener('click', closePopup);
 btnClosePlace.addEventListener('click', closePopup);
 
+//реагирование формы изменения профиля на нажатие кнопки
 formEditProfile.addEventListener('submit', (ev) => {
   nameUser.textContent = nameUserInput.value;
   nameAbout.textContent = aboutInput.value;
   handleFormSubmit(ev);
 });
 
+//реагирование формы добавления места на нажатие кнопки
 formAddPlace.addEventListener('submit', (ev) => {
   let lastIndex = initialCards.length - 1;
   initialCards.push({});

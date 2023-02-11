@@ -1,0 +1,3 @@
+.transition-background {
+  transition: background-image .15s linear;
+}
