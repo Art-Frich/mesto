@@ -12,6 +12,34 @@ const nameAbout = profile.querySelector('.profile__subtitle');
 
 const classPopupOpened = 'popup_opened'
 
+const placesGrid = document.querySelector('.places__grid');
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
 function openPopup () {
   nameInput.value = nameUser.textContent;
   aboutInput.value = nameAbout.textContent;
@@ -24,15 +52,25 @@ function closePopup () {
 
 function handleFormSubmit (event) {
   // Эта строчка отменяет стандартную отправку формы.
-  // Так мы можем определить свою логику отправки.
-  // О том, как это делать, расскажем позже.
     event.preventDefault()    
-
     nameUser.textContent = nameInput.value;
     nameAbout.textContent = aboutInput.value;
     closePopup ();
 }
 
+function addPlace(item) {
+  const placeTemplate = 
+    document.querySelector('.places__card-template').content;
+  const placeElement = 
+    placeTemplate.querySelector('.places__grid-item').cloneNode(true);
+  placeElement.querySelector('.places__grid-item-photo').src = item.link;
+  placeElement.querySelector('.places__grid-item-title').textContent = 
+    item.name;
+  placesGrid.append(placeElement);
+}
+
+// загружаем стартовые значения
+initialCards.forEach(addPlace);
 
 // кнопка изменения данных профиля
 btnEdit.addEventListener('click', openPopup);
@@ -42,4 +80,4 @@ btnCloseEdit.addEventListener('click', closePopup);
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
-forms.addEventListener('submit', handleFormSubmit);
+form.addEventListener('submit', handleFormSubmit);
