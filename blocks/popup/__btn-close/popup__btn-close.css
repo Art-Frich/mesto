@@ -1,4 +1,4 @@
-.popup__btn-close-edit {
+.popup__btn-close{
   width: 32px;
   /* почему-то aspect-ratio не работает */
   height: 32px;
@@ -15,12 +15,12 @@
   cursor: pointer;
 }
 
-.popup__btn-close-edit:hover {
+.popup__btn-close:hover {
   opacity: 0.6;
 }
 
 @media screen and (max-width: 535px) {
-  .popup__btn-close-edit {
+  .popup__btn-close {
     width: 20px;
     height: 20px;
 

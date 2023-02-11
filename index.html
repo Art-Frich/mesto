@@ -51,12 +51,12 @@
       <p class="footer__author">&copy; 2023 Art Frich</p>
     </footer>
 
-    <div class="popup">
+    <div class="popup popup_type_editProfile">
       <div class="popup__container">
         <form class="popup__form" name="editProfileText">
           <h2 class="popup__title">Редактировать профиль</h2>
           <input
-            class="popup__input popup__input_type_name"
+            class="popup__input popup__input_type_name-user"
             name="nameUser"
             placeholder="Имя или то, что вам его заменит"
           />
@@ -74,7 +74,37 @@
           </button>
         </form>
         <button
-          class="popup__btn-close-edit button-zeroing transition-opacity"
+          class="popup__btn-close popup__btn-close_type_profile button-zeroing transition-opacity"
+          type="button"
+          name="Закрыть окно формы"
+        ></button>
+      </div>
+    </div>
+
+    <div class="popup popup_type_addPlace">
+      <div class="popup__container">
+        <form class="popup__form" name="addNewPlace">
+          <h2 class="popup__title">Новое место</h2>
+          <input
+            class="popup__input popup__input_type_name-place"
+            name="nameUser"
+            placeholder="Как называется это место?"
+          />
+          <input
+            class="popup__input popup__input_type_url"
+            name="aboutUser"
+            placeholder="Укажите ссылку на изображение"
+          />
+          <button
+            class="popup__btn-save-edit button-zeroing transition-opacity"
+            type="submit"
+            name="Добавить новое место"
+          >
+            Создать
+          </button>
+        </form>
+        <button
+          class="popup__btn-close popup__btn-close_type_place button-zeroing transition-opacity"
           type="button"
           name="Закрыть окно формы"
         ></button>
