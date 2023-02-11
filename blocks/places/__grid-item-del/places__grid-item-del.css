@@ -1,0 +1,18 @@
+.places__grid-item-del {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+
+  width: 18px;
+  height: 19px;
+
+  background: url(../../../images/trash.svg);
+  object-fit: cover;
+  z-index: 2;
+
+  cursor: pointer;
+}
+
+.places__grid-item-del:hover {
+  opacity: 0.6
+}

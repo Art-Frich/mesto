@@ -90,6 +90,9 @@ function addPlace(item) {
   placeElement.querySelector('.places__grid-item-like').addEventListener('click', (ev) => {
     ev.target.classList.toggle('places__grid-item-like_active');
   })
+  placeElement.querySelector('.places__grid-item-del').addEventListener('click', () => {
+    placeElement.remove();
+  })
   placesGrid.prepend(placeElement);
 }
 

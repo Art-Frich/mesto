@@ -35,6 +35,7 @@
 @import url(../blocks/places/__grid-item-like/places__grid-item-like.css);
 @import url(
   ../blocks/places/__grid-item-like/_active/places__grid-item-like_active.css);
+@import url(../blocks/places/__grid-item-del/places__grid-item-del.css);
 
 /* стили подвала */
 @import url(../blocks/footer/footer.css);
