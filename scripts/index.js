@@ -79,20 +79,39 @@ function handleFormSubmit (event) {
     closePopup ();
 }
 
+function imgFull(event, item) {
+  let popupImgTemplate = 
+    document.querySelector('.template_type_figure').content;
+  let popupFigure = popupImgTemplate.querySelector('.popup_type_full-img-place').cloneNode(true);
+  popupFigure.querySelector('.popup__img').src = event.target.src;
+  popupFigure.querySelector('.popup__figcaption').textContent = event.target.alt.slice(12); //изображение_ = 12 символов, с 13-го название места
+  popupFigure.querySelector('.popup__btn-close_type_img').addEventListener('click', closePopup);
+  document.querySelector('.body').prepend(popupFigure);
+}
+
 function addPlace(item) {
-  const placeTemplate = 
-    document.querySelector('.places__card-template').content;
-  const placeElement = 
+  let placeTemplate = 
+    document.querySelector('.template_type_place').content;
+
+  let placeElement = 
     placeTemplate.querySelector('.places__grid-item').cloneNode(true);
-  placeElement.querySelector('.places__grid-item-photo').src = item.link;
+
+  let img = placeElement.querySelector('.places__grid-item-photo');
+  img.src = item.link;
+  img.alt += ' ' + item.name; 
+  img.addEventListener('click', imgFull);
+
   placeElement.querySelector('.places__grid-item-title').textContent = 
     item.name;
+
   placeElement.querySelector('.places__grid-item-like').addEventListener('click', (ev) => {
     ev.target.classList.toggle('places__grid-item-like_active');
   })
+
   placeElement.querySelector('.places__grid-item-del').addEventListener('click', () => {
     placeElement.remove();
   })
+
   placesGrid.prepend(placeElement);
 }
 

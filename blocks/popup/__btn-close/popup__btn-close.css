@@ -1,4 +1,4 @@
-.popup__btn-close{
+.popup__btn-close {
   width: 32px;
   /* почему-то aspect-ratio не работает */
   height: 32px;
