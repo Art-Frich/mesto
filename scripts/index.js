@@ -59,8 +59,8 @@ const initialCards = [
 // функции
 
 // открыть попап
-function openPopup (btn) {
-  btn.classList.add(classPopupOpened);
+function openPopup (pp) {
+  pp.classList.add(classPopupOpened);
 }
 
 // сбросить строки ввода
@@ -94,6 +94,8 @@ function openImgFull(event) {
   popupFigure.querySelector('.popup__figcaption').textContent = event.target.alt.slice(12); //изображение_ = 12 символов, с 13-го название места
   popupFigure.querySelector('.popup__btn-close_type_img').addEventListener('click', closePopup);
   document.querySelector('.body').prepend(popupFigure);
+  // того, чтобы код успел отрендеритья на страничке, и только затем изменились свойства -> сработала анимация плавного появления
+  setTimeout(() => {openPopup(popupFigure)}, 100);
 }
 
 // добавить новое место
@@ -159,3 +161,6 @@ formAddPlace.addEventListener('submit', (ev) => {
   resetInput();
   handleFormSubmit(ev);
 })
+
+// для включения анимаций на страничке
+document.querySelector('.preload').classList.remove('preload');
