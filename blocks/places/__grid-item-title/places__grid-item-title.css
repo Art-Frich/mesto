@@ -11,9 +11,4 @@
   font-size: 24px;
   line-height: 29px;
   color: #000;
-
-  /* Для появления "..." у слишком длинных наименований */
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
 }

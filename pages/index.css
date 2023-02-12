@@ -4,6 +4,7 @@
 @import url(../blocks/button-zeroing/button-zeroing.css);
 @import url(../blocks/transition-opacity/transition-opacity.css);
 @import url(../blocks/transition-background/transition-background.css);
+@import url(../blocks/text-overflow/text-overflow.css);
 @import url(../blocks/body/body.css);
 
 /* стили header */
@@ -41,7 +42,7 @@
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__author/footer__author.css);
 
-/* блок всплывающего окна изменения перс. данных */
+/* блок стилей попапов */
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
 @import url(../blocks/popup/__container/popup__container.css);

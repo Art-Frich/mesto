@@ -23,8 +23,6 @@
   outline: none;
 }
 
-/* стили и база на случай, если js чутка сломается,
-мб лучше удалить... */
 .popup__input::placeholder {
   display: inline-block;
   font-style: normal;

@@ -6,19 +6,16 @@ const btnClosePlace = document.querySelector('.popup__btn-close_type_place');
 
 // Формы
 const formAddPlace = document.querySelector('.popup__form[name="addNewPlace"]');
-const formEditProfile = 
-  document.querySelector('.popup__form[name="editProfileText"]');
+const formEditProfile = document.querySelector('.popup__form[name="editProfileText"]');
 
 //попап профиля
 const popupEditProfile = document.querySelector('.popup_type_editProfile');
-const nameUserInput = 
-  popupEditProfile.querySelector('.popup__input_type_name-user');
+const nameUserInput = popupEditProfile.querySelector('.popup__input_type_name-user');
 const aboutInput = popupEditProfile.querySelector('.popup__input_type_about');
 
 // попап места
 const popupAddPlace = document.querySelector('.popup_type_addPlace');
-const namePlaceInput = 
-  popupAddPlace.querySelector('.popup__input_type_name-place')
+const namePlaceInput = popupAddPlace.querySelector('.popup__input_type_name-place')
 const urlInput = popupAddPlace.querySelector('.popup__input_type_url');
 
 // профиль
@@ -58,28 +55,38 @@ const initialCards = [
   }
 ];
 
+
+// функции
+
+// открыть попап
 function openPopup (btn) {
   btn.classList.add(classPopupOpened);
 }
 
-// закрываем попам и очищаем поля ввода
-function closePopup () {
+// сбросить строки ввода
+function resetInput () {
   let popup = document.querySelector('.popup_opened')
   let input = popup.querySelectorAll('.popup__input');
   input.forEach((item) => {
     item.value = null;
   })
+}
+
+// закрываем попам
+function closePopup () {
+  let popup = document.querySelector('.popup_opened')
   popup.classList.remove(classPopupOpened);
 }
 
-// просто закрывает попап
+// просто закрывает попап для submit
 function handleFormSubmit (event) {
   // Эта строчка отменяет стандартную отправку формы.
     event.preventDefault();
     closePopup ();
 }
 
-function imgFull(event, item) {
+// открыть картинку из места
+function openImgFull(event) {
   let popupImgTemplate = 
     document.querySelector('.template_type_figure').content;
   let popupFigure = popupImgTemplate.querySelector('.popup_type_full-img-place').cloneNode(true);
@@ -89,17 +96,15 @@ function imgFull(event, item) {
   document.querySelector('.body').prepend(popupFigure);
 }
 
+// добавить новое место
 function addPlace(item) {
-  let placeTemplate = 
-    document.querySelector('.template_type_place').content;
+  const placeTemplate = document.querySelector('.template_type_place').content;
+  const placeElement = placeTemplate.querySelector('.places__grid-item').cloneNode(true);
 
-  let placeElement = 
-    placeTemplate.querySelector('.places__grid-item').cloneNode(true);
-
-  let img = placeElement.querySelector('.places__grid-item-photo');
+  const img = placeElement.querySelector('.places__grid-item-photo');
   img.src = item.link;
   img.alt += ' ' + item.name; 
-  img.addEventListener('click', imgFull);
+  img.addEventListener('click', openImgFull);
 
   placeElement.querySelector('.places__grid-item-title').textContent = 
     item.name;
@@ -132,7 +137,10 @@ btnAddPlace.addEventListener('click', () => {
 
 // кнопка "закрыть" окно изменения данных профиля
 btnCloseEdit.addEventListener('click', closePopup);
-btnClosePlace.addEventListener('click', closePopup);
+btnClosePlace.addEventListener('click', () => {
+  resetInput()
+  closePopup()
+});
 
 //реагирование формы изменения профиля на нажатие кнопки
 formEditProfile.addEventListener('submit', (ev) => {
@@ -148,5 +156,6 @@ formAddPlace.addEventListener('submit', (ev) => {
   initialCards[lastIndex].link = urlInput.value;
   initialCards[lastIndex].name = namePlaceInput.value;
   addPlace(initialCards[lastIndex]);
+  resetInput();
   handleFormSubmit(ev);
 })

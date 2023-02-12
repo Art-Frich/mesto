@@ -1,11 +1,11 @@
 .profile {
   display: flex;
   flex-direction: row;
+
+  margin-bottom: 50px;
+
   /* only для выравнивания кнопки */
   align-items: center;
-
-  /* отступ до следующей секции */
-  margin-bottom: 50px;
 }
 
 @media screen and (max-width: 965px) {
