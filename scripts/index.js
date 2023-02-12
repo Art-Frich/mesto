@@ -163,4 +163,4 @@ formAddPlace.addEventListener('submit', (ev) => {
 })
 
 // для включения анимаций на страничке
-document.querySelector('.preload').classList.remove('preload');
+setTimeout(() => {document.querySelector('.preload').classList.remove('preload')}, 500)
