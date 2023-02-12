@@ -111,7 +111,21 @@
       </div>
     </div>
 
-    <template class="template_type_place">
+    <div class="popup popup_type_full-img-place">
+      <div class="popup__container popup__container_type_figure">
+        <figure class="popup__figure">
+          <img src="#" alt="Изображение" class="popup__img" />
+          <figcaption class="popup__figcaption"></figcaption>
+        </figure>
+        <button
+          class="popup__btn-close popup__btn-close_type_img button-zeroing transition-opacity"
+          type="button"
+          name="Закрыть окно c изображением"
+        ></button>
+      </div>
+    </div>
+
+    <template class="template">
       <li class="places__grid-item">
         <img src="#" alt="Изображение" class="places__grid-item-photo" />
         <div class="places__grid-item-figcaption">
@@ -128,22 +142,6 @@
           name="удалить место"
         ></button>
       </li>
-    </template>
-
-    <template class="template_type_figure">
-      <div class="popup popup_type_full-img-place">
-        <div class="popup__container popup__container_type_figure">
-          <figure class="popup__figure">
-            <img src="#" alt="Изображение" class="popup__img" />
-            <figcaption class="popup__figcaption"></figcaption>
-          </figure>
-          <button
-            class="popup__btn-close popup__btn-close_type_img button-zeroing transition-opacity"
-            type="button"
-            name="Закрыть окно c изображением"
-          ></button>
-        </div>
-      </div>
     </template>
 
     <script src="./scripts/index.js"></script>

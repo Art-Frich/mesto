@@ -3,6 +3,8 @@ const btnEdit = document.querySelector('.profile__btn-edit');
 const btnAddPlace = document.querySelector('.profile__btn-add');
 const btnCloseEdit = document.querySelector('.popup__btn-close_type_profile');
 const btnClosePlace = document.querySelector('.popup__btn-close_type_place');
+const btnCloseImg = document.querySelector('.popup__btn-close_type_img');
+
 
 // Формы
 const formAddPlace = document.querySelector('.popup__form[name="addNewPlace"]');
@@ -65,8 +67,8 @@ function openPopup (pp) {
 
 // сбросить строки ввода
 function resetInput () {
-  let popup = document.querySelector('.popup_opened')
-  let input = popup.querySelectorAll('.popup__input');
+  const popup = document.querySelector('.popup_opened')
+  const input = popup.querySelectorAll('.popup__input');
   input.forEach((item) => {
     item.value = null;
   })
@@ -74,7 +76,7 @@ function resetInput () {
 
 // закрываем попам
 function closePopup () {
-  let popup = document.querySelector('.popup_opened')
+  const popup = document.querySelector('.popup_opened')
   popup.classList.remove(classPopupOpened);
 }
 
@@ -87,20 +89,15 @@ function handleFormSubmit (event) {
 
 // открыть картинку из места
 function openImgFull(event) {
-  let popupImgTemplate = 
-    document.querySelector('.template_type_figure').content;
-  let popupFigure = popupImgTemplate.querySelector('.popup_type_full-img-place').cloneNode(true);
+  const popupFigure = document.querySelector('.popup_type_full-img-place')
   popupFigure.querySelector('.popup__img').src = event.target.src;
   popupFigure.querySelector('.popup__figcaption').textContent = event.target.alt.slice(12); //изображение_ = 12 символов, с 13-го название места
-  popupFigure.querySelector('.popup__btn-close_type_img').addEventListener('click', closePopup);
-  document.querySelector('.body').prepend(popupFigure);
-  // того, чтобы код успел отрендеритья на страничке, и только затем изменились свойства -> сработала анимация плавного появления
-  setTimeout(() => {openPopup(popupFigure)}, 100);
+  openPopup(popupFigure);
 }
 
 // добавить новое место
 function addPlace(item) {
-  const placeTemplate = document.querySelector('.template_type_place').content;
+  const placeTemplate = document.querySelector('.template').content;
   const placeElement = placeTemplate.querySelector('.places__grid-item').cloneNode(true);
 
   const img = placeElement.querySelector('.places__grid-item-photo');
@@ -137,12 +134,14 @@ btnAddPlace.addEventListener('click', () => {
   openPopup(popupAddPlace);
 });
 
-// кнопка "закрыть" окно изменения данных профиля
+// кнопки закрывашки
 btnCloseEdit.addEventListener('click', closePopup);
+btnCloseImg.addEventListener('click', closePopup);
 btnClosePlace.addEventListener('click', () => {
-  resetInput()
-  closePopup()
+  resetInput();
+  closePopup();
 });
+
 
 //реагирование формы изменения профиля на нажатие кнопки
 formEditProfile.addEventListener('submit', (ev) => {
