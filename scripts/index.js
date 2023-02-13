@@ -89,11 +89,29 @@ function closePopup (ev) {
   if (isPopup(popup)) {popup.classList.remove(classPopupOpened);}
 }
 
-// действия для submit
-function handleFormSubmit (ev) {
-  // Эта строчка отменяет стандартную отправку формы.
+// блокировка двойного нажатия
+function blockBtn () {
+  return (!blockBtn.flag)
+}
+
+// действия для submit ProfileForm
+function handleProfileFormSubmit (ev) {
     ev.preventDefault();
+    nameUser.textContent = nameUserInput.value;
+    nameAbout.textContent = aboutInput.value;
     closePopup (ev);
+}
+
+// дейсвтия для submit PlaseForm
+function handlePlaceFormSubmit (ev) {
+  ev.preventDefault();
+  if (blockBtn()) {
+    blockBtn.flag = true;
+    addPlace(urlInput.value, namePlaceInput.value);
+    resetInput(ev);
+    closePopup (ev);
+    setTimeout(() => {blockBtn.flag = false;}, 500);
+  }
 }
 
 // открыть изображение места
@@ -158,23 +176,13 @@ btnEdit.addEventListener('click', () => {
 });
 
 // открыть попап нового места при нажатии
-btnAddPlace.addEventListener('click', () => {
-  openPopup(popupAddPlace);
-});
+btnAddPlace.addEventListener('click', () => openPopup(popupAddPlace));
 
 // применение формы изменения профиля
-formEditProfile.addEventListener('submit', (ev) => {
-  nameUser.textContent = nameUserInput.value;
-  nameAbout.textContent = aboutInput.value;
-  handleFormSubmit(ev);
-});
+formEditProfile.addEventListener('submit', (ev) => handleProfileFormSubmit(ev));
 
 // применение формы добавления места
-formAddPlace.addEventListener('submit', (ev) => {
-  addPlace(urlInput.value, namePlaceInput.value);
-  resetInput(ev);
-  handleFormSubmit(ev);
-})
+formAddPlace.addEventListener('submit', (ev) => handlePlaceFormSubmit(ev))
 
 // включить анимацию на страничке
 setTimeout(() => document.querySelector('.preload').classList.remove('preload'), 500)
