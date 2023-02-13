@@ -90,8 +90,8 @@ function closePopup (ev) {
 }
 
 // блокировка двойного нажатия
-function blockBtn () {
-  return (!blockBtn.flag)
+function unblockBtn () {
+  return (!unblockBtn.block)
 }
 
 // действия для submit ProfileForm
@@ -105,12 +105,12 @@ function handleProfileFormSubmit (ev) {
 // дейсвтия для submit PlaseForm
 function handlePlaceFormSubmit (ev) {
   ev.preventDefault();
-  if (blockBtn()) {
-    blockBtn.flag = true;
+  if (unblockBtn()) {
+    unblockBtn.block = true;
     addPlace(urlInput.value, namePlaceInput.value);
     resetInput(ev);
     closePopup (ev);
-    setTimeout(() => {blockBtn.flag = false;}, 500);
+    setTimeout(() => {unblockBtn.block = false;}, 500);
   }
 }
 
