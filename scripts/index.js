@@ -1,10 +1,10 @@
 // Кнопки
 const btnEdit = document.querySelector('.profile__btn-edit');
 const btnAddPlace = document.querySelector('.profile__btn-add');
-const btnCloseEdit = document.querySelector('.popup__btn-close_type_profile');
-const btnClosePlace = document.querySelector('.popup__btn-close_type_place');
-const btnCloseImg = document.querySelector('.popup__btn-close_type_img');
+const closeButtons = document.querySelectorAll('.popup__btn-close');
 
+// templat-ы
+const placeTemplate = document.querySelector('.template').content;
 
 // Формы
 const formAddPlace = document.querySelector('.popup__form[name="addNewPlace"]');
@@ -17,8 +17,13 @@ const aboutInput = popupEditProfile.querySelector('.popup__input_type_about');
 
 // попап места
 const popupAddPlace = document.querySelector('.popup_type_addPlace');
-const namePlaceInput = popupAddPlace.querySelector('.popup__input_type_name-place')
+const namePlaceInput = popupAddPlace.querySelector('.popup__input_type_name-place');
 const urlInput = popupAddPlace.querySelector('.popup__input_type_url');
+
+// попап картинки
+const popupFigure = document.querySelector('.popup_type_full-img-place');
+const popupFigureImg = popupFigure.querySelector('.popup__img');
+const popupFigureFigcaption = popupFigure.querySelector('.popup__figcaption');
 
 // профиль
 const profile = document.querySelector('.profile');
@@ -61,105 +66,115 @@ const initialCards = [
 // функции
 
 // открыть попап
-function openPopup (pp) {
-  pp.classList.add(classPopupOpened);
+function openPopup (popup) {
+  popup.classList.add(classPopupOpened);
 }
 
-// сбросить строки ввода
-function resetInput () {
-  const popup = document.querySelector('.popup_opened')
-  const input = popup.querySelectorAll('.popup__input');
-  input.forEach((item) => {
-    item.value = null;
-  })
+// проверка popup на существование
+function isPopup (object) {
+  return (!!object)
+}
+
+// сбросить значения input
+function resetInput (ev) {
+  if (isPopup(ev.target)) {
+    ev == 'submit' ? //если
+    ev.target.reset(): //то 
+    ev.target.closest(".popup").querySelector('.popup__form').reset();} //иначе
 }
 
 // закрываем попам
-function closePopup () {
-  const popup = document.querySelector('.popup_opened')
-  popup.classList.remove(classPopupOpened);
+function closePopup (ev) {
+  const popup = ev.target.closest('.popup');
+  if (isPopup(popup)) {popup.classList.remove(classPopupOpened);}
 }
 
-// просто закрывает попап для submit
-function handleFormSubmit (event) {
+// действия для submit
+function handleFormSubmit (ev) {
   // Эта строчка отменяет стандартную отправку формы.
-    event.preventDefault();
-    closePopup ();
+    ev.preventDefault();
+    closePopup (ev);
 }
 
-// открыть картинку из места
-function openImgFull(event) {
-  const popupFigure = document.querySelector('.popup_type_full-img-place')
-  popupFigure.querySelector('.popup__img').src = event.target.src;
-  popupFigure.querySelector('.popup__figcaption').textContent = event.target.alt.slice(12); //изображение_ = 12 символов, с 13-го название места
+// открыть изображение места
+function openImgFull(ev) {
+  popupFigureImg.src = ev.target.src;
+  //"изображение_" = 12 символов, с 13-го название места
+  popupFigureImg.alt = ev.target.alt.slice(12);
+  popupFigureFigcaption.textContent = ev.target.alt.slice(12); 
   openPopup(popupFigure);
 }
 
-// добавить новое место
-function addPlace(item) {
-  const placeTemplate = document.querySelector('.template').content;
-  const placeElement = placeTemplate.querySelector('.places__grid-item').cloneNode(true);
-
-  const img = placeElement.querySelector('.places__grid-item-photo');
-  img.src = item.link;
-  img.alt += ' ' + item.name; 
-  img.addEventListener('click', openImgFull);
-
-  placeElement.querySelector('.places__grid-item-title').textContent = 
-    item.name;
-
-  placeElement.querySelector('.places__grid-item-like').addEventListener('click', (ev) => {
-    ev.target.classList.toggle('places__grid-item-like_active');
-  })
-
-  placeElement.querySelector('.places__grid-item-del').addEventListener('click', () => {
-    placeElement.remove();
-  })
-
-  placesGrid.prepend(placeElement);
+// переключить состояние лайка
+function toggleLikeCondition (ev) {
+  ev.target.classList.toggle('places__grid-item-like_active');
 }
 
-// загружаем стартовые значения
-initialCards.forEach(addPlace);
+// создать html-карточку места
+function createPlaceElement (placeImgSrc, placeName) {
+  const placeElement = placeTemplate.querySelector('.places__grid-item').cloneNode(true);
+  const img = placeElement.querySelector('.places__grid-item-photo');
+  const imgTitle = placeElement.querySelector('.places__grid-item-title');
+  const imgLike = placeElement.querySelector('.places__grid-item-like');
+  const btnPlaceDel = placeElement.querySelector('.places__grid-item-del');
 
-// кнопка изменения данных профиля
+  img.src = placeImgSrc;
+  img.alt += ' ' + placeName; 
+  imgTitle.textContent = placeName;
+
+  imgLike.addEventListener('click', toggleLikeCondition);
+  img.addEventListener('click', openImgFull);
+  btnPlaceDel.addEventListener('click', () => placeElement.remove());
+
+  return placeElement;
+}
+
+// добавить новое место
+function addPlace (placeImgSrc, placeName) {
+  placesGrid.prepend(createPlaceElement(placeImgSrc, placeName));
+}
+
+
+//код при запуске скрипта
+
+// загрузить стартовые значения
+initialCards.forEach(object => addPlace(object.link, object.name));
+
+//И сказал разработчик: "на каждый крестик по листенеру!"
+//                                    7-е писание о становлении программиста
+closeButtons.forEach((btn) => {
+  const popup = btn.closest('.popup');
+  if (popup.classList.contains('popup_type_addPlace')) {
+    btn.addEventListener('click', (ev) => resetInput(ev));
+  }
+  btn.addEventListener('click', (ev) => closePopup(ev));
+})
+
+// открыть попап изменения данных профиля при нажатии
 btnEdit.addEventListener('click', () => {
   openPopup(popupEditProfile);
   nameUserInput.value = nameUser.textContent;
   aboutInput.value = nameAbout.textContent;
 });
 
-// кнопка добавления нового места
+// открыть попап нового места при нажатии
 btnAddPlace.addEventListener('click', () => {
   openPopup(popupAddPlace);
 });
 
-// кнопки закрывашки
-btnCloseEdit.addEventListener('click', closePopup);
-btnCloseImg.addEventListener('click', closePopup);
-btnClosePlace.addEventListener('click', () => {
-  resetInput();
-  closePopup();
-});
-
-
-//реагирование формы изменения профиля на нажатие кнопки
+// применение формы изменения профиля
 formEditProfile.addEventListener('submit', (ev) => {
   nameUser.textContent = nameUserInput.value;
   nameAbout.textContent = aboutInput.value;
   handleFormSubmit(ev);
 });
 
-//реагирование формы добавления места на нажатие кнопки
+// применение формы добавления места
 formAddPlace.addEventListener('submit', (ev) => {
-  let lastIndex = initialCards.length - 1;
-  initialCards.push({});
-  initialCards[lastIndex].link = urlInput.value;
-  initialCards[lastIndex].name = namePlaceInput.value;
-  addPlace(initialCards[lastIndex]);
-  resetInput();
+  addPlace(urlInput.value, namePlaceInput.value);
+  resetInput(ev);
   handleFormSubmit(ev);
 })
 
-// для включения анимаций на страничке
-setTimeout(() => {document.querySelector('.preload').classList.remove('preload')}, 500)
+// включить анимацию на страничке
+setTimeout(() => document.querySelector('.preload').classList.remove('preload'), 500)

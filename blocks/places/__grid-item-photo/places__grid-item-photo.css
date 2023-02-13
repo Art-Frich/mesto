@@ -8,7 +8,7 @@
 }
 
 .places__grid-item-photo:before {
-  content: ' ' attr(alt) ' отсутствует =(';
+  content: attr(alt) ' отсутствует =(';
   position: absolute;
   left: 0;
   right: 0;
