@@ -71,22 +71,41 @@ function openPopup (popup) {
 }
 
 // проверка popup на существование
-function isPopup (object) {
+function isObject (object) {
   return (!!object)
 }
 
 // сбросить значения input
-function resetInput (ev) {
-  if (isPopup(ev.target)) {
-    ev == 'submit' ? //если
-    ev.target.reset(): //то 
-    ev.target.closest(".popup").querySelector('.popup__form').reset();} //иначе
+function resetInput (popup) {
+  const form = popup.querySelector('.popup__form');
+  form.reset();
 }
 
-// закрываем попам
-function closePopup (ev) {
-  const popup = ev.target.closest('.popup');
-  if (isPopup(popup)) {popup.classList.remove(classPopupOpened);}
+// закрываем попап
+function closePopup () {
+  // код рабочий, но не универсален, оставлю в запасе
+  // const popup = ev.target.closest('.popup');
+  const popup = document.querySelector('.popup_opened');
+  if (isObject(popup)) {
+    popup.classList.remove(classPopupOpened);
+    if (popup.classList.contains('popup_type_addPlace')) {
+      resetInput(popup)
+    };
+  }
+}
+
+// остановка распространений события при клике по попапу
+function notСlosePopup (ev) {
+  ev.stopPropagation();
+}
+
+// обработчик нажатий
+function keyHandler (ev, htmlElement) {
+  switch (ev.key) {
+    case 'Escape':
+      closePopup ();
+      break;
+  }
 }
 
 // блокировка двойного нажатия
@@ -99,7 +118,7 @@ function handleProfileFormSubmit (ev) {
     ev.preventDefault();
     nameUser.textContent = nameUserInput.value;
     nameAbout.textContent = aboutInput.value;
-    closePopup (ev);
+    closePopup ();
 }
 
 // дейсвтия для submit PlaseForm
@@ -108,8 +127,7 @@ function handlePlaceFormSubmit (ev) {
   if (unblockBtn()) {
     unblockBtn.block = true;
     addPlace(urlInput.value, namePlaceInput.value);
-    resetInput(ev);
-    closePopup (ev);
+    closePopup ();
     setTimeout(() => {unblockBtn.block = false;}, 500);
   }
 }
@@ -158,14 +176,16 @@ function addPlace (placeImgSrc, placeName) {
 // загрузить стартовые значения
 initialCards.forEach(object => addPlace(object.link, object.name));
 
-//И сказал разработчик: "на каждый крестик по листенеру!"
-//                                    7-е писание о становлении программиста
+// события закрывашки попапов на каждый объект с крестиком
 closeButtons.forEach((btn) => {
   const popup = btn.closest('.popup');
-  if (popup.classList.contains('popup_type_addPlace')) {
-    btn.addEventListener('click', (ev) => resetInput(ev));
-  }
-  btn.addEventListener('click', (ev) => closePopup(ev));
+  const popupContainer = popup.querySelector('.popup__container');
+  // закрыть на крестик
+  btn.addEventListener('click', () => closePopup ());
+  // не закрывать, если произошел клик по попапу
+  popupContainer.addEventListener('click', (ev) => notСlosePopup (ev));
+  // закрыть, если произошел клик по оверлею
+  popup.addEventListener('click', () => closePopup ());
 })
 
 // открыть попап изменения данных профиля при нажатии
@@ -175,7 +195,7 @@ btnEdit.addEventListener('click', () => {
   aboutInput.value = nameAbout.textContent;
 });
 
-// открыть попап нового места при нажатии
+// открыть форму-попап добавления места при нажатии
 btnAddPlace.addEventListener('click', () => openPopup(popupAddPlace));
 
 // применение формы изменения профиля
@@ -183,6 +203,9 @@ formEditProfile.addEventListener('submit', (ev) => handleProfileFormSubmit(ev));
 
 // применение формы добавления места
 formAddPlace.addEventListener('submit', (ev) => handlePlaceFormSubmit(ev))
+
+//закрываем попап по клику esc
+document.addEventListener('keydown', (ev, popup) => keyHandler(ev, popup));
 
 // включить анимацию на страничке
 setTimeout(() => document.querySelector('.preload').classList.remove('preload'), 500)
