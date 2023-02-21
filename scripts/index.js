@@ -100,7 +100,7 @@ function notСlosePopup (ev) {
 }
 
 // обработчик нажатий
-function keyHandler (ev, htmlElement) {
+function keyHandler (ev) {
   switch (ev.key) {
     case 'Escape':
       closePopup ();
@@ -202,10 +202,10 @@ btnAddPlace.addEventListener('click', () => openPopup(popupAddPlace));
 formEditProfile.addEventListener('submit', (ev) => handleProfileFormSubmit(ev));
 
 // применение формы добавления места
-formAddPlace.addEventListener('submit', (ev) => handlePlaceFormSubmit(ev))
+formAddPlace.addEventListener('submit', (ev) => handlePlaceFormSubmit(ev));
 
 //закрываем попап по клику esc
-document.addEventListener('keydown', (ev, popup) => keyHandler(ev, popup));
+document.addEventListener('keydown', ev => keyHandler(ev));
 
 // включить анимацию на страничке
 setTimeout(() => document.querySelector('.preload').classList.remove('preload'), 500)

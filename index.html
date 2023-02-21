@@ -53,18 +53,33 @@
 
     <div class="popup popup_type_editProfile">
       <div class="popup__container popup__container_type_form">
-        <form class="popup__form" name="editProfileText">
+
+        <form class="popup__form" name="editProfileText" novalidate>
           <h2 class="popup__title">Редактировать профиль</h2>
-          <input
-            class="popup__input popup__input_type_name-user"
-            name="nameUser"
-            placeholder="Имя или то, что вам его заменит"
-          />
-          <input
-            class="popup__input popup__input_type_about"
-            name="aboutUser"
-            placeholder="Кто вы? Можете оставить это место пустым =)"
-          />
+          <label class="popup__field">
+            <input
+              class="popup__input popup__input_type_name-user"
+              name="nameUser"
+              placeholder="Имя или то, что вам его заменит"
+              type="text"
+              minlength="2"
+              maxlength="40"
+              required
+            />
+            <span class="popup__error"></span>
+          </label>
+          <label class="popup__field">
+            <input
+              class="popup__input popup__input_type_about"
+              name="aboutUser"
+              placeholder="Кто вы? Можете оставить это место пустым =)"
+              type="text"
+              minlength="2"
+              maxlength="200"
+              required
+            />
+            <span class="popup__error"></span>
+          </label>
           <button
             class="popup__btn-save-edit button-zeroing transition-opacity"
             type="submit"
@@ -73,6 +88,7 @@
             Сохранить
           </button>
         </form>
+
         <button
           class="popup__btn-close popup__btn-close_type_profile button-zeroing transition-opacity"
           type="button"
@@ -83,26 +99,41 @@
 
     <div class="popup popup_type_addPlace">
       <div class="popup__container popup__container_type_form">
-        <form class="popup__form" name="addNewPlace">
+
+        <form class="popup__form" name="addNewPlace" novalidate>
           <h2 class="popup__title">Новое место</h2>
-          <input
-            class="popup__input popup__input_type_name-place"
-            name="nameUser"
-            placeholder="Как называется это место?"
-          />
-          <input
-            class="popup__input popup__input_type_url"
-            name="aboutUser"
-            placeholder="Укажите ссылку на изображение"
-          />
+          <label class="popup__field">
+            <input
+              class="popup__input popup__input_type_name-place "
+              name="nameUser"
+              placeholder="Как называется это место?"
+              type="text"
+              minlength="2"
+              maxlength="30"
+              required
+            />
+            <span class="popup__error"></span>
+          </label>
+          <label class="popup__field">
+            <input
+              class="popup__input popup__input_type_url"
+              name="aboutUser"
+              placeholder="Укажите ссылку на изображение"
+              type="url"
+              required
+            />
+            <span class="popup__error"></span>
+          </label>
           <button
             class="popup__btn-save-edit button-zeroing transition-opacity"
             type="submit"
             name="Добавить новое место"
+            disabled
           >
             Создать
           </button>
         </form>
+
         <button
           class="popup__btn-close popup__btn-close_type_place button-zeroing transition-opacity"
           type="button"

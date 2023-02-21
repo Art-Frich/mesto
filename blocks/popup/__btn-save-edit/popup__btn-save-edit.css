@@ -18,6 +18,14 @@
   opacity: 0.8;
 }
 
+.popup__btn-save-edit:disabled {
+  background: none;
+  border: 1px solid #000;
+  opacity: 0.2;
+  color: #000;
+  cursor: default;
+}
+
 @media screen and (max-width: 535px) {
   .popup__btn-save-edit {
     min-height: 46px;
