@@ -1,14 +1,16 @@
-// Кнопки
-const btnEdit = document.querySelector('.profile__btn-edit');
-const btnAddPlace = document.querySelector('.profile__btn-add');
-const closeButtons = document.querySelectorAll('.popup__btn-close');
+// Триггеры
+const triggersClose = document.querySelectorAll('.triggerClose');
 
 // templat-ы
 const placeTemplate = document.querySelector('.template').content;
 
 // Формы
-const formAddPlace = document.querySelector('.popup__form[name="addNewPlace"]');
-const formEditProfile = document.querySelector('.popup__form[name="editProfileText"]');
+const formAddPlace = document.forms['addNewPlace'];
+const formEditProfile = document.forms['editProfileText'];
+
+// Кнопки
+const btnEdit = document.querySelector('.profile__btn-edit');
+const btnAddPlace = document.querySelector('.profile__btn-add');
 
 //попап профиля
 const popupEditProfile = document.querySelector('.popup_type_editProfile');
@@ -30,8 +32,10 @@ const profile = document.querySelector('.profile');
 const nameUser = profile.querySelector('.profile__title-name');
 const nameAbout = profile.querySelector('.profile__subtitle');
 
-//служебная переменная
+//служебные переменные
 const classPopupOpened = 'popup_opened';
+const classBtnClose = 'popup__btn-close';
+const classLikeActive = 'places__grid-item-like_active';
 
 //сетка мест и массив мест
 const placesGrid = document.querySelector('.places__grid');
@@ -68,6 +72,7 @@ const initialCards = [
 // открыть попап
 function openPopup (popup) {
   popup.classList.add(classPopupOpened);
+  document.addEventListener('keydown', handlerKey);
 }
 
 // проверка popup на существование
@@ -76,34 +81,26 @@ function isObject (object) {
 }
 
 // сбросить значения input
-function resetInput (popup) {
-  const form = popup.querySelector('.popup__form');
+function resetInput (ev) {
+  const form = ev.target.closest('.popup__form');
   form.reset();
 }
 
 // закрываем попап
 function closePopup () {
-  // код рабочий, но не универсален, оставлю в запасе
-  // const popup = ev.target.closest('.popup');
-  const popup = document.querySelector('.popup_opened');
+  const popup = document.querySelector(`.${classPopupOpened}`);
   if (isObject(popup)) {
     popup.classList.remove(classPopupOpened);
-    if (popup.classList.contains('popup_type_addPlace')) {
-      resetInput(popup)
-    };
+    document.removeEventListener('keydown', handlerKey);
   }
 }
 
-// остановка распространений события при клике по попапу
-function notСlosePopup (ev) {
-  ev.stopPropagation();
-}
-
 // обработчик нажатий
-function keyHandler (ev) {
+const handlerKey = (ev) => {
+  //закрываем попап по клику esc
   switch (ev.key) {
     case 'Escape':
-      closePopup ();
+      closePopup();
       break;
   }
 }
@@ -118,7 +115,7 @@ function handleProfileFormSubmit (ev) {
     ev.preventDefault();
     nameUser.textContent = nameUserInput.value;
     nameAbout.textContent = aboutInput.value;
-    closePopup ();
+    closePopup();
 }
 
 // дейсвтия для submit PlaseForm
@@ -127,7 +124,8 @@ function handlePlaceFormSubmit (ev) {
   if (unblockBtn()) {
     unblockBtn.block = true;
     addPlace(urlInput.value, namePlaceInput.value);
-    closePopup ();
+    closePopup();
+    resetInput(ev);
     setTimeout(() => {unblockBtn.block = false;}, 500);
   }
 }
@@ -143,7 +141,7 @@ function openImgFull(ev) {
 
 // переключить состояние лайка
 function toggleLikeCondition (ev) {
-  ev.target.classList.toggle('places__grid-item-like_active');
+  ev.target.classList.toggle(classLikeActive);
 }
 
 // создать html-карточку места
@@ -158,7 +156,7 @@ function createPlaceElement (placeImgSrc, placeName) {
   img.alt += ' ' + placeName; 
   imgTitle.textContent = placeName;
 
-  imgLike.addEventListener('click', toggleLikeCondition);
+  imgLike.addEventListener('mousedown', toggleLikeCondition);
   img.addEventListener('click', openImgFull);
   btnPlaceDel.addEventListener('click', () => placeElement.remove());
 
@@ -176,36 +174,33 @@ function addPlace (placeImgSrc, placeName) {
 // загрузить стартовые значения
 initialCards.forEach(object => addPlace(object.link, object.name));
 
-// события закрывашки попапов на каждый объект с крестиком
-closeButtons.forEach((btn) => {
-  const popup = btn.closest('.popup');
-  const popupContainer = popup.querySelector('.popup__container');
-  // закрыть на крестик
-  btn.addEventListener('click', () => closePopup ());
-  // не закрывать, если произошел клик по попапу
-  popupContainer.addEventListener('click', (ev) => notСlosePopup (ev));
-  // закрыть, если произошел клик по оверлею
-  popup.addEventListener('click', () => closePopup ());
+// загрузить в input формы изменения личных данных стартовые значения
+nameUserInput.value = nameUser.textContent;
+aboutInput.value = nameAbout.textContent;
+
+// события закрывашки попапов
+triggersClose.forEach((item) => {
+  item.addEventListener('mousedown', ev => {
+    if (ev.target.classList.contains(classPopupOpened) || 
+        ev.target.classList.contains(classBtnClose)) {
+        closePopup();
+    } 
+  });
 })
 
 // открыть попап изменения данных профиля при нажатии
 btnEdit.addEventListener('click', () => {
   openPopup(popupEditProfile);
-  nameUserInput.value = nameUser.textContent;
-  aboutInput.value = nameAbout.textContent;
 });
 
 // открыть форму-попап добавления места при нажатии
 btnAddPlace.addEventListener('click', () => openPopup(popupAddPlace));
 
 // применение формы изменения профиля
-formEditProfile.addEventListener('submit', (ev) => handleProfileFormSubmit(ev));
+formEditProfile.addEventListener('submit', handleProfileFormSubmit);
 
 // применение формы добавления места
-formAddPlace.addEventListener('submit', (ev) => handlePlaceFormSubmit(ev));
-
-//закрываем попап по клику esc
-document.addEventListener('keydown', ev => keyHandler(ev));
+formAddPlace.addEventListener('submit', handlePlaceFormSubmit);
 
 // включить анимацию на страничке
 setTimeout(() => document.querySelector('.preload').classList.remove('preload'), 500)

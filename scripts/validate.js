@@ -6,14 +6,12 @@ function getErrorElement (errorClass, field) {
 // показать текст ошибки
 function showInputError (textError, inputUnvalidateClass, errorVisibleClass, errorElement, inputElement) {
   inputElement.classList.add(`${inputUnvalidateClass}`);
-  // errorElement.classList.add(`${errorVisibleClass}`);
   errorElement.textContent = textError;
 }
 
 // скрыть текст ошибки
 function hideInputError (inputUnvalidateClass, errorVisibleClass, errorElement, inputElement) {
   inputElement.classList.remove(`${inputUnvalidateClass}`);
-  // errorElement.classList.remove(`${errorVisibleClass}`);
   errorElement.textContent = '';
 } 
 
@@ -24,39 +22,21 @@ function checkInputValidity (inputElement, formParametrs, field) {
   const inputUnvalidateClass = formParametrs.inputUnvalidateClass;
   const errorElement = getErrorElement(errorClass, field);
 
-  inputElement.validity.valid ? //если
-    hideInputError (inputUnvalidateClass, errorVisibleClass, errorElement, inputElement) : //то
+  inputElement.validity.valid ?
+    hideInputError (inputUnvalidateClass, errorVisibleClass, errorElement, inputElement) :
     showInputError (
       inputElement.validationMessage, inputUnvalidateClass, 
       errorVisibleClass, errorElement, inputElement
-      ); //иначе
+      );
 }
 
+// проверить валидность инпутов
 function hasInvalidInput(inputList) {
   let flag = true;
   inputList.forEach(item => {
     flag *= item.validity.valid;
   });
   return !flag;
-}
-
-// обработчик нажатий P.S. т.к. есть свой keyHandler у index.js
-function keyHandlerFromValide (ev) {
-  switch (ev.key) {
-    case 'Escape':
-      return true;
-  }
-}
-
-// сброс валидации в случае выхода с формы без submit
-function resetValidationForm (btnSubmit, inputList, errorList, popup, formParametrs) {
-  toggleButtonState(btnSubmit, inputList);
-  errorList.forEach(item => item.textContent = '');
-  inputList.forEach(item => item.classList.remove(`${formParametrs.inputUnvalidateClass}`));
-  
-  if (popup.classList.contains(`${formParametrs.popupEditProfileClass}`)) {
-    btnSubmit.removeAttribute('disabled');
-  }
 }
 
 // переключатель состояния кнопки с контроллером
@@ -77,25 +57,6 @@ function setEventListeners (form, formParametrs) {
   const inputList = getFormElements(form, formParametrs.inputSelector);
   const errorList = getFormElements(form, formParametrs.errorClass);
   const btnSubmit = form.querySelector(`.${formParametrs.submitBtnSelector}`);
-  const popup = form.closest(`.${formParametrs.popupSelector}`);
-  const btnCloseForm = popup.querySelector(`.${formParametrs.btnCloseSelector}`);
-
-  // при закрытии через крестик сбросить форму
-  btnCloseForm.addEventListener('click', () => {
-    resetValidationForm (btnSubmit, inputList, errorList, popup, formParametrs);
-  });
-
-  // это работает корректно, т.к. всплытие останавливается в index.js
-  popup.addEventListener ('click', () => {
-    resetValidationForm (btnSubmit, inputList, errorList, popup, formParametrs);
-  });
-
-  document.addEventListener('keydown', ev => {
-    if (keyHandlerFromValide(ev)) {
-      resetValidationForm (btnSubmit, inputList, errorList, popup, formParametrs);
-    }
-  });
-
 
   // отключить действия по умолчанию для submit форм
   form.addEventListener('submit', ev => {
@@ -132,7 +93,5 @@ enableValidation({
   inputUnvalidateClass: 'popup__input_type_error',
   errorClass: 'popup__error',
   formFieldSelector: 'popup__field',
-  popupSelector: 'popup',
-  btnCloseSelector: 'popup__btn-close',
   popupEditProfileClass: 'popup_type_editProfile'
 });

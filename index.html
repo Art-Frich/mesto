@@ -51,7 +51,7 @@
       <p class="footer__author">&copy; 2023 Art Frich</p>
     </footer>
 
-    <div class="popup popup_type_editProfile">
+    <div class="popup popup_type_editProfile triggerClose">
       <div class="popup__container popup__container_type_form">
 
         <form class="popup__form" name="editProfileText" novalidate>
@@ -90,14 +90,14 @@
         </form>
 
         <button
-          class="popup__btn-close popup__btn-close_type_profile button-zeroing transition-opacity"
+          class="popup__btn-close button-zeroing transition-opacity triggerClose"
           type="button"
           name="Закрыть окно формы"
         ></button>
       </div>
     </div>
 
-    <div class="popup popup_type_addPlace">
+    <div class="popup popup_type_addPlace triggerClose">
       <div class="popup__container popup__container_type_form">
 
         <form class="popup__form" name="addNewPlace" novalidate>
@@ -135,21 +135,21 @@
         </form>
 
         <button
-          class="popup__btn-close popup__btn-close_type_place button-zeroing transition-opacity"
+          class="popup__btn-close button-zeroing transition-opacity triggerClose"
           type="button"
           name="Закрыть окно формы"
         ></button>
       </div>
     </div>
 
-    <div class="popup popup_type_full-img-place">
+    <div class="popup popup_type_full-img-place triggerClose">
       <div class="popup__container popup__container_type_figure">
         <figure class="popup__figure">
           <img src="#" alt="Изображение" class="popup__img" />
           <figcaption class="popup__figcaption"></figcaption>
         </figure>
         <button
-          class="popup__btn-close popup__btn-close_type_img button-zeroing transition-opacity"
+          class="popup__btn-close button-zeroing transition-opacity triggerClose"
           type="button"
           name="Закрыть окно c изображением"
         ></button>
