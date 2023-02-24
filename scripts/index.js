@@ -1,5 +1,5 @@
 // Триггеры
-const triggersClose = document.querySelectorAll('.triggerClose');
+const popupList = document.querySelectorAll('.popup');
 
 // templat-ы
 const placeTemplate = document.querySelector('.template').content;
@@ -72,7 +72,7 @@ const initialCards = [
 // открыть попап
 function openPopup (popup) {
   popup.classList.add(classPopupOpened);
-  document.addEventListener('keydown', handlerKey);
+  document.addEventListener('keydown', handleKey);
 }
 
 // проверка popup на существование
@@ -91,12 +91,12 @@ function closePopup () {
   const popup = document.querySelector(`.${classPopupOpened}`);
   if (isObject(popup)) {
     popup.classList.remove(classPopupOpened);
-    document.removeEventListener('keydown', handlerKey);
+    document.removeEventListener('keydown', handleKey);
   }
 }
 
 // обработчик нажатий
-const handlerKey = (ev) => {
+const handleKey = (ev) => {
   //закрываем попап по клику esc
   switch (ev.key) {
     case 'Escape':
@@ -134,8 +134,9 @@ function handlePlaceFormSubmit (ev) {
 function openImgFull(ev) {
   popupFigureImg.src = ev.target.src;
   //"изображение_" = 12 символов, с 13-го название места
-  popupFigureImg.alt = ev.target.alt.slice(12);
-  popupFigureFigcaption.textContent = ev.target.alt.slice(12); 
+  let imgAlt = ev.target.alt.slice(12);
+  popupFigureImg.alt = imgAlt;
+  popupFigureFigcaption.textContent = imgAlt;
   openPopup(popupFigure);
 }
 
@@ -179,7 +180,7 @@ nameUserInput.value = nameUser.textContent;
 aboutInput.value = nameAbout.textContent;
 
 // события закрывашки попапов
-triggersClose.forEach((item) => {
+popupList.forEach((item) => {
   item.addEventListener('mousedown', ev => {
     if (ev.target.classList.contains(classPopupOpened) || 
         ev.target.classList.contains(classBtnClose)) {
