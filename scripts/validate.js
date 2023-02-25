@@ -1,32 +1,23 @@
-// получить текстовый блок с ошибкой (пока пустой)
-function getErrorElement (errorClass, field) {
-  return field.querySelector(`.${errorClass}`);
-}
-
 // показать текст ошибки
-function showInputError (textError, inputUnvalidateClass, errorVisibleClass, errorElement, inputElement) {
+function showInputError (textError, inputUnvalidateClass, errorElement, inputElement) {
   inputElement.classList.add(`${inputUnvalidateClass}`);
   errorElement.textContent = textError;
 }
 
 // скрыть текст ошибки
-function hideInputError (inputUnvalidateClass, errorVisibleClass, errorElement, inputElement) {
+function hideInputError (inputUnvalidateClass, errorElement, inputElement) {
   inputElement.classList.remove(`${inputUnvalidateClass}`);
   errorElement.textContent = '';
 } 
 
 // проверить валидность формы и вызвать соответствующий метод
-function checkInputValidity (inputElement, formParametrs, field) {
-  const errorClass = formParametrs.errorClass;
-  const errorVisibleClass = errorClass+'_visible';
+function checkInputValidity (inputElement, formParametrs, field, errorElement) {
   const inputUnvalidateClass = formParametrs.inputUnvalidateClass;
-  const errorElement = getErrorElement(errorClass, field);
 
   inputElement.validity.valid ?
-    hideInputError (inputUnvalidateClass, errorVisibleClass, errorElement, inputElement) :
+    hideInputError (inputUnvalidateClass, errorElement, inputElement) :
     showInputError (
-      inputElement.validationMessage, inputUnvalidateClass, 
-      errorVisibleClass, errorElement, inputElement
+      inputElement.validationMessage, inputUnvalidateClass, errorElement, inputElement
       );
 }
 
@@ -67,7 +58,7 @@ function setEventListeners (form, formParametrs) {
   // листенеры на инпуты
   inputList.forEach((inputElement, index) => {
     inputElement.addEventListener('input', () => {
-      checkInputValidity(inputElement, formParametrs, formFieldList[index]);
+      checkInputValidity(inputElement, formParametrs, formFieldList[index], errorList[index]);
       toggleButtonState(btnSubmit, inputList);
     });
   })
