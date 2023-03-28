@@ -1,7 +1,7 @@
 'use strict';
 
 export default class Card {
-  constructor (placeName, placeImgSrc, templateSelector) {
+  constructor ( placeName, placeImgSrc, templateSelector ) {
     this._placeName = placeName;
     this._placeImgSrc = placeImgSrc; 
     this._templateSelector = templateSelector;
@@ -20,7 +20,7 @@ export default class Card {
     this._popupFigureImg = this._popupFigure.querySelector('.popup__img');
     this._popupFigureFigcaption = this._popupFigure.querySelector('.popup__figcaption');
 
-    this._classPopupOpened = '.popup_opened';
+    this._classPopupOpened = 'popup_opened';
   }
 
   // создать html-карточку места
@@ -84,7 +84,7 @@ export default class Card {
 
   // закрываем попап
   _closePopup = () => {
-    const popup = document.querySelector( this._classPopupOpened );
+    const popup = document.querySelector( `${ this._classPopupOpened }` );
     if (popup) {
       popup.classList.remove( this._classPopupOpened );
       document.removeEventListener( 'keydown', this._handleKey );
