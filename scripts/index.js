@@ -1,8 +1,10 @@
+'use strict';
+
+import Card from './Card.js';
+import FormValidator from './FormValidator.js';
+
 // Триггеры
 const popupList = document.querySelectorAll('.popup');
-
-// templat-ы
-const placeTemplate = document.querySelector('.template').content;
 
 // Формы
 const formAddPlace = document.forms['addNewPlace'];
@@ -22,11 +24,6 @@ const popupAddPlace = document.querySelector('.popup_type_addPlace');
 const namePlaceInput = popupAddPlace.querySelector('.popup__input_type_name-place');
 const urlInput = popupAddPlace.querySelector('.popup__input_type_url');
 
-// попап картинки
-const popupFigure = document.querySelector('.popup_type_full-img-place');
-const popupFigureImg = popupFigure.querySelector('.popup__img');
-const popupFigureFigcaption = popupFigure.querySelector('.popup__figcaption');
-
 // профиль
 const profile = document.querySelector('.profile');
 const nameUser = profile.querySelector('.profile__title-name');
@@ -35,7 +32,15 @@ const nameAbout = profile.querySelector('.profile__subtitle');
 //служебные переменные
 const classPopupOpened = 'popup_opened';
 const classBtnClose = 'popup__btn-close';
-const classLikeActive = 'places__grid-item-like_active';
+const placeTemplateSelector = '.template';
+
+// настройки валидации
+const validateConfig = {
+  inputSelector: 'popup__input',
+  submitBtnSelector: 'popup__btn-save-edit',
+  inputUnvalidateClass: 'popup__input_type_error',
+  errorClass: 'popup__error',
+};
 
 //сетка мест и массив мест
 const placesGrid = document.querySelector('.places__grid');
@@ -75,11 +80,6 @@ function openPopup (popup) {
   document.addEventListener('keydown', handleKey);
 }
 
-// проверка popup на существование
-function isObject (object) {
-  return (!!object)
-}
-
 // сбросить значения input
 function resetInput (ev) {
   const form = ev.target.closest('.popup__form');
@@ -89,14 +89,14 @@ function resetInput (ev) {
 // закрываем попап
 function closePopup () {
   const popup = document.querySelector(`.${classPopupOpened}`);
-  if (isObject(popup)) {
+  if (popup) {
     popup.classList.remove(classPopupOpened);
     document.removeEventListener('keydown', handleKey);
   }
 }
 
 // обработчик нажатий
-const handleKey = (ev) => {
+const handleKey = ( ev ) => {
   //закрываем попап по клику esc
   switch (ev.key) {
     case 'Escape':
@@ -107,11 +107,11 @@ const handleKey = (ev) => {
 
 // блокировка двойного нажатия
 function unblockBtn () {
-  return (!unblockBtn.block)
+  return !unblockBtn.block;
 }
 
 // действия для submit ProfileForm
-function handleProfileFormSubmit (ev) {
+function handleProfileFormSubmit ( ev ) {
     ev.preventDefault();
     nameUser.textContent = nameUserInput.value;
     nameAbout.textContent = aboutInput.value;
@@ -119,73 +119,49 @@ function handleProfileFormSubmit (ev) {
 }
 
 // дейсвтия для submit PlaseForm
-function handlePlaceFormSubmit (ev) {
+function handlePlaceFormSubmit ( ev ) {
   ev.preventDefault();
-  if (unblockBtn()) {
+  if ( unblockBtn() ) {
     unblockBtn.block = true;
-    addPlace(urlInput.value, namePlaceInput.value);
+    addPlace( namePlaceInput.value, urlInput.value );
     closePopup();
     resetInput(ev);
     setTimeout(() => {unblockBtn.block = false;}, 500);
   }
 }
 
-// открыть изображение места
-function openImgFull(ev) {
-  popupFigureImg.src = ev.target.src;
-  //"изображение_" = 12 символов, с 13-го название места
-  let imgAlt = ev.target.alt.slice(12);
-  popupFigureImg.alt = imgAlt;
-  popupFigureFigcaption.textContent = imgAlt;
-  openPopup(popupFigure);
-}
-
-// переключить состояние лайка
-function toggleLikeCondition (ev) {
-  ev.target.classList.toggle(classLikeActive);
-}
-
-// создать html-карточку места
-function createPlaceElement (placeImgSrc, placeName) {
-  const placeElement = placeTemplate.querySelector('.places__grid-item').cloneNode(true);
-  const img = placeElement.querySelector('.places__grid-item-photo');
-  const imgTitle = placeElement.querySelector('.places__grid-item-title');
-  const imgLike = placeElement.querySelector('.places__grid-item-like');
-  const btnPlaceDel = placeElement.querySelector('.places__grid-item-del');
-
-  img.src = placeImgSrc;
-  img.alt += ' ' + placeName; 
-  imgTitle.textContent = placeName;
-
-  imgLike.addEventListener('mousedown', toggleLikeCondition);
-  img.addEventListener('click', openImgFull);
-  btnPlaceDel.addEventListener('click', () => placeElement.remove());
-
-  return placeElement;
-}
-
 // добавить новое место
-function addPlace (placeImgSrc, placeName) {
-  placesGrid.prepend(createPlaceElement(placeImgSrc, placeName));
+function addPlace ( namePlace, linkImg ) {
+  const newCard = new Card( namePlace, linkImg, placeTemplateSelector);
+  placesGrid.prepend( newCard.getPlaceCard() );
+}
+
+// установка валидаторов формы
+function setValidate ( form ) {
+  const newValidate = new FormValidator ( validateConfig, form );
+  newValidate.enableValidation(); // запуск валидации
 }
 
 
 //код при запуске скрипта
 
-// загрузить стартовые значения
-initialCards.forEach(object => addPlace(object.link, object.name));
-
 // загрузить в input формы изменения личных данных стартовые значения
 nameUserInput.value = nameUser.textContent;
 aboutInput.value = nameAbout.textContent;
+
+// загрузить стартовые значения
+initialCards.forEach( object => addPlace( object.name, object.link ) );
+
+// установить валидацию
+Array.from( document.forms ).forEach( form => setValidate( form ) );
 
 // события закрывашки попапов
 popupList.forEach((item) => {
   item.addEventListener('mousedown', ev => {
     if (ev.target.classList.contains(classPopupOpened) || 
         ev.target.classList.contains(classBtnClose)) {
-        closePopup();
-    } 
+          closePopup();
+        } 
   });
 })
 
