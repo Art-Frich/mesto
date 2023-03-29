@@ -51,7 +51,7 @@
       <p class="footer__author">&copy; 2023 Art Frich</p>
     </footer>
 
-    <div class="popup popup_type_editProfile">
+    <div class="popup popup_type_edit-profile">
       <div class="popup__container popup__container_type_form">
         <form class="popup__form" name="editProfileText" novalidate>
           <h2 class="popup__title">Редактировать профиль</h2>
@@ -96,7 +96,7 @@
       </div>
     </div>
 
-    <div class="popup popup_type_addPlace">
+    <div class="popup popup_type_add-place">
       <div class="popup__container popup__container_type_form">
         <form class="popup__form" name="addNewPlace" novalidate>
           <h2 class="popup__title">Новое место</h2>
@@ -156,25 +156,29 @@
 
     <template class="template">
       <li class="places__grid-item">
-        <img src="#" alt="Изображение" class="places__grid-item-photo" />
-        <div class="places__grid-item-figcaption">
-          <h2 class="places__grid-item-title text-overflow"></h2>
+        <div class="card">
+          <img src="#" alt="Изображение" class="card__photo" />
+          <div class="card__figcaption">
+            <h2 class="card__title text-overflow"></h2>
+            <button
+              class="card__like button-zeroing transition-opacity transition-background"
+              type="button"
+              name="Поставить лайк"
+            ></button>
+          </div>
           <button
-            class="places__grid-item-like button-zeroing transition-opacity transition-background"
+            class="card__del-card-btn button-zeroing transition-opacity"
             type="button"
-            name="Поставить лайк"
+            name="удалить место"
           ></button>
         </div>
-        <button
-          class="places__grid-item-del button-zeroing transition-opacity"
-          type="button"
-          name="удалить место"
-        ></button>
       </li>
     </template>
 
     <script type="module" src="./scripts/index.js"></script>
     <script type="module" src="./scripts/Card.js"></script>
     <script type="module" src="./scripts/FormValidator.js"></script>
+    <script type="module" src="./scripts/initialCards.js"></script>
+    <script type="module" src="./scripts/Popup.js"></script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-.places__grid-item-figcaption {
+.card__figcaption {
   display: flex;
   flex-direction: row;
   justify-content: space-between;

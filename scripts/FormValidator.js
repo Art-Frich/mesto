@@ -1,6 +1,15 @@
 'use strict';
 
+/**
+ * Класс, представляющий валидацию формы
+ */
 export default class FormValidator {
+  /**
+   * Создать экземпляр формы под валидацию
+   * 
+   * @param {Object} config - необходимые селекторы
+   * @param {Node} form - форма
+   */
   constructor( config, form ) {
     this._inputUnvalidateClass = config._inputUnvalidateClass;
     this._form = form;
@@ -9,33 +18,33 @@ export default class FormValidator {
     this._btnSubmit = form.querySelector( `.${ config.submitBtnSelector }` );
   }
 
-  // получить список областей к форме
+  /**
+   * Получить массив элементов из формы
+   * 
+   * @method
+   * @private
+   * @param {HTMLFormElement} form - форма
+   * @param {string} formSelector - селектор поиска внутри формы
+   * @returns {Array<HTMLElement>} - массив элементов формы
+   */
   _getFormElements = ( form, formSelector ) => {
     return Array.from( form.querySelectorAll( `.${ formSelector }` ) );
   }
 
-  // проверить валидность инпутов
   _hasInvalidInput = () => {
-    let flag = true;
-    this._inputList.forEach( item => {
-      flag *= item.validity.valid;
-    });
-    return !flag;
+    return !this._inputList.some( input => input.validity.valid );
   }
 
-  // показать текст ошибки
   _showInputError = ( textError, errorElement, inputElement ) => {
     inputElement.classList.add( `${ this._inputUnvalidateClass }` );
     errorElement.textContent = textError;
   }
 
-  // скрыть текст ошибки
   _hideInputError = ( errorElement, inputElement ) => {
     inputElement.classList.remove( `${ this._inputUnvalidateClass }` );
     errorElement.textContent = '';
   } 
 
-  // проверить валидность формы и вызвать соответствующий метод
   _checkInputValidity = ( inputElement, errorElement ) => {
     inputElement.validity.valid 
       ? this._hideInputError ( errorElement, inputElement ) 
@@ -46,22 +55,23 @@ export default class FormValidator {
         );
   }
 
-  // переключатель состояния кнопки с контроллером
   _toggleButtonState = () => {
     this._hasInvalidInput() ?
       this._btnSubmit.setAttribute( 'disabled', true ):
       this._btnSubmit.removeAttribute( 'disabled' );
   }
 
-  // устанавливаем листенеры инпутам
   _setEventListeners = () => {
-    // отключить действия по умолчанию для submit форм
     this._form.addEventListener('submit', ev => {
       ev.preventDefault();
-      this._toggleButtonState();
+      /**  
+       * из-за модульного подключения toggleButtonState срабатывает быстрее
+       * чем очистка input внутри index.js, поэтому переместим эту фукнцию
+       * в конец очереди через setTimeout
+       */
+      setTimeout( this._toggleButtonState, 0 );
     });
 
-     // листенеры на инпуты
     this._inputList.forEach( ( inputElement, index ) => {
       inputElement.addEventListener( 'input', () => {
         this._checkInputValidity( inputElement, this._errorList[index] );
@@ -70,7 +80,9 @@ export default class FormValidator {
     })
   } 
 
-  // подключаем все модули валидации
+  /**
+   * Включить валидацию переданной формы
+   */
   enableValidation = () => {
     this._setEventListeners();
   };

@@ -1,4 +1,4 @@
-.places__grid-item-like {
+.card__like {
   width: 22px;
   height: 19px;
 
@@ -6,6 +6,6 @@
   object-fit: cover;
 }
 
-.places__grid-item-like:hover {
+.card__like:hover {
   opacity: 0.5;
 }

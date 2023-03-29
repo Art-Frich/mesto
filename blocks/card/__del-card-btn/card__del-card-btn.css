@@ -1,4 +1,4 @@
-.places__grid-item-del {
+.card__del-card-btn {
   position: absolute;
   right: 20px;
   top: 20px;
@@ -13,6 +13,6 @@
   cursor: pointer;
 }
 
-.places__grid-item-del:hover {
+.card__del-card-btn:hover {
   opacity: 0.6;
 }

@@ -1,4 +1,4 @@
-.places__grid-item-photo {
+.card__photo {
   position: relative;
   display: block;
   width: 282px;
@@ -7,7 +7,7 @@
   object-position: center;
 }
 
-.places__grid-item-photo:before {
+.card__photo:before {
   content: attr(alt) ' отсутствует =(';
   position: absolute;
   left: 0;
