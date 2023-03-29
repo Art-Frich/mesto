@@ -21,7 +21,7 @@ export default class Card {
     this._templateSelector = config.templateSelector;
     this._classPopupOpened = config.classPopupOpened;
     this._placesItemSelector = config.cardSelector;
-    this._classLikeActive = config._classLikeActive;
+    this._classLikeActive = config.classLikeActive;
 
     this._placeElement = this._getPlaceElement();
     this._img = this._placeElement.querySelector( `.${ config.imgSelector }` );

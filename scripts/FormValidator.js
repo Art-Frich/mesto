@@ -11,7 +11,7 @@ export default class FormValidator {
    * @param {Node} form - форма
    */
   constructor( config, form ) {
-    this._inputUnvalidateClass = config._inputUnvalidateClass;
+    this._inputUnvalidateClass = config.inputUnvalidateClass;
     this._form = form;
     this._inputList = this._getFormElements( form, config.inputSelector );
     this._errorList = this._getFormElements( form, config.errorClass );
@@ -32,7 +32,7 @@ export default class FormValidator {
   }
 
   _hasInvalidInput = () => {
-    return !this._inputList.some( input => input.validity.valid );
+    return this._inputList.some( input => !input.validity.valid );
   }
 
   _showInputError = ( textError, errorElement, inputElement ) => {
@@ -61,19 +61,23 @@ export default class FormValidator {
       this._btnSubmit.removeAttribute( 'disabled' );
   }
 
+    /**  
+   * из-за модульного подключения toggleButtonState срабатывает быстрее
+   * чем очистка input внутри index.js, поэтому переместим эту фукнцию
+   * в конец очереди через setTimeout
+   */
   _setEventListeners = () => {
     this._form.addEventListener('submit', ev => {
       ev.preventDefault();
-      /**  
-       * из-за модульного подключения toggleButtonState срабатывает быстрее
-       * чем очистка input внутри index.js, поэтому переместим эту фукнцию
-       * в конец очереди через setTimeout
-       */
       setTimeout( this._toggleButtonState, 0 );
     });
 
     this._inputList.forEach( ( inputElement, index ) => {
       inputElement.addEventListener( 'input', () => {
+        this._checkInputValidity( inputElement, this._errorList[index] );
+        this._toggleButtonState();
+      });
+      inputElement.addEventListener( 'change', () => {
         this._checkInputValidity( inputElement, this._errorList[index] );
         this._toggleButtonState();
       });
