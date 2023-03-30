@@ -11,12 +11,12 @@ export default class Card {
    * @param {string} placeName - название места
    * @param {string} placeImgSrc - URL-адрес изображения места
    * @param {object} config - словарик всех необходимых селекторов
-   * @param {function} openImgFull - вешает на объект слушатель 
+   * @param {function} openImgFunc
    */
-  constructor ( placeName, placeImgSrc, config, openImgListener ) {
+  constructor ( placeName, placeImgSrc, config, openImgFunc ) {
     this._placeName = placeName;
     this._placeImgSrc = placeImgSrc; 
-    this._openImgListener = openImgListener;
+    this._openImgFunc = openImgFunc;
 
     this._templateSelector = config.templateSelector;
     this._classPopupOpened = config.classPopupOpened;
@@ -56,13 +56,14 @@ export default class Card {
    * @private
    */
   _setEventListeners = () => {
-    this._openImgListener( { 
-      placeName: this._placeName, 
-      placeImgSrc: this._placeImgSrc 
-    }, this._img );
+    this._img.addEventListener( 'click', () => this._openImgFunc( this._placeImgSrc, this._placeName ) );
     this._imgLike.addEventListener( 'mousedown', this._toggleLikeCondition );
     this._btnPlaceDel.addEventListener( 'click', this._deleteOnClick );
   }
+
+  setOpenOnClick = ( imgParamets, img ) => {
+    img.addEventListener("click", () => this.openImgFullOnClick( imgParamets ));
+  };
 
   _deleteOnClick = () => {
     this._placeElement.remove();

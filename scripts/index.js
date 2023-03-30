@@ -71,7 +71,7 @@ const cardConfig = {
 /**
  * HTML элемент сетки мест
  */
-const placesGrid = document.querySelector('.places__grid');
+const placesGrid = document.querySelector( '.places__grid' );
 /**
  * объект класса PopupWithImage
  */
@@ -80,21 +80,21 @@ const moduleImgObject = createModuleImg();
 
 // функции
 
-function openPopup (popup) {
-  popup.classList.add(classPopupOpened);
-  document.addEventListener('keydown', handleKey);
+function openPopup ( popup ) {
+  popup.classList.add( classPopupOpened );
+  document.addEventListener( 'keydown', handleKey );
 }
 
-function resetInput (ev) {
-  const form = ev.target.closest('.popup__form');
+function resetInput ( ev ) {
+  const form = ev.target.closest( '.popup__form' );
   form.reset();
 }
 
 function closePopup () {
-  const popup = document.querySelector(`.${classPopupOpened}`);
+  const popup = document.querySelector( `.${ classPopupOpened }` );
   if (popup) {
-    popup.classList.remove(classPopupOpened);
-    document.removeEventListener('keydown', handleKey);
+    popup.classList.remove( classPopupOpened );
+    document.removeEventListener( 'keydown', handleKey );
   }
 }
 
@@ -177,22 +177,22 @@ popupList.forEach((item) => {
 })
 
 // открыть попап изменения данных профиля
-btnEdit.addEventListener('click', () => {
+btnEdit.addEventListener( 'click', () => {
   nameUserInput.value = nameUser.textContent;
   aboutInput.value = nameAbout.textContent;
-  openPopup(popupEditProfile);
+  openPopup( popupEditProfile );
 });
 
 // открыть форму-попап добавления места 
-btnAddPlace.addEventListener('click', () => openPopup(popupAddPlace));
+btnAddPlace.addEventListener( 'click', () => openPopup(popupAddPlace) );
 
 // применение формы изменения профиля
-formEditProfile.addEventListener('submit', handleProfileFormSubmit);
+formEditProfile.addEventListener( 'submit', handleProfileFormSubmit );
 
 // применение формы добавления места
-formAddPlace.addEventListener('submit', handlePlaceFormSubmit);
+formAddPlace.addEventListener( 'submit', handlePlaceFormSubmit );
 
 /**
  * включить анимацию на страничке
  */
-setTimeout( () => document.querySelector('.preload').classList.remove('preload'), 500 );
+setTimeout( () => document.querySelector( '.preload' ).classList.remove( 'preload' ), 500 );

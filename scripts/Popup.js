@@ -11,28 +11,27 @@ class Popup {
    * @method
    */
   _openPopup( popupElement ) {
-    popupElement.classList.add(this._classPopupOpened);
-    document.addEventListener( "keydown", this._handleKey );
+    popupElement.classList.add( this._classPopupOpened );
+    document.addEventListener( 'keydown', this._handleKey );
   }
 
   // обработчик нажатий
-  _handleKey = (ev) => {
-    if (ev.key === "Escape") {
-      this._closePopup();
-    }
-  };
+  _handleKey = ( ev ) => {
+    if ( ev.key === 'Escape' ) { this._closePopup(); }
+  }
 
   /**
    * Закрыть попап и снять слушатель-закрывашку
    * @method
    */
-  _closePopup = () => {
-    const popup = document.querySelector(`.${this._classPopupOpened}`);
+   _closePopup = () => {
+    const popup = document.querySelector( `.${ this._classPopupOpened }` );
     if (popup) {
-      popup.classList.remove(this._classPopupOpened);
-      document.removeEventListener( "keydown", this._handleKey );
+      popup.classList.remove( this._classPopupOpened );
+      document.removeEventListener( 'keydown', this._handleKey );
     }
-  };
+  }
+
 }
 
 /**
@@ -40,34 +39,30 @@ class Popup {
  */
 class PopupWithImage extends Popup {
   /**
-   * @param {string} classPopupOpened
+   * @param {string} classPopupOpened 
    */
   constructor( moduleImgConfig, classPopupOpened ) {
     super( classPopupOpened );
-    this._popupFigure = document.querySelector(
-      `.${ moduleImgConfig.figureSelector }`
-    );
-    this._popupFigureImg = this._popupFigure.querySelector(
-      `.${ moduleImgConfig.imgSelector }`
-    );
-    this._popupFigureFigcaption = this._popupFigure.querySelector(
-      `.${ moduleImgConfig.figcaptionSelector }`
-    );
+
+    this._popupFigure = document
+      .querySelector( `.${ moduleImgConfig.figureSelector }` );
+
+    this._popupFigureImg = this._popupFigure
+      .querySelector( `.${ moduleImgConfig.imgSelector }` );
+
+    this._popupFigureFigcaption = this._popupFigure
+      .querySelector( `.${ moduleImgConfig.figcaptionSelector }` );
+
     this.openImgFullOnClick.bind( this );
   }
 
-  openImgFullOnClick = ( placeName, placeImgSrc ) => {
+  openImgFullOnClick = ( placeImgSrc, placeName ) => {
     this._popupFigureImg.src = placeImgSrc;
     const imgAlt = placeName;
     this._popupFigureImg.alt = imgAlt;
     this._popupFigureFigcaption.textContent = imgAlt;
     super._openPopup( this._popupFigure );
-  };
+  }
 }
-
-class PopupWithForm extends Popup {
-
-}
-
 
 export { PopupWithImage };
