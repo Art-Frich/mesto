@@ -2,34 +2,47 @@ class Popup {
   /**
    * @param {string} classPopupOpened
    */
-  constructor( classPopupOpened ) {
-    this._classPopupOpened = classPopupOpened;
+  constructor( classPopup ) {
+    this._classPopup = classPopup;
+    this._classPopupOpened = `${ classPopup }_opened`;
   }
 
   /**
    * Открыть попап и повесить слушатель-закрывашку
    * @method
    */
-  _openPopup( popupElement ) {
+  openPopup( popupElement ) {
     popupElement.classList.add( this._classPopupOpened );
     document.addEventListener( 'keydown', this._handleKey );
   }
 
   // обработчик нажатий
   _handleKey = ( ev ) => {
-    if ( ev.key === 'Escape' ) { this._closePopup(); }
+    if ( ev.key === 'Escape' ) { this.closePopup(); }
   }
 
   /**
    * Закрыть попап и снять слушатель-закрывашку
    * @method
    */
-   _closePopup = () => {
-    const popup = document.querySelector( `.${ this._classPopupOpened }` );
+  closePopup = () => {
+  const popup = document.querySelector( `.${ this._classPopupOpened }` );
     if (popup) {
       popup.classList.remove( this._classPopupOpened );
       document.removeEventListener( 'keydown', this._handleKey );
     }
+  }
+
+  setEventListeners() {
+    // события закрывашки попапов
+    this._popupList.forEach((item) => {
+      item.addEventListener('mousedown', ev => {
+        if (ev.target.classList.contains(classPopupOpened) || 
+            ev.target.classList.contains(classBtnClose)) {
+              closePopup();
+            } 
+      });
+    })
   }
 
 }
@@ -41,8 +54,8 @@ class PopupWithImage extends Popup {
   /**
    * @param {string} classPopupOpened 
    */
-  constructor( moduleImgConfig, classPopupOpened ) {
-    super( classPopupOpened );
+  constructor( moduleImgConfig, classPopup ) {
+    super( classPopup );
 
     this._popupFigure = document
       .querySelector( `.${ moduleImgConfig.figureSelector }` );
@@ -61,7 +74,7 @@ class PopupWithImage extends Popup {
     const imgAlt = placeName;
     this._popupFigureImg.alt = imgAlt;
     this._popupFigureFigcaption.textContent = imgAlt;
-    super._openPopup( this._popupFigure );
+    super.openPopup( this._popupFigure );
   }
 }
 

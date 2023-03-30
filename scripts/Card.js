@@ -19,7 +19,6 @@ export default class Card {
     this._openImgFunc = openImgFunc;
 
     this._templateSelector = config.templateSelector;
-    this._classPopupOpened = config.classPopupOpened;
     this._placesItemSelector = config.cardSelector;
     this._classLikeActive = config.classLikeActive;
 

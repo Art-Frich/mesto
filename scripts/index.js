@@ -32,8 +32,8 @@ const nameUser = profile.querySelector('.profile__title-name');
 const nameAbout = profile.querySelector('.profile__subtitle');
 
 //служебные переменные
-const classPopupOpened = 'popup_opened';
 const classBtnClose = 'popup__btn-close';
+const classPopup = 'popup';
 
 /**
  * настройки валидации
@@ -64,7 +64,6 @@ const cardConfig = {
   likeSelector: 'card__like',
   btnDelSelector: 'card__del-card-btn',
   classLikeActive: 'card__like_active',
-  classPopupOpened: classPopupOpened,
   templateSelector: 'template'
 }
 
@@ -80,27 +79,9 @@ const moduleImgObject = createModuleImg();
 
 // функции
 
-function openPopup ( popup ) {
-  popup.classList.add( classPopupOpened );
-  document.addEventListener( 'keydown', handleKey );
-}
-
 function resetInput ( ev ) {
   const form = ev.target.closest( '.popup__form' );
   form.reset();
-}
-
-function closePopup () {
-  const popup = document.querySelector( `.${ classPopupOpened }` );
-  if (popup) {
-    popup.classList.remove( classPopupOpened );
-    document.removeEventListener( 'keydown', handleKey );
-  }
-}
-
-
-const handleKey = ( ev ) => {
-  if ( ev.key === 'Escape' ) { closePopup(); }
 }
 
 // блокировка двойного нажатия
@@ -136,7 +117,7 @@ function handlePlaceFormSubmit ( ev ) {
 }
 
 function createModuleImg() {
-  return new PopupWithImage ( moduleImgConfig, classPopupOpened );
+  return new PopupWithImage ( moduleImgConfig, classPopup );
 }
 
 function createPlaceCard( namePlace, linkImg ) {
@@ -166,15 +147,7 @@ initialCards.forEach( object => addPlace( object.name, object.link ) );
 // установить валидацию
 Array.from( document.forms ).forEach( form => setValidate( form ) );
 
-// события закрывашки попапов
-popupList.forEach((item) => {
-  item.addEventListener('mousedown', ev => {
-    if (ev.target.classList.contains(classPopupOpened) || 
-        ev.target.classList.contains(classBtnClose)) {
-          closePopup();
-        } 
-  });
-})
+
 
 // открыть попап изменения данных профиля
 btnEdit.addEventListener( 'click', () => {
