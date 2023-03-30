@@ -56,13 +56,18 @@ export default class Card {
    * @private
    */
   _setEventListeners = () => {
-    this._openImgListener( this, this._img );
+    this._openImgListener( { 
+      placeName: this._placeName, 
+      placeImgSrc: this._placeImgSrc 
+    }, this._img );
     this._imgLike.addEventListener( 'mousedown', this._toggleLikeCondition );
-    this._btnPlaceDel.addEventListener( 'click', () => {
-      this._placeElement.remove();
-      this._placeElement = null;
-    } );
+    this._btnPlaceDel.addEventListener( 'click', this._deleteOnClick );
   }
+
+  _deleteOnClick = () => {
+    this._placeElement.remove();
+    this._placeElement = null;
+  };
 
   /**
    * Заполняет атрибуты <img>

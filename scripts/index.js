@@ -3,7 +3,7 @@
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 import initialCards from './initialCards.js';
-import { ModuleImg } from './Popup.js';
+import { PopupWithImage } from './Popup.js';
 
 // Триггеры
 const popupList = document.querySelectorAll('.popup');
@@ -68,24 +68,28 @@ const cardConfig = {
   templateSelector: 'template'
 }
 
-//сетка мест
+/**
+ * HTML элемент сетки мест
+ */
 const placesGrid = document.querySelector('.places__grid');
+/**
+ * объект класса PopupWithImage
+ */
+const moduleImgObject = createModuleImg();
+
 
 // функции
 
-// открыть попап
 function openPopup (popup) {
   popup.classList.add(classPopupOpened);
   document.addEventListener('keydown', handleKey);
 }
 
-// сбросить значения input
 function resetInput (ev) {
   const form = ev.target.closest('.popup__form');
   form.reset();
 }
 
-// закрываем попап
 function closePopup () {
   const popup = document.querySelector(`.${classPopupOpened}`);
   if (popup) {
@@ -94,7 +98,7 @@ function closePopup () {
   }
 }
 
-// обработчик нажатий
+
 const handleKey = ( ev ) => {
   if ( ev.key === 'Escape' ) { closePopup(); }
 }
@@ -104,7 +108,10 @@ function unblockBtn () {
   return !unblockBtn.block;
 }
 
-// действия для submit ProfileForm
+/**
+ * Обработка события submit у формы редактирования профиля
+ * @param {Event} ev - событие submit
+ */
 function handleProfileFormSubmit ( ev ) {
     ev.preventDefault();
     nameUser.textContent = nameUserInput.value;
@@ -113,6 +120,10 @@ function handleProfileFormSubmit ( ev ) {
 }
 
 // дейсвтия для submit PlaceForm
+/**
+ * Обработка события submit у формы добавления места
+ * @param {Event} ev - событие submit
+ */
 function handlePlaceFormSubmit ( ev ) {
   ev.preventDefault();
   if ( unblockBtn() ) {
@@ -125,24 +136,19 @@ function handlePlaceFormSubmit ( ev ) {
 }
 
 function createModuleImg() {
-  return new ModuleImg ( moduleImgConfig, classPopupOpened );
+  return new PopupWithImage ( moduleImgConfig, classPopupOpened );
 }
 
 function createPlaceCard( namePlace, linkImg ) {
-  const moduleImgObject = createModuleImg();
   return new Card( 
-    namePlace, linkImg, cardConfig, moduleImgObject.setOpenOnClick 
+    namePlace, linkImg, cardConfig, moduleImgObject.openImgFullOnClick
   );
-}
-
-function addPlaceToGrid( card ) {
-  placesGrid.prepend( card.getPlaceCard() );
 }
 
 // добавить новое место
 function addPlace ( namePlace, linkImg ) {
   const card = createPlaceCard( namePlace, linkImg );
-  addPlaceToGrid( card );
+  placesGrid.prepend( card.getPlaceCard() );
 }
 
 // установка валидаторов формы
@@ -186,5 +192,7 @@ formEditProfile.addEventListener('submit', handleProfileFormSubmit);
 // применение формы добавления места
 formAddPlace.addEventListener('submit', handlePlaceFormSubmit);
 
-// включить анимацию на страничке
+/**
+ * включить анимацию на страничке
+ */
 setTimeout( () => document.querySelector('.preload').classList.remove('preload'), 500 );
