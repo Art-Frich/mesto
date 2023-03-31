@@ -3,7 +3,7 @@
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 import initialCards from './initialCards.js';
-import { PopupWithImage } from './Popup.js';
+import { PopupWithImage, Popup } from './Popup.js';
 
 // Триггеры
 const popupList = document.querySelectorAll('.popup');
@@ -32,7 +32,6 @@ const nameUser = profile.querySelector('.profile__title-name');
 const nameAbout = profile.querySelector('.profile__subtitle');
 
 //служебные переменные
-const classBtnClose = 'popup__btn-close';
 const classPopup = 'popup';
 
 /**
@@ -48,7 +47,7 @@ const validateConfig = {
 /**
  * настройки модульного окна с изображением места карточки
  */
-const moduleImgConfig = {
+const popupWithImgConfig = {
   figureSelector: 'popup_type_full-img-place',
   imgSelector: 'popup__img',
   figcaptionSelector: 'popup__figcaption'
@@ -74,65 +73,22 @@ const placesGrid = document.querySelector( '.places__grid' );
 /**
  * объект класса PopupWithImage
  */
-const moduleImgObject = createModuleImg();
-
+const popupWithImgObject = new PopupWithImage ( popupWithImgConfig, classPopup );
+const popupObject = new Popup ( classPopup );
 
 // функции
 
-function resetInput ( ev ) {
-  const form = ev.target.closest( '.popup__form' );
-  form.reset();
-}
-
-// блокировка двойного нажатия
-function unblockBtn () {
-  return !unblockBtn.block;
-}
-
-/**
- * Обработка события submit у формы редактирования профиля
- * @param {Event} ev - событие submit
- */
-function handleProfileFormSubmit ( ev ) {
-    ev.preventDefault();
-    nameUser.textContent = nameUserInput.value;
-    nameAbout.textContent = aboutInput.value;
-    closePopup();
-}
-
-// дейсвтия для submit PlaceForm
-/**
- * Обработка события submit у формы добавления места
- * @param {Event} ev - событие submit
- */
-function handlePlaceFormSubmit ( ev ) {
-  ev.preventDefault();
-  if ( unblockBtn() ) {
-    unblockBtn.block = true;
-    addPlace( namePlaceInput.value, urlInput.value );
-    closePopup();
-    resetInput( ev );
-    setTimeout( () => { unblockBtn.block = false; }, 500 );
-  }
-}
-
-function createModuleImg() {
-  return new PopupWithImage ( moduleImgConfig, classPopup );
-}
-
 function createPlaceCard( namePlace, linkImg ) {
   return new Card( 
-    namePlace, linkImg, cardConfig, moduleImgObject.openImgFullOnClick
+    namePlace, linkImg, cardConfig, popupWithImgObject.open
   );
 }
 
-// добавить новое место
 function addPlace ( namePlace, linkImg ) {
   const card = createPlaceCard( namePlace, linkImg );
   placesGrid.prepend( card.getPlaceCard() );
 }
 
-// установка валидаторов формы
 function setValidate ( form ) {
   const newValidate = new FormValidator ( validateConfig, form );
   newValidate.enableValidation(); // запуск валидации
@@ -147,23 +103,8 @@ initialCards.forEach( object => addPlace( object.name, object.link ) );
 // установить валидацию
 Array.from( document.forms ).forEach( form => setValidate( form ) );
 
-
-
-// открыть попап изменения данных профиля
-btnEdit.addEventListener( 'click', () => {
-  nameUserInput.value = nameUser.textContent;
-  aboutInput.value = nameAbout.textContent;
-  openPopup( popupEditProfile );
-});
-
-// открыть форму-попап добавления места 
-btnAddPlace.addEventListener( 'click', () => openPopup(popupAddPlace) );
-
-// применение формы изменения профиля
-formEditProfile.addEventListener( 'submit', handleProfileFormSubmit );
-
-// применение формы добавления места
-formAddPlace.addEventListener( 'submit', handlePlaceFormSubmit );
+// установка слушателей-закрывашек 
+popupObject.setEventListeners();
 
 /**
  * включить анимацию на страничке
