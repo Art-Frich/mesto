@@ -3,9 +3,6 @@
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 import initialCards from './initialCards.js';
-// import Popup from './Popup.js';
-// import PopupWithForm from './PopupWithForm.js';
-// import PopupWithImage from './PopupWithImage.js';
 
 // Триггеры 
 const popupList = document.querySelectorAll('.popup'); 
@@ -54,15 +51,6 @@ const validateConfig = {
 };
 
 /**
- * настройки модульного окна с изображением места карточки
- */
-// const popupWithImgConfig = {
-//   figureSelector: 'popup_type_full-img-place',
-//   imgSelector: 'popup__img',
-//   figcaptionSelector: 'popup__figcaption'
-// }
-
-/**
  * настройки для карточки
  */
 const cardConfig = {
@@ -77,9 +65,6 @@ const cardConfig = {
 
 const placesGrid = document.querySelector( '.places__grid' );
 
-// const popupWithImgObject = new PopupWithImage ( popupWithImgConfig, classPopup );
-// const popupObject = new Popup ( classPopup );
-// const popupWithFormObject = new PopupWithForm ( classPopup, addPlace );
 
 // функции
 
@@ -94,12 +79,11 @@ function resetInput (ev) {
 } 
 
 // открыть изображение места 
-
-function openImgFull(ev, imgSrc, placeName) { 
+function openImgFull( imgSrc, placeName ) { 
   popupFigureImg.src = imgSrc;
   popupFigureImg.alt = placeName;
   popupFigureFigcaption.textContent = placeName
-  openPopup.bind( this, popupFigure ); 
+  openPopup( popupFigure ); 
 } 
 
 function closePopup () { 
@@ -111,7 +95,7 @@ function closePopup () {
 } 
 
 const handleKey = ( ev ) => { 
-  if ( ev.key === 'Escape' ) { this.close(); }
+  if ( ev.key === 'Escape' ) { closePopup() }
 } 
 
 // блокировка двойного нажатия 
@@ -165,22 +149,6 @@ initialCards.forEach( object => addPlace( object.name, object.link ) );
 
 // установить валидацию
 Array.from( document.forms ).forEach( form => setValidate( form ) );
-
-// // установка слушателей-закрывашек 
-// popupObject.setEventListeners();
-
-// btnEdit.addEventListener( 'click', popupWithFormObject.openEditProfilePopup );
-
-// // открыть форму-попап добавления места 
-// btnAddPlace.addEventListener( 'click', popupWithFormObject.openAddPlacePopup );
-
-// // применение формы изменения профиля
-// formEditProfile.addEventListener( 'submit', popupWithFormObject.handleProfileFormSubmit );
-
-// // применение формы добавления места
-// formAddPlace.addEventListener( 'submit', popupWithFormObject.handlePlaceFormSubmit );
-
-// события закрывашки попапов 
 
 popupList.forEach((item) => { 
   item.addEventListener('mousedown', ev => { 
