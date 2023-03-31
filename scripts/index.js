@@ -126,14 +126,15 @@ function handlePlaceFormSubmit ( ev ) {
 } 
 
 function createPlaceCard( namePlace, linkImg ) {
-  return new Card( 
+  const cardObject = new Card( 
     namePlace, linkImg, cardConfig, openImgFull
   );
+  return cardObject.getPlaceCard();
 }
 
 function addPlace ( namePlace, linkImg ) {
-  const card = createPlaceCard( namePlace, linkImg );
-  placesGrid.prepend( card.getPlaceCard() );
+  const cardPlace = createPlaceCard( namePlace, linkImg );
+  placesGrid.prepend( cardPlace );
 }
 
 function setValidate ( form ) {
