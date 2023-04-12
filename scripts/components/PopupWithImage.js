@@ -21,6 +21,7 @@ export default class PopupWithImage extends Popup {
     this._figure = document.querySelector(`.${ figureSelector }`);
     this._figureImg = this._figure.querySelector(`.${ imgSelector }`);
     this._figcaption = this._figure.querySelector( `.${ figcaptionSelector }` );
+    this.setEventListeners();
   }
 
   /**

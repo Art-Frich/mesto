@@ -9,14 +9,15 @@ export default class PopupWithForm extends Popup {
     this._classInput = classInput;
     
     this._form = document.forms[nameForm];
-    this._inputs = Array.from( 
+    this.inputs = Array.from( 
       this._form.querySelectorAll( `.${ this._classInput }` )
     );
+    this.setEventListeners();
   }
 
   _getInputValues() {
     const data = [];
-    this._inputs.forEach( input => {
+    this.inputs.forEach( input => {
       data.push( input.value );
     })
     return data;
@@ -29,8 +30,8 @@ export default class PopupWithForm extends Popup {
     });
   }
 
-  close() {
-    super.close();
+  close = () => {
     this._form.reset();
+    super.close();
   }
 }

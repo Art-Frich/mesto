@@ -37,6 +37,12 @@ export const popupEditProfileConfig = {
   nameForm: 'editProfileText'
 }
 
+export const userInfoConfig = {
+  selectorNameUserContainer: 'profile__title-name',
+  selectorUserAboutContainer: 'profile__subtitle'
+}
+
+
 export const validateConfig = {
   inputSelector: classInput,
   submitBtnSelector: 'popup__btn-save-edit',

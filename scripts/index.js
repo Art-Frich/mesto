@@ -76,7 +76,7 @@ import initialCards from './utils/initialCards.js';
 import {
   btnEditProfile, btnAddPlace, cardConfig, validateConfig,
   popupWithImageConfig, popupAddPlaceConfig, popupEditProfileConfig,
-  selectorCards
+  selectorCards, userInfoConfig,
  } from './utils/constants.js';
 
 // функции
@@ -88,14 +88,19 @@ import {
 //   return cardObject.getPlaceCard();
 // }
 
-// function setValidate ( form ) {
-//   const newValidate = new FormValidator ( validateConfig, form );
-//   newValidate.enableValidation();
-// }
+function setValidate ( form ) {
+  const newValidate = new FormValidator ( validateConfig, form );
+  newValidate.enableValidation();
+}
 
-const popupEditProfile = new PopupWithForm( popupEditProfileConfig );
-const popupAddCard = new PopupWithForm( popupAddPlaceConfig );
+const popupEditProfile = new PopupWithForm( popupEditProfileConfig, () => {
+
+} );
+const popupAddCard = new PopupWithForm( popupAddPlaceConfig, () => {
+
+} );
 const popupWithImage = new PopupWithImage( popupWithImageConfig ); 
+const userInfo = new UserInfo( userInfoConfig );
 const section = new Section( {
   items: initialCards,
   renderer: ( dataCard ) => {
@@ -110,15 +115,21 @@ const section = new Section( {
   } 
 }, selectorCards )
 
-popupWithImage.setEventListeners();
+// не понимаю, зачем выносить этот функционал наружу, если он и в конструкторе прекрасно работает
+// popupWithImage.setEventListeners();
+// popupAddCard.setEventListeners();
+// popupEditProfile.setEventListeners();
 section.addInitialCards();
 
 btnAddPlace.addEventListener( 'click', () => popupAddCard.open() );
-btnEditProfile.addEventListener( 'click', () => popupEditProfile.open() );
+btnEditProfile.addEventListener( 'click', () => {
+  const userData = userInfo.getUserInfo()
+  popupEditProfile.inputs[0].value = userData.name;
+  popupEditProfile.inputs[1].value = userData.about;
+  popupEditProfile.open() 
+});
 
-
-// установить валидацию
-// Array.from( document.forms ).forEach( form => setValidate( form ) );
+Array.from( document.forms ).forEach( form => setValidate( form ) );
 
 
 /**
