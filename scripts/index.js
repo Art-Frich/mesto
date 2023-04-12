@@ -26,13 +26,7 @@
   //   }
   // }
 
-// открыть изображение места 
-// function openImgFull( imgSrc, placeName ) { 
-//   popupFigureImg.src = imgSrc;
-//   popupFigureImg.alt = placeName;
-//   popupFigureFigcaption.textContent = placeName
-//   openPopup( popupFigure ); 
-// } 
+
 
 // действия для submit ProfileForm 
 // function handleProfileFormSubmit ( ev ) { 
@@ -71,8 +65,6 @@
 // // применение формы добавления места 
 // formAddPlace.addEventListener('submit', handlePlaceFormSubmit); 
 
-
-
 import Card from './components/Card.js';
 import FormValidator from './components/FormValidator.js';
 import Popup from './components/Popup.js';
@@ -82,27 +74,45 @@ import Section from './components/Section.js';
 import UserInfo from './components/UserInfo.js';
 import initialCards from './utils/initialCards.js';
 import {
-  btnEdit, btnAddPlace, cardConfig, validateConfig
+  btnEdit, btnAddPlace, cardConfig, validateConfig,
+  selectorCards, popupWithImageConfig
  } from './utils/constants.js';
 
 // функции
 
-function createPlaceCard( namePlace, linkImg ) {
-  const cardObject = new Card( 
-    namePlace, linkImg, cardConfig, openImgFull
-  );
-  return cardObject.getPlaceCard();
-}
+// function createPlaceCard( namePlace, linkImg ) {
+//   const cardObject = new Card( 
+//     namePlace, linkImg, cardConfig, openImgFull
+//   );
+//   return cardObject.getPlaceCard();
+// }
 
-function setValidate ( form ) {
-  const newValidate = new FormValidator ( validateConfig, form );
-  newValidate.enableValidation();
-}
+// function setValidate ( form ) {
+//   const newValidate = new FormValidator ( validateConfig, form );
+//   newValidate.enableValidation();
+// }
 
-//код при запуске скрипта
+const popupWithImage = new PopupWithImage( popupWithImageConfig ); 
+const section = new Section( {
+  items: initialCards,
+  renderer: ( dataCard ) => {
+    const card = new Card({
+      placeName: dataCard.name,
+      placeImgSrc: dataCard.link,
+      config: cardConfig,
+      handleCardClick: () => popupWithImage.open( dataCard.link, dataCard.name )
+    })
+    const newCard = card.getPlaceCard();
+    section.addItem( newCard );
+  } 
+}, selectorCards )
+
+popupWithImage.setEventListeners();
+section.addInitialCards();
+
 
 // установить валидацию
-Array.from( document.forms ).forEach( form => setValidate( form ) );
+// Array.from( document.forms ).forEach( form => setValidate( form ) );
 
 
 /**

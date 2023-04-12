@@ -11,10 +11,12 @@ export default class Card {
    * @param {object} config - словарик всех необходимых селекторов
    * @param {function} handeCardClick
    */
-  constructor ( { placeName, placeImgSrc, config, handeCardClick } ) {
+
+
+  constructor ( { placeName, placeImgSrc, config, handleCardClick } ) {
     this._placeName = placeName;
     this._placeImgSrc = placeImgSrc; 
-    this._handeCardClick = handeCardClick;
+    this._handeCardClick = handleCardClick;
 
     this._templateSelector = config.templateSelector;
     this._placesItemSelector = config.cardSelector;

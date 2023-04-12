@@ -1,3 +1,4 @@
+import Popup from "./Popup.js";
 /**
  * класс наследуемый от Popup. Работает с модальным окном full image
  */
@@ -10,12 +11,13 @@ export default class PopupWithImage extends Popup {
    * @param {string} figcaptionSelector
    */
   constructor( { 
-    popupConfig, 
+    popupConfig,
+    classPopup,
     figureSelector, 
     imgSelector,
     figcaptionSelector  
   } ) {
-    super( popupConfig );
+    super( popupConfig, classPopup );
     this._figure = document.querySelector(`.${ figureSelector }`);
     this._figureImg = this._figure.querySelector(`.${ imgSelector }`);
     this._figcaption = this._figure.querySelector( `.${ figcaptionSelector }` );
