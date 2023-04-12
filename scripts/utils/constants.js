@@ -1,13 +1,20 @@
 // Кнопки
-export const btnEdit = document.querySelector('.profile__btn-edit');
+export const btnEditProfile = document.querySelector('.profile__btn-edit');
 export const btnAddPlace = document.querySelector('.profile__btn-add');
+
+// Селекторы
 export const selectorCards = 'places__grid';
 
-export const popupConfig = {
+// Служебные
+const classInput = 'popup__input';
+
+const popupConfig = {
   classBtnClose: 'popup__btn-close',
   classPopupOpened: 'popup_opened'
 }
 
+
+// Конфиги
 export const popupWithImageConfig = {
   popupConfig: popupConfig,
   classPopup: 'popup_type_full-img-place',
@@ -16,19 +23,27 @@ export const popupWithImageConfig = {
   figcaptionSelector: 'popup__figcaption'
 }
 
-/**
- * настройки валидации
- *  */ 
+export const popupAddPlaceConfig = {
+  popupConfig: popupConfig,
+  classInput: classInput,
+  classPopup: 'popup_type_add-place',
+  nameForm: 'addNewPlace'
+}
+
+export const popupEditProfileConfig = {
+  popupConfig: popupConfig,
+  classInput: classInput,
+  classPopup: 'popup_type_edit-profile',
+  nameForm: 'editProfileText'
+}
+
 export const validateConfig = {
-  inputSelector: 'popup__input',
+  inputSelector: classInput,
   submitBtnSelector: 'popup__btn-save-edit',
   inputUnvalidateClass: 'popup__input_type_error',
   errorClass: 'popup__error',
 };
 
-/**
- * настройки для карточки
- */
 export const cardConfig = {
   cardSelector: 'places__grid-item',
   imgSelector: 'card__photo',

@@ -1,30 +1,32 @@
 import Popup from "./Popup.js";
 
 export default class PopupWithForm extends Popup {
-  constructor ( 
-    popupConfig, classPopup, classInput, classForm, callBackSubmit 
-  ) {
+  constructor ( { 
+    popupConfig, classInput, classPopup, nameForm
+  }, callbackSubmit ) {
     super( popupConfig, classPopup );
-    this._callBackSubmit = callBackSubmit;
+    this._callbackSubmit = callbackSubmit;
     this._classInput = classInput;
-    // строго говоря, это дубликат, он уже есть внутри Popup, но в ТЗ сказано работать с селекторами...
-    this._popup = document.querySelector( `.${ classPopup }` );
-    this._form = this._popup.querySelector( `.${ classForm }` );
+    
+    this._form = document.forms[nameForm];
     this._inputs = Array.from( 
       this._form.querySelectorAll( `.${ this._classInput }` )
     );
   }
 
   _getInputValues() {
-    const data = []
+    const data = [];
     this._inputs.forEach( input => {
       data.push( input.value );
     })
+    return data;
   }
 
   setEventListeners() {
     super.setEventListeners();
-    this._callBackSumbmit( this._getInputValues() );
+    this._form.addEventListener( 'submit', () => {
+      this._callbackSubmit( this._getInputValues() )
+    });
   }
 
   close() {

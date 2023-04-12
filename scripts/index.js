@@ -74,8 +74,9 @@ import Section from './components/Section.js';
 import UserInfo from './components/UserInfo.js';
 import initialCards from './utils/initialCards.js';
 import {
-  btnEdit, btnAddPlace, cardConfig, validateConfig,
-  selectorCards, popupWithImageConfig
+  btnEditProfile, btnAddPlace, cardConfig, validateConfig,
+  popupWithImageConfig, popupAddPlaceConfig, popupEditProfileConfig,
+  selectorCards
  } from './utils/constants.js';
 
 // функции
@@ -92,6 +93,8 @@ import {
 //   newValidate.enableValidation();
 // }
 
+const popupEditProfile = new PopupWithForm( popupEditProfileConfig );
+const popupAddCard = new PopupWithForm( popupAddPlaceConfig );
 const popupWithImage = new PopupWithImage( popupWithImageConfig ); 
 const section = new Section( {
   items: initialCards,
@@ -109,6 +112,9 @@ const section = new Section( {
 
 popupWithImage.setEventListeners();
 section.addInitialCards();
+
+btnAddPlace.addEventListener( 'click', () => popupAddCard.open() );
+btnEditProfile.addEventListener( 'click', () => popupEditProfile.open() );
 
 
 // установить валидацию

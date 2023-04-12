@@ -34,7 +34,7 @@ export default class Popup {
    * Закрыть попап и снять слушатель-закрывашку
    * @method
    */
-  close() {
+  close = () => {
     if ( this._popup.classList.contains( this._classPopupOpened ) ) {
       this._popup.classList.remove( this._classPopupOpened );
       document.removeEventListener( 'keydown', ( ev ) => {
