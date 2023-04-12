@@ -9,12 +9,12 @@ export default class Card {
    * @param {string} placeName - название места
    * @param {string} placeImgSrc - URL-адрес изображения места
    * @param {object} config - словарик всех необходимых селекторов
-   * @param {function} openImgFunc
+   * @param {function} handeCardClick
    */
-  constructor ( placeName, placeImgSrc, config, openImgFunc ) {
+  constructor ( { placeName, placeImgSrc, config, handeCardClick } ) {
     this._placeName = placeName;
     this._placeImgSrc = placeImgSrc; 
-    this._openImgFunc = openImgFunc;
+    this._handeCardClick = handeCardClick;
 
     this._templateSelector = config.templateSelector;
     this._placesItemSelector = config.cardSelector;
@@ -53,7 +53,9 @@ export default class Card {
    * @private
    */
   _setEventListeners = () => {
-    this._img.addEventListener( 'click', () => this._openImgFunc( this._placeImgSrc, this._placeName ) );
+    this._img.addEventListener( 'click', () => {
+      this._handeCardClick( this._placeImgSrc, this._placeName )
+    } );
     this._imgLike.addEventListener( 'mousedown', this._toggleLikeCondition );
     this._btnPlaceDel.addEventListener( 'click', this._deleteOnClick );
   }
