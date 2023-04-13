@@ -16,15 +16,6 @@ export default class FormValidator {
     this._btnSubmit = form.querySelector( `.${ config.submitBtnSelector }` );
   }
 
-  /**
-   * Получить массив элементов из формы
-   * 
-   * @method
-   * @private
-   * @param {HTMLFormElement} form - форма
-   * @param {string} formSelector - селектор поиска внутри формы
-   * @returns {Array<HTMLElement>} - массив элементов формы
-   */
   _getFormElements = ( form, formSelector ) => {
     return Array.from( form.querySelectorAll( `.${ formSelector }` ) );
   }
@@ -65,7 +56,7 @@ export default class FormValidator {
    * в конец очереди через setTimeout
    */
   _setEventListeners = () => {
-    this._form.addEventListener('submit', ev => {
+    this._form.addEventListener( 'submit', ev => {
       ev.preventDefault();
       setTimeout( this._toggleButtonState, 0 );
     });
@@ -75,6 +66,12 @@ export default class FormValidator {
         this._checkInputValidity( inputElement, this._errorList[index] );
         this._toggleButtonState();
       });
+
+      // обработчик закрывашек с точки зрения валидации
+      inputElement.addEventListener( 'reset', () => {
+        this._hideInputError( this._errorList[ index ], inputElement );
+        this._toggleButtonState();
+      })
     })
   } 
 

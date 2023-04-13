@@ -5,10 +5,11 @@ import Popup from "./Popup.js";
 export default class PopupWithImage extends Popup {
   /**
    * 
-   * @param {object} popupConfig 
-   * @param {string} figureSelector
-   * @param {string} imgSelector
-   * @param {string} figcaptionSelector
+   * @param {object} popupConfig - классы передаваемые в Popup
+   * @param {string} classPopup - класс рабочего popup-окна
+   * @param {string} figureSelector - селектор элемента с картинкой и подписью
+   * @param {string} imgSelector - селектор картинки внутри фигуры
+   * @param {string} figcaptionSelector - селектор подписи внутри фигуры
    */
   constructor( { 
     popupConfig,
@@ -17,19 +18,19 @@ export default class PopupWithImage extends Popup {
     imgSelector,
     figcaptionSelector  
   } ) {
+    
     super( popupConfig, classPopup );
     this._figure = document.querySelector(`.${ figureSelector }`);
     this._figureImg = this._figure.querySelector(`.${ imgSelector }`);
     this._figcaption = this._figure.querySelector( `.${ figcaptionSelector }` );
-    this.setEventListeners();
   }
 
   /**
    * открывает модальное окно с изображением карточки
-   * @param {URL} placeImgSrc 
-   * @param {string} placeName 
+   * @param {URL} placeImgSrc - url к картинке
+   * @param {string} placeName - название к карточке
    */
-  open = ( placeImgSrc, placeName ) => {
+  open( placeImgSrc, placeName ) {
     this._figureImg.src = placeImgSrc;
     this._figureImg.alt = placeName;
     this._figcaption.textContent = placeName;

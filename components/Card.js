@@ -9,10 +9,8 @@ export default class Card {
    * @param {string} placeName - название места
    * @param {string} placeImgSrc - URL-адрес изображения места
    * @param {object} config - словарик всех необходимых селекторов
-   * @param {function} handeCardClick
+   * @param {function} handeCardClick - callback клика по картинке
    */
-
-
   constructor ( { placeName, placeImgSrc, config, handleCardClick } ) {
     this._placeName = placeName;
     this._placeImgSrc = placeImgSrc; 
@@ -29,13 +27,6 @@ export default class Card {
     this._btnPlaceDel = this._placeElement.querySelector( `.${ config.btnDelSelector }` );
   }
 
-  /**
-   * получить шаблон карточки
-   * 
-   * @private
-   * @method
-   * @returns {Node} клонирует html элемент
-   */
   _getPlaceElement = () => {
     return document
       .querySelector( `.${ this._templateSelector }` )
@@ -48,12 +39,6 @@ export default class Card {
     this._imgLike.classList.toggle( this._classLikeActive );
   }
 
-  /**
-   * Установить слушатели на карточку
-   * 
-   * @method
-   * @private
-   */
   _setEventListeners = () => {
     this._img.addEventListener( 'click', () => {
       this._handeCardClick( this._placeImgSrc, this._placeName )
@@ -62,21 +47,11 @@ export default class Card {
     this._btnPlaceDel.addEventListener( 'click', this._deleteOnClick );
   }
 
-  setOpenOnClick = ( imgParamets, img ) => {
-    img.addEventListener("click", () => this.openImgFullOnClick( imgParamets ));
-  };
-
   _deleteOnClick = () => {
     this._placeElement.remove();
     this._placeElement = null;
   };
 
-  /**
-   * Заполняет атрибуты <img>
-   *
-   * @private
-   * @method
-   */
   _fillPlaceImg = () => {
     this._img.src = this._placeImgSrc;
     this._img.alt += `${this._placeName}`; 

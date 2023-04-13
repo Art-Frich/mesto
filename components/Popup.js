@@ -1,3 +1,6 @@
+/**
+ * класс описывает общий функционал всех popup-окон
+ */
 export default class Popup {
   /**
    * 
@@ -14,7 +17,6 @@ export default class Popup {
   /**
    * Открыть попап
    * повесить слушатель-закрывашку по клику на esc
-   * @method
    * @param {HTMLElement} popupElement
    */
   open() {
@@ -32,7 +34,6 @@ export default class Popup {
 
   /**
    * Закрыть попап и снять слушатель-закрывашку
-   * @method
    */
   close() {
     if ( this._popup.classList.contains( this._classPopupOpened ) ) {

@@ -7,12 +7,10 @@ export const selectorCards = 'places__grid';
 
 // Служебные
 const classInput = 'popup__input';
-
 const popupConfig = {
   classBtnClose: 'popup__btn-close',
   classPopupOpened: 'popup_opened'
 }
-
 
 // Конфиги
 export const popupWithImageConfig = {
@@ -42,7 +40,6 @@ export const userInfoConfig = {
   selectorUserAboutContainer: 'profile__subtitle'
 }
 
-
 export const validateConfig = {
   inputSelector: classInput,
   submitBtnSelector: 'popup__btn-save-edit',
@@ -59,22 +56,3 @@ export const cardConfig = {
   classLikeActive: 'card__like_active',
   templateSelector: 'template'
 }
-
-// // попап профиля
-// this._popupEditProfile = document.querySelector('.popup_type_edit-profile');
-// this._nameUserInput = this._popupEditProfile.querySelector('.popup__input_type_name-user');
-// this._aboutInput = this._popupEditProfile.querySelector('.popup__input_type_about');
-
-// // попап места
-// this._popupAddPlace = document.querySelector('.popup_type_add-place');
-// this._namePlaceInput = this._popupAddPlace.querySelector('.popup__input_type_name-place');
-// this._urlInput = this._popupAddPlace.querySelector('.popup__input_type_url');
-
-// // профиль
-// this._profile = document.querySelector('.profile');
-// this._nameUserValue = this._profile.querySelector('.profile__title-name');
-// this._userAboutValue = this._profile.querySelector('.profile__subtitle');
-
-// // Формы
-// const formAddPlace = document.forms['addNewPlace'];
-// const formEditProfile = document.forms['editProfileText'];
