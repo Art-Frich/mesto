@@ -27,12 +27,19 @@ module.exports = {
         exclude: '/node_modules/',
       },
       {
-        test: /\.(png|svg|jpg|gpeg|gif)$/,
-        type: 'asset/resource'
+        test: /\.(png|svg|jpg|gpeg|gif)$/i,
+        type: 'asset/resource',
+        generator: { // сохранить "В" (по умолчанию в корневой каталог /dist)
+          //                имя     хэш  расширение - все кроме хэша родные
+          filename: 'images/[name].[hash][ext]',
+        }
       },
       {
-        test: /\.(woff|woff2|eot|ttf|otf)$/,
-        type: 'asset/resource'
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'fonts/[name].[hash][ext]'
+        }
       },      
       {
         test: /\.css$/,

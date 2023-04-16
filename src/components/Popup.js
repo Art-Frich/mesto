@@ -6,12 +6,13 @@ export default class Popup {
    * 
    * @param {string} classBtnClose
    * @param {string} classPopupOpened
-   * @param {string} classPopup
+   * @param {string} popupSelector
    */
-  constructor( { classBtnClose, classPopupOpened }, classPopup ) {
+  constructor( { classBtnClose, classPopupOpened }, popupSelector ) {
     this._classPopupOpened = classPopupOpened;
     this._classBtnClose = classBtnClose;
-    this._popup = document.querySelector( `.${ classPopup }` );
+    this._popup = document.querySelector( popupSelector );
+    this._handleEscClose = this._handleEscClose.bind( this );
   }
 
   /**
@@ -20,13 +21,9 @@ export default class Popup {
    * @param {HTMLElement} popupElement
    */
   open() {
-    if ( !this._popup.classList.contains( this._classPopupOpened ) ) {
-      this._popup.classList.add( this._classPopupOpened );
-      document.addEventListener( 'keydown', ( ev ) => { 
-        this._handleEscClose( ev )
-      } );
-    }
-  }
+    this._popup.classList.add( this._classPopupOpened );
+    document.addEventListener( 'keydown', this._handleEscClose );
+}
 
   _handleEscClose( ev ) {
     if ( ev.key === 'Escape' ) { this.close(); }
@@ -36,12 +33,8 @@ export default class Popup {
    * Закрыть попап и снять слушатель-закрывашку
    */
   close() {
-    if ( this._popup.classList.contains( this._classPopupOpened ) ) {
-      this._popup.classList.remove( this._classPopupOpened );
-      document.removeEventListener( 'keydown', ( ev ) => {
-        this._handleEscClose( ev ) 
-      } );
-    }
+    this._popup.classList.remove( this._classPopupOpened );
+    document.removeEventListener( 'keydown', this._handleEscClose );
   }
 
   /**

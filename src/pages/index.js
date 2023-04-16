@@ -57,8 +57,8 @@ popupEditProfile.setEventListeners();
 section.addInitialCards();
 
 Array.from( document.forms ).forEach( form => {
-  const newValidate = new FormValidator ( validateConfig, form );
-  newValidate.enableValidation();
+  const newValidator = new FormValidator ( validateConfig, form );
+  newValidator.enableValidation();
 } );
 
 btnAddPlace.addEventListener( 'click', () => popupAddCard.open() );

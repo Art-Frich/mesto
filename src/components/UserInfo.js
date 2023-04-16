@@ -11,8 +11,8 @@ export default class UserInfo {
     selectorNameUserContainer, 
     selectorUserAboutContainer 
   } ) {
-    this._nameContainer = document.querySelector( `.${selectorNameUserContainer}` );
-    this._aboutContainer = document.querySelector( `.${selectorUserAboutContainer}` );
+    this._nameContainer = document.querySelector( selectorNameUserContainer );
+    this._aboutContainer = document.querySelector( selectorUserAboutContainer );
   }
 
   /**

@@ -6,23 +6,23 @@ export default class PopupWithImage extends Popup {
   /**
    * 
    * @param {object} popupConfig - классы передаваемые в Popup
-   * @param {string} classPopup - класс рабочего popup-окна
+   * @param {string} popupSelector - класс рабочего popup-окна
    * @param {string} figureSelector - селектор элемента с картинкой и подписью
    * @param {string} imgSelector - селектор картинки внутри фигуры
    * @param {string} figcaptionSelector - селектор подписи внутри фигуры
    */
   constructor( { 
     popupConfig,
-    classPopup,
+    popupSelector,
     figureSelector, 
     imgSelector,
     figcaptionSelector  
   } ) {
     
-    super( popupConfig, classPopup );
-    this._figure = document.querySelector(`.${ figureSelector }`);
-    this._figureImg = this._figure.querySelector(`.${ imgSelector }`);
-    this._figcaption = this._figure.querySelector( `.${ figcaptionSelector }` );
+    super( popupConfig, popupSelector );
+    this._figure = document.querySelector( figureSelector );
+    this._figureImg = this._figure.querySelector( imgSelector );
+    this._figcaption = this._figure.querySelector( figcaptionSelector );
   }
 
   /**

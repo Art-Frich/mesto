@@ -10,16 +10,14 @@ export default class Section {
   constructor( { items, renderer }, selectorCards ) {
     this._initialCards = items;
     this._renderer = renderer;
-    this._cards = document.querySelector( `.${ selectorCards }` )
+    this._cards = document.querySelector( selectorCards )
   }
 
   /**
    * добавить в разметку заранее подготовленные карточки
    */
   addInitialCards = () => {
-    this._initialCards.forEach( cardData => {
-      this._renderer( cardData );
-    })
+    this._initialCards.forEach( this._renderer )
   }
 
   /**

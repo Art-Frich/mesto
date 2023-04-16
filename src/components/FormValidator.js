@@ -9,15 +9,15 @@ export default class FormValidator {
    * @param {Node} form - форма
    */
   constructor( config, form ) {
-    this._inputUnvalidateClass = config.inputUnvalidateClass;
+    this._inputUnvalidateClass = config.inputUnvalidateSelector;
     this._form = form;
     this._inputList = this._getFormElements( form, config.inputSelector );
-    this._errorList = this._getFormElements( form, config.errorClass );
-    this._btnSubmit = form.querySelector( `.${ config.submitBtnSelector }` );
+    this._errorList = this._getFormElements( form, config.errorSelector );
+    this._btnSubmit = form.querySelector( config.submitBtnSelector );
   }
 
   _getFormElements = ( form, formSelector ) => {
-    return Array.from( form.querySelectorAll( `.${ formSelector }` ) );
+    return Array.from( form.querySelectorAll( formSelector ) );
   }
 
   _hasInvalidInput = () => {
@@ -25,12 +25,12 @@ export default class FormValidator {
   }
 
   _showInputError = ( textError, errorElement, inputElement ) => {
-    inputElement.classList.add( `${ this._inputUnvalidateClass }` );
+    inputElement.classList.add( this._inputUnvalidateClass );
     errorElement.textContent = textError;
   }
 
   _hideInputError = ( errorElement, inputElement ) => {
-    inputElement.classList.remove( `${ this._inputUnvalidateClass }` );
+    inputElement.classList.remove( this._inputUnvalidateClass );
     errorElement.textContent = '';
   } 
 
@@ -50,28 +50,28 @@ export default class FormValidator {
       this._btnSubmit.removeAttribute( 'disabled' );
   }
 
-    /**  
-   * из-за модульного подключения toggleButtonState срабатывает быстрее
-   * чем очистка input внутри index.js, поэтому переместим эту фукнцию
-   * в конец очереди через setTimeout
-   */
   _setEventListeners = () => {
     this._form.addEventListener( 'submit', ev => {
       ev.preventDefault();
-      setTimeout( this._toggleButtonState, 0 );
+      this._toggleButtonState();
     });
+
+    this._form.addEventListener( 'reset', ev => {
+      ev.preventDefault();
+      setTimeout( () => {
+        this._inputList.forEach( ( inputElement, index ) => {
+          inputElement.value = '';
+          this._hideInputError( this._errorList[ index ], inputElement );
+        });
+        this._toggleButtonState();
+      }, 0);
+    })
 
     this._inputList.forEach( ( inputElement, index ) => {
       inputElement.addEventListener( 'input', () => {
         this._checkInputValidity( inputElement, this._errorList[index] );
         this._toggleButtonState();
       });
-
-      // обработчик закрывашек с точки зрения валидации
-      inputElement.addEventListener( 'reset', () => {
-        this._hideInputError( this._errorList[ index ], inputElement );
-        this._toggleButtonState();
-      })
     })
   } 
 
