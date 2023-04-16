@@ -54,7 +54,7 @@ export default class Card {
 
   _fillPlaceImg = () => {
     this._img.src = this._placeImgSrc;
-    this._img.alt += this._placeName; 
+    this._img.alt += ` ${ this._placeName }`; 
     this._imgTitle.textContent = this._placeName;
   }
 

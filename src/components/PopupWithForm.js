@@ -25,21 +25,25 @@ export default class PopupWithForm extends Popup {
       this._form.querySelectorAll( this._classInput )
     );
   }
-  
+
   /**
    * устанавливает в input-элементы указанные значения
    * @param {Array} values - массив значений для input-элементов 
    */
+  // Примечание: слабым местом такой реализации выступает соответствие ключа и значения атрибута
+  // Значение ключа же задаётся в классе UserInfo, который ничего не знает о PopupWithForm
+  // Деструктуризация data из UserInfo при передаче в setInputValues в index.js может быть решением,
+  // но вероятно это снизит гибкость и сделает код более громоздким
   setInputValues = ( values ) => {
     this._inputs.forEach( ( input, i ) =>
-      input.value = values[ i ]
+      input.value = values[ input.getAttribute( 'name' ) ]
     );
   }
 
   _getInputValues() {
-    const data = [];
+    const data = {};
     this._inputs.forEach( input => {
-      data.push( input.value );
+      data[ input.getAttribute('name') ] = input.value;
     })
     return data;
   }
@@ -51,7 +55,8 @@ export default class PopupWithForm extends Popup {
     super.setEventListeners();
     this._form.addEventListener( 'submit', (ev) => {
       ev.preventDefault();
-      this._callbackSubmit( this._getInputValues() )
+      this._callbackSubmit( this._getInputValues() );
+      this.close();
     });
   }
 
@@ -67,7 +72,6 @@ export default class PopupWithForm extends Popup {
    * открывает текущий popup, предварительно устанавливая корректное состояние кнопки
    */
   open() {
-    // this._callResetEventForInput();
     super.open();
   }
 }

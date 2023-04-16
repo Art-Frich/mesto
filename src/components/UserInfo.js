@@ -11,6 +11,7 @@ export default class UserInfo {
     selectorNameUserContainer, 
     selectorUserAboutContainer 
   } ) {
+    // Примечание: при увеличении количества полей данных, код линейно вырастет в объеме
     this._nameContainer = document.querySelector( selectorNameUserContainer );
     this._aboutContainer = document.querySelector( selectorUserAboutContainer );
   }
@@ -20,10 +21,12 @@ export default class UserInfo {
    * @returns возвращает массив вида [name, about]
    */
   getUserInfo = () => {
-    return [
-      this._nameContainer.textContent,
-      this._aboutContainer.textContent 
-    ]
+    // Примечание: важно, чтобы значение ключа совпадало со значением
+    // атрибута 'name' целевых input-элементов 
+    return {
+      nameUser: this._nameContainer.textContent,
+      aboutUser: this._aboutContainer.textContent
+    }
   }
 
   /**

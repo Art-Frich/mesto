@@ -25,14 +25,14 @@
         />
         <div class="profile__text-about">
           <div class="profile__title-container">
-            <h1 class="profile__title-name text-overflow">Жак-Ив Кусто</h1>
+            <h1 class="profile__title-name text-overflow" name="curNameUser">Жак-Ив Кусто</h1>
             <button
               class="profile__btn-edit button-zeroing transition-opacity"
               type="button"
               name="Изменить описание профиля"
             ></button>
           </div>
-          <p class="profile__subtitle text-overflow">Исследователь океана</p>
+          <p class="profile__subtitle text-overflow" name="curAboutUser">Исследователь океана</p>
         </div>
         <button
           class="profile__btn-add button-zeroing transition-opacity"
@@ -103,7 +103,7 @@
           <label class="popup__field">
             <input
               class="popup__input popup__input_type_name-place"
-              name="nameUser"
+              name="namePlace"
               placeholder="Как называется это место?"
               type="text"
               minlength="2"
@@ -115,7 +115,7 @@
           <label class="popup__field">
             <input
               class="popup__input popup__input_type_url"
-              name="aboutUser"
+              name="urlImage"
               placeholder="Укажите ссылку на изображение"
               type="url"
               required

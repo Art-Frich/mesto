@@ -40,15 +40,13 @@ const section = new Section( {
 }, selectorCards )
 
 const popupEditProfile = new PopupWithForm( 
-  popupEditProfileConfig, ( [newName, newAbout] ) => {
-    userInfo.setUserInfo( newName, newAbout );
-    popupEditProfile.close();
+  popupEditProfileConfig, ( { nameUser, aboutUser } ) => {
+    userInfo.setUserInfo( nameUser, aboutUser );
 } );
 
-const popupAddCard = new PopupWithForm( popupAddPlaceConfig, ([ name, link ]) => {
-  renderer( name, link );
-  popupAddCard.close();
-} );
+const popupAddCard = new PopupWithForm( popupAddPlaceConfig, ( 
+  { namePlace, urlImage } ) => renderer( namePlace, urlImage )
+  );
 
 // Запуск скриптов
 popupWithImage.setEventListeners();

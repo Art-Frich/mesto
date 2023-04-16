@@ -53,18 +53,18 @@ export default class FormValidator {
   _setEventListeners = () => {
     this._form.addEventListener( 'submit', ev => {
       ev.preventDefault();
-      this._toggleButtonState();
     });
 
+    // Примечание: если не использовать preventDefault, очищать инпуты не потребуется,
+    // но потребуется setTimeout (сначала reset, затем toggleButtonState) и, вероятно, 
+    // возникают сайд-эффекты.
     this._form.addEventListener( 'reset', ev => {
       ev.preventDefault();
-      setTimeout( () => {
-        this._inputList.forEach( ( inputElement, index ) => {
-          inputElement.value = '';
-          this._hideInputError( this._errorList[ index ], inputElement );
-        });
-        this._toggleButtonState();
-      }, 0);
+      this._inputList.forEach( ( inputElement, index ) => {
+        inputElement.value = '';
+        this._hideInputError( this._errorList[ index ], inputElement );
+      });
+      this._toggleButtonState();
     })
 
     this._inputList.forEach( ( inputElement, index ) => {
