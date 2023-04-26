@@ -7,11 +7,11 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js'; //чё -_-
-import initialCards from '../utils/initialCards.js';
+import initialCards from '../utils/initialCards.js'
 import {
   btnEditProfile, btnAddPlace, cardConfig, validateConfig,
   popupWithImageConfig, popupAddPlaceConfig, popupEditProfileConfig,
-  selectorCards, userInfoConfig
+  selectorCards, userInfoConfig, apiConfig,
  } from '../utils/constants.js';
 
 
@@ -34,11 +34,8 @@ function renderer( name, link ) {
 // объекты классов
 const popupWithImage = new PopupWithImage( popupWithImageConfig ); 
 const userInfo = new UserInfo( userInfoConfig );
-
-const section = new Section( {
-  items: initialCards,
-  renderer: ( dataCard ) => renderer( dataCard.name, dataCard.link )
-}, selectorCards )
+const api = new Api( apiConfig );
+const section = new Section( selectorCards );
 
 const popupEditProfile = new PopupWithForm( 
   popupEditProfileConfig, ( { nameUser, aboutUser } ) => {
@@ -47,13 +44,21 @@ const popupEditProfile = new PopupWithForm(
 
 const popupAddCard = new PopupWithForm( popupAddPlaceConfig, ( 
   { namePlace, urlImage } ) => renderer( namePlace, urlImage )
-  );
+);
 
 // Запуск скриптов
+api.getUserDataFromServer()
+  .then( data => userInfo.setInitialUserInfo( data ) );
+
 popupWithImage.setEventListeners();
 popupAddCard.setEventListeners();
 popupEditProfile.setEventListeners();
-section.addInitialCards();
+api.getInitialCards()
+  .then( data => {
+    data.forEach( dataCard => {
+      renderer( dataCard.name, dataCard.link )
+    })
+  });
 
 Array.from( document.forms ).forEach( form => {
   const newValidator = new FormValidator ( validateConfig, form );

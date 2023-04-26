@@ -7,17 +7,8 @@ export default class Section {
    * @param {Function} renderer - callback для рендеринга исходного массива карточек
    * @param {string} selectorCards - селектор html-блока со всеми карточками
    */
-  constructor( { items, renderer }, selectorCards ) {
-    this._initialCards = items;
-    this._renderer = renderer;
+  constructor( selectorCards ) {
     this._cards = document.querySelector( selectorCards )
-  }
-
-  /**
-   * добавить в разметку заранее подготовленные карточки
-   */
-  addInitialCards = () => {
-    this._initialCards.forEach( this._renderer )
   }
 
   /**

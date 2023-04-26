@@ -9,11 +9,13 @@ export default class UserInfo {
    */
   constructor( { 
     selectorNameUserContainer, 
-    selectorUserAboutContainer 
+    selectorUserAboutContainer,
+    selectorUserAvatar 
   } ) {
     // Примечание: при увеличении количества полей данных, код линейно вырастет в объеме
     this._nameContainer = document.querySelector( selectorNameUserContainer );
     this._aboutContainer = document.querySelector( selectorUserAboutContainer );
+    this._userAvatar = document.querySelector( selectorUserAvatar );
   }
 
   /**
@@ -37,5 +39,14 @@ export default class UserInfo {
   setUserInfo( newName, newAbout ) {
     this._nameContainer.textContent = newName;
     this._aboutContainer.textContent = newAbout;
+  }
+
+  setAvatar( url ) {
+    this._userAvatar.src = url;
+  }
+
+  setInitialUserInfo( data ){
+    this.setUserInfo( data.name, data.about );
+    this.setAvatar( data.avatar );
   }
 }

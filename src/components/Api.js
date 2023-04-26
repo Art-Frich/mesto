@@ -3,36 +3,41 @@ export default class Api {
   // id 7fe16738c600cfe949208d93
   // url servera https://mesto.nomoreparties.co/v1/cohort-65/
 
-  constructor( token, urlServer ) {
-    this.token = token;
-    this.urlServer = urlServer;
-    this.qUsersMe = 'users/me'
+  constructor( { token, myId, urlServer, qUsersMe, qCards } ) {
+    this._token = token;
+    this._urlServer = urlServer;
+    this._myId = myId;
+    this._qUsersMe = qUsersMe;
+    this._qCards = qCards;
   }
 
-  // _createQuery( infoPath, typeQ = 'GET' ) {
-  //   fetch( this.urlServer + infoPath, {
-  //     method: typeQ,
-  //     headers: {
-  //       authorization: this.token
-  //     }
-  //   })
-  //     .then(res => res.json())
-  //     .then((result) => {
-  //       console.log('i work ', result);
-  //     });
-  // }
-
-  getUserInfo() {
-    fetch ( this.urlServer + this.qUsersMe, {
+  getUserDataFromServer() {
+    return fetch( this._urlServer + this._qUsersMe, {
       headers: {
-        autorization: this.token
+        authorization: this._token
       }
     })
-      .then( res => res.json() )
-      .then( data => {
-        console.log( data )
+      .then( res => {
+          if ( res.ok ) { return res.json(); }
+          throw new Error( res );
       })
+      .catch( err => {
+        alert( `Произошла ошибка. Получено: ${ err }` );
+      });
+  }
 
-
+  getInitialCards() {
+    return fetch( this._urlServer + this._qCards, {
+      headers: {
+        authorization: this._token
+      }
+    })
+      .then( res => {
+        if ( res.ok ) { return res.json(); }
+        throw new Error( res );
+      })
+      .catch( err => {
+        alert( `Произошла ошибка. Получено: ${ err }` );
+      });
   }
 }
