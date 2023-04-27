@@ -9,6 +9,7 @@ export default class Api {
     this._myId = myId;
     this._qUsersMe = qUsersMe;
     this._qCards = qCards;
+    this._errMsgText = 'Произошла ошибка. Получено от сервера:'
   }
 
   getUserDataFromServer() {
@@ -22,7 +23,8 @@ export default class Api {
           throw new Error( res );
       })
       .catch( err => {
-        alert( `Произошла ошибка. Получено: ${ err }` );
+        alert( `${this._errMsgText} ${ err }` );
+        console.log( err );
       });
   }
 
@@ -37,7 +39,54 @@ export default class Api {
         throw new Error( res );
       })
       .catch( err => {
-        alert( `Произошла ошибка. Получено: ${ err }` );
+        alert( `${this._errMsgText} ${ err }` );
+        console.log( err );
+      });
+  }
+
+  updateUserData( newName, newAbout ) {
+    fetch( this._urlServer + this._qUsersMe, {
+      method: 'PATCH',
+      headers: {
+        authorization: this._token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: newName,
+        about: newAbout
+      })
+    })
+      .then( res => {
+        if ( !res.ok ) {
+          throw new Error( res );
+        }
+      })
+      .catch( err => {
+        alert( `${this._errMsgText} ${ err }` );
+        console.log( err );
+      });
+  }
+
+  addNewCard( namePlace, linkImg ) {
+    fetch( this._urlServer + this._qCards, {
+      method: 'POST',
+      headers: {
+        authorization: this._token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: namePlace,
+        link: linkImg
+      })
+    })
+      .then( res => {
+        if ( !res.ok ) {
+          throw new Error( res );
+        }
+      })
+      .catch( err => {
+        alert( `${this._errMsgText} ${ err }` );
+        console.log( err );
       });
   }
 }

@@ -28,22 +28,26 @@ function createCardConfigObject ( name, link ) {
 function renderer( name, link ) {
   const cardObject = new Card( createCardConfigObject( name, link ) );
   const newCard = cardObject.getPlaceCard();
-  section.addItem( newCard );
+  cards.addItem( newCard );
 }
 
 // объекты классов
 const popupWithImage = new PopupWithImage( popupWithImageConfig ); 
 const userInfo = new UserInfo( userInfoConfig );
 const api = new Api( apiConfig );
-const section = new Section( selectorCards );
+const cards = new Section( renderer, selectorCards );
 
 const popupEditProfile = new PopupWithForm( 
   popupEditProfileConfig, ( { nameUser, aboutUser } ) => {
     userInfo.setUserInfo( nameUser, aboutUser );
+    api.updateUserData( nameUser, aboutUser );
 } );
 
 const popupAddCard = new PopupWithForm( popupAddPlaceConfig, ( 
-  { namePlace, urlImage } ) => renderer( namePlace, urlImage )
+  { namePlace, urlImage } ) => {
+    renderer( namePlace, urlImage );
+    api.addNewCard( namePlace, urlImage );
+  }
 );
 
 // Запуск скриптов
@@ -54,11 +58,7 @@ popupWithImage.setEventListeners();
 popupAddCard.setEventListeners();
 popupEditProfile.setEventListeners();
 api.getInitialCards()
-  .then( data => {
-    data.forEach( dataCard => {
-      renderer( dataCard.name, dataCard.link )
-    })
-  });
+  .then( data => cards.renderCards( data ) );
 
 Array.from( document.forms ).forEach( form => {
   const newValidator = new FormValidator ( validateConfig, form );
