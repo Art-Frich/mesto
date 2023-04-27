@@ -9,7 +9,6 @@ export default class Api {
     this._myId = myId;
     this._qUsersMe = qUsersMe;
     this._qCards = qCards;
-    this._errMsgText = 'Произошла ошибка. Получено от сервера:'
   }
 
   getUserDataFromServer() {
@@ -18,14 +17,6 @@ export default class Api {
         authorization: this._token
       }
     })
-      .then( res => {
-          if ( res.ok ) { return res.json(); }
-          throw new Error( res );
-      })
-      .catch( err => {
-        alert( `${this._errMsgText} ${ err }` );
-        console.log( err );
-      });
   }
 
   getInitialCards() {
@@ -34,18 +25,10 @@ export default class Api {
         authorization: this._token
       }
     })
-      .then( res => {
-        if ( res.ok ) { return res.json(); }
-        throw new Error( res );
-      })
-      .catch( err => {
-        alert( `${this._errMsgText} ${ err }` );
-        console.log( err );
-      });
   }
 
   updateUserData( newName, newAbout ) {
-    fetch( this._urlServer + this._qUsersMe, {
+    return fetch( this._urlServer + this._qUsersMe, {
       method: 'PATCH',
       headers: {
         authorization: this._token,
@@ -56,19 +39,10 @@ export default class Api {
         about: newAbout
       })
     })
-      .then( res => {
-        if ( !res.ok ) {
-          throw new Error( res );
-        }
-      })
-      .catch( err => {
-        alert( `${this._errMsgText} ${ err }` );
-        console.log( err );
-      });
   }
 
   addNewCard( namePlace, linkImg ) {
-    fetch( this._urlServer + this._qCards, {
+    return fetch( this._urlServer + this._qCards, {
       method: 'POST',
       headers: {
         authorization: this._token,
@@ -79,14 +53,5 @@ export default class Api {
         link: linkImg
       })
     })
-      .then( res => {
-        if ( !res.ok ) {
-          throw new Error( res );
-        }
-      })
-      .catch( err => {
-        alert( `${this._errMsgText} ${ err }` );
-        console.log( err );
-      });
   }
 }

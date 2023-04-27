@@ -31,6 +31,21 @@ function renderer( name, link ) {
   cards.addItem( newCard );
 }
 
+function handleResponse( response ){
+  // const errMsgText = 'Произошла ошибка. Получено от сервера:';
+  return response
+    .then( res => {
+      if ( !res.ok ) {
+        throw new Error( res );
+      }
+      return res.json();
+    })
+    .catch( err => {
+      // alert( `${ errMsgText } ${ err }` );
+      console.log( err );
+    });
+}
+
 // объекты классов
 const popupWithImage = new PopupWithImage( popupWithImageConfig ); 
 const userInfo = new UserInfo( userInfoConfig );
@@ -40,24 +55,25 @@ const cards = new Section( renderer, selectorCards );
 const popupEditProfile = new PopupWithForm( 
   popupEditProfileConfig, ( { nameUser, aboutUser } ) => {
     userInfo.setUserInfo( nameUser, aboutUser );
-    api.updateUserData( nameUser, aboutUser );
+    handleResponse( api.updateUserData( nameUser, aboutUser ) );
 } );
 
 const popupAddCard = new PopupWithForm( popupAddPlaceConfig, ( 
   { namePlace, urlImage } ) => {
     renderer( namePlace, urlImage );
-    api.addNewCard( namePlace, urlImage );
+    handleResponse( api.addNewCard( namePlace, urlImage ) );
   }
 );
 
 // Запуск скриптов
-api.getUserDataFromServer()
+handleResponse( api.getUserDataFromServer() )
   .then( data => userInfo.setInitialUserInfo( data ) );
+ 
 
 popupWithImage.setEventListeners();
 popupAddCard.setEventListeners();
 popupEditProfile.setEventListeners();
-api.getInitialCards()
+handleResponse( api.getInitialCards() )
   .then( data => cards.renderCards( data ) );
 
 Array.from( document.forms ).forEach( form => {
