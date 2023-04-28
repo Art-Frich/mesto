@@ -12,8 +12,8 @@ export default class Card {
    * @param {function} handeCardClick - callback клика по картинке
    */
   constructor ( { 
-    placeName, placeImgSrc, countLike, config, ownerId, myId, handleCardClick, confirmDelete
-  } ) {
+    placeName, placeImgSrc, countLike, config, ownerId, myId, handleCardClick }, confirmDelete 
+  ) {
     this._placeName = placeName;
     this._placeImgSrc = placeImgSrc; 
     this._countLike = countLike;
@@ -52,10 +52,10 @@ export default class Card {
       this._handeCardClick( this._placeImgSrc, this._placeName )
     } );
     this._imgLike.addEventListener( 'mousedown', this._toggleLikeCondition );
-    this._btnPlaceDel.addEventListener( 'click', this._confirmDelete() );
+    this._btnPlaceDel.addEventListener( 'click', this._confirmDelete );
   }
 
-  deleteOnClick = () => {
+  deleteOnClick() {
     this._placeElement.remove();
     this._placeElement = null;
   };

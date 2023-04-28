@@ -54,4 +54,13 @@ export default class Api {
       })
     })
   }
+
+  deleteCard( id ) {
+    return fetch( this._urlServer + this._qCards + id, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._token,
+      }
+    })
+  }
 }

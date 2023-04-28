@@ -2,8 +2,8 @@ import Popup from "./Popup.js";
 
 export default class PopupCardDelete extends Popup{
   constructor( { popupConfig, popupSelector, nameForm } ) {
-    console.log( popupSelector)
     super( popupConfig, popupSelector );
+    this._delCard;
     this._form = document.forms[nameForm];
   }
 
@@ -11,8 +11,13 @@ export default class PopupCardDelete extends Popup{
     super.setEventListeners();
     this._form.addEventListener( 'submit', (ev) => {
       ev.preventDefault();
+      this._delCard();
       this.close();
-      return true;
     });
+  }
+
+  open( callback ) {
+    this._delCard = callback;
+    super.open()
   }
 }

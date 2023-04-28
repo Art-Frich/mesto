@@ -24,16 +24,20 @@ function createCardConfigObject ( { name, link, likes, owner } ) {
     placeImgSrc: link,
     countLike: likes.length || 0,
     config: cardConfig,
-    ownerId: owner._id,
+    ownerId: owner._id || myId,
     myId: myId,
-    handleCardClick: () => popupWithImage.open( link, name ), //со скобками не срабатывает при загрузке страницы
-    confirmDelete: () => popupConfirmDeleteCard.open, //со скобками срабатывает при загрузке страницы
-  }
+    handleCardClick: () => popupWithImage.open( link, name ),
+  } 
 }
 
 function renderer( data ) {
-  const cardObject = new Card( 
-    createCardConfigObject( data ) 
+  const cardObject = new Card(
+    createCardConfigObject( data ),
+    () => popupConfirmDeleteCard.open( () => {
+      handleResponse( api.deleteCard( data._id ) )
+        .then( () => cardObject.deleteOnClick() )
+        .catch( err => console.log( err ) )
+    })
   );
   const newCard = cardObject.getPlaceCard();
   cards.addItem( newCard );
@@ -67,10 +71,11 @@ const popupEditProfile = new PopupWithForm(
     handleResponse( api.updateUserData( nameUser, aboutUser ) );
 } );
 
-const popupAddCard = new PopupWithForm( popupAddPlaceConfig, ( 
-  { namePlace, urlImage } ) => {
+const popupAddCard = new PopupWithForm( popupAddPlaceConfig, ({
+  namePlace, urlImage }) => {
     handleResponse( api.addNewCard( namePlace, urlImage ) )
-      .then( data => renderer ( data ))
+      .then( data => renderer( data ) )
+      .catch( err => console.log( err ) )
   }
 );
 
@@ -79,15 +84,16 @@ handleResponse( api.getUserDataFromServer() )
   .then( data => {
     userInfo.setInitialUserInfo( data );
     myId = data._id;
-  });
- 
+  })
+  .catch( err => console.log( err ) )
 
 popupWithImage.setEventListeners();
 popupAddCard.setEventListeners();
 popupEditProfile.setEventListeners();
 popupConfirmDeleteCard.setEventListeners();
 handleResponse( api.getInitialCards() )
-  .then( data => cards.renderCards( data ) );
+  .then( data => cards.renderCards( data ) )
+  .catch( err => console.log( err ) )
 
 Array.from( document.forms ).forEach( form => {
   const newValidator = new FormValidator ( validateConfig, form );
