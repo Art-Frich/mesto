@@ -17,7 +17,7 @@ export default class Section {
    */
   renderCards( data ) {
     for ( let i = data.length - 1; i > -1; i-- ){
-      this._renderer( data[ i ].name, data[ i ].link );
+      this._renderer( data[ i ] );
     }
   }
 

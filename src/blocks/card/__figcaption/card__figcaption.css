@@ -2,9 +2,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
 
-  margin: 25px 20px 25px 21px;
-  /* убрать отступы между inline элементами внутри */
-  font-size: 0;
+  margin: 22px 20px 22px 21px;
 }

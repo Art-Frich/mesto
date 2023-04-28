@@ -7,9 +7,9 @@ export const selectorCards = '.places__grid';
 
 // Служебные
 const inputSelector = '.popup__input';
-const popupConfig = {
+export const popupConfig = {
   classBtnClose: 'popup__btn-close',
-  classPopupOpened: 'popup_opened'
+  classPopupOpened: 'to-visible'
 }
 
 // Конфиги
@@ -43,7 +43,7 @@ export const userInfoConfig = {
 
 export const validateConfig = {
   inputSelector: inputSelector,
-  submitBtnSelector: '.popup__btn-save-edit',
+  submitBtnSelector: '.popup__btn-submit',
   inputUnvalidateSelector: '.popup__input_type_error',
   errorSelector: '.popup__error',
 };
@@ -55,7 +55,9 @@ export const cardConfig = {
   likeSelector: '.card__like',
   btnDelSelector: '.card__del-card-btn',
   classLikeActive: 'card__like_active',
-  templateSelector: '.template'
+  templateSelector: '.template',
+  countLikeSelector: '.card__like-count',
+  btnDellHiddenClass: 'to-visible'
 }
 
 export const apiConfig = {
@@ -64,4 +66,10 @@ export const apiConfig = {
   urlServer: 'https://mesto.nomoreparties.co/v1/cohort-65/',
   qUsersMe: 'users/me',
   qCards: 'cards',
+}
+
+export const popupConfirmDeleteConfig = {
+  popupConfig: popupConfig,
+  popupSelector: '.popup_type_confirmDelete',
+  nameForm: 'confirmCardDelete'
 }

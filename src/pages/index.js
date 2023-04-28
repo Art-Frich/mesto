@@ -6,33 +6,41 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
-import Api from '../components/Api.js'; //чё -_-
-import initialCards from '../utils/initialCards.js'
+import Api from '../components/Api.js';
+import PopupCardDelete from '../components/PopupCardDelete';
 import {
   btnEditProfile, btnAddPlace, cardConfig, validateConfig,
   popupWithImageConfig, popupAddPlaceConfig, popupEditProfileConfig,
-  selectorCards, userInfoConfig, apiConfig,
+  selectorCards, userInfoConfig, apiConfig, popupConfirmDeleteConfig
  } from '../utils/constants.js';
 
+// Переменные
+let myId;
 
 // функции
-function createCardConfigObject ( name, link ) {
+function createCardConfigObject ( { name, link, likes, owner } ) {
   return {
     placeName: name,
     placeImgSrc: link,
+    countLike: likes.length,
     config: cardConfig,
-    handleCardClick: () => popupWithImage.open( link, name )
+    ownerId: owner._id,
+    myId: myId,
+    handleCardClick: () => popupWithImage.open( link, name ), //со скобками не срабатывает при загрузке страницы
+    confirmDelete: () => popupConfirmDeleteCard.open, //со скобками срабатывает при загрузке страницы
   }
 }
 
-function renderer( name, link ) {
-  const cardObject = new Card( createCardConfigObject( name, link ) );
+function renderer( data ) {
+  const cardObject = new Card( 
+    createCardConfigObject( data ) 
+  );
   const newCard = cardObject.getPlaceCard();
   cards.addItem( newCard );
 }
 
 function handleResponse( response ){
-  // const errMsgText = 'Произошла ошибка. Получено от сервера:';
+  // const errMsgText = 'Произошла ошибка. Текст ошибки или обрабатываемый объект:';
   return response
     .then( res => {
       if ( !res.ok ) {
@@ -47,6 +55,7 @@ function handleResponse( response ){
 }
 
 // объекты классов
+const popupConfirmDeleteCard = new PopupCardDelete( popupConfirmDeleteConfig );
 const popupWithImage = new PopupWithImage( popupWithImageConfig ); 
 const userInfo = new UserInfo( userInfoConfig );
 const api = new Api( apiConfig );
@@ -67,12 +76,16 @@ const popupAddCard = new PopupWithForm( popupAddPlaceConfig, (
 
 // Запуск скриптов
 handleResponse( api.getUserDataFromServer() )
-  .then( data => userInfo.setInitialUserInfo( data ) );
+  .then( data => {
+    userInfo.setInitialUserInfo( data );
+    myId = data._id;
+  });
  
 
 popupWithImage.setEventListeners();
 popupAddCard.setEventListeners();
 popupEditProfile.setEventListeners();
+popupConfirmDeleteCard.setEventListeners();
 handleResponse( api.getInitialCards() )
   .then( data => cards.renderCards( data ) );
 
