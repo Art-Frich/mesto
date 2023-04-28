@@ -22,7 +22,7 @@ function createCardConfigObject ( { name, link, likes, owner } ) {
   return {
     placeName: name,
     placeImgSrc: link,
-    countLike: likes.length,
+    countLike: likes.length || 0,
     config: cardConfig,
     ownerId: owner._id,
     myId: myId,
@@ -69,8 +69,8 @@ const popupEditProfile = new PopupWithForm(
 
 const popupAddCard = new PopupWithForm( popupAddPlaceConfig, ( 
   { namePlace, urlImage } ) => {
-    renderer( namePlace, urlImage );
-    handleResponse( api.addNewCard( namePlace, urlImage ) );
+    handleResponse( api.addNewCard( namePlace, urlImage ) )
+      .then( data => renderer ( data ))
   }
 );
 
