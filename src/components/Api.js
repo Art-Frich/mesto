@@ -3,12 +3,15 @@ export default class Api {
   // id 7fe16738c600cfe949208d93
   // url servera https://mesto.nomoreparties.co/v1/cohort-65/
 
-  constructor( { token, myId, urlServer, qUsersMe, qCards } ) {
+  constructor({ 
+    token, myId, urlServer, qUsersMe, qCards, qLikes 
+  }) {
     this._token = token;
     this._urlServer = urlServer;
     this._myId = myId;
     this._qUsersMe = qUsersMe;
     this._qCards = qCards;
+    this._qLikes = qLikes;
   }
 
   getUserDataFromServer() {
@@ -57,6 +60,24 @@ export default class Api {
 
   deleteCard( id ) {
     return fetch( this._urlServer + this._qCards + id, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._token,
+      }
+    })
+  }
+
+  setLike( id ){
+    return fetch( this._urlServer + this._qCards + id + this._qLikes, {
+      method: 'PUT',
+      headers: {
+        authorization: this._token,
+      }
+    })
+  }
+
+  deleteLike( id ) {
+    return fetch( this._urlServer + this._qCards + id + this._qLikes, {
       method: 'DELETE',
       headers: {
         authorization: this._token,

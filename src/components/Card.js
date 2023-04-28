@@ -11,16 +11,21 @@ export default class Card {
    * @param {object} config - словарик всех необходимых селекторов
    * @param {function} handeCardClick - callback клика по картинке
    */
-  constructor ( { 
-    placeName, placeImgSrc, countLike, config, ownerId, myId, handleCardClick }, confirmDelete 
-  ) {
+  constructor({ 
+    placeName, placeImgSrc, countLike,
+    config, ownerId, myId, handleCardClick,
+    confirmDelete, setLikeOnServer, deleteLikeFromServer 
+  }) {
+    // Примечание: очень громоздкий конструктор
     this._placeName = placeName;
     this._placeImgSrc = placeImgSrc; 
     this._countLike = countLike;
-    this._handeCardClick = handleCardClick;
-    this._confirmDelete = confirmDelete;
     this._ownerCardId = ownerId;
     this._myId = myId;
+    this._handeCardClick = handleCardClick;
+    this._confirmDelete = confirmDelete;
+    this._setLikeOnServer = setLikeOnServer;
+    this._deleteLikeFromServer = deleteLikeFromServer;
 
     this._templateSelector = config.templateSelector;
     this._placesItemSelector = config.cardSelector;
@@ -43,8 +48,19 @@ export default class Card {
       .cloneNode( true );
   } 
 
+  _toggleLikeConditionOnserver = () => {
+    return this._imgLike.classList.contains( this._classLikeActive ) 
+      ? this._deleteLikeFromServer()
+      : this._setLikeOnServer()
+  }
+
   _toggleLikeCondition = () => {
-    this._imgLike.classList.toggle( this._classLikeActive );
+    this._toggleLikeConditionOnserver()
+      .then( data => {
+        this._countLikeConitainer.textContent = data.likes.length;
+        this._imgLike.classList.toggle( this._classLikeActive );
+      })
+      .catch( err => console.log( err ) );
   }
 
   _setEventListeners = () => {

@@ -18,33 +18,31 @@ import {
 let myId;
 
 // функции
-function createCardConfigObject ( { name, link, likes, owner } ) {
-  return {
-    placeName: name,
-    placeImgSrc: link,
-    countLike: likes.length || 0,
-    config: cardConfig,
-    ownerId: owner._id || myId,
-    myId: myId,
-    handleCardClick: () => popupWithImage.open( link, name ),
-  } 
-}
 
+// Примечание: можно прокинуть id в класс и вызывать его через this. Не знаю, что из этого лучше
+// Примечание2: создание класса Card выглядит громоздким и сложным
 function renderer( data ) {
-  const cardObject = new Card(
-    createCardConfigObject( data ),
-    () => popupConfirmDeleteCard.open( () => {
+  const cardObject = new Card({
+    placeName: data.name,
+    placeImgSrc: data.link,
+    countLike: data.likes.length || 0,
+    config: cardConfig,
+    ownerId: data.owner._id,
+    myId: myId,
+    handleCardClick: () => popupWithImage.open( data.link, data.name ),
+    confirmDelete: () => popupConfirmDeleteCard.open( () => {
       handleResponse( api.deleteCard( data._id ) )
         .then( () => cardObject.deleteOnClick() )
         .catch( err => console.log( err ) )
-    })
-  );
+    }),
+    setLikeOnServer: () => handleResponse( api.setLike( data._id ) ),
+    deleteLikeFromServer: () => handleResponse( api.deleteLike( data._id ) ),
+  });
   const newCard = cardObject.getPlaceCard();
   cards.addItem( newCard );
 }
 
 function handleResponse( response ){
-  // const errMsgText = 'Произошла ошибка. Текст ошибки или обрабатываемый объект:';
   return response
     .then( res => {
       if ( !res.ok ) {
@@ -52,10 +50,6 @@ function handleResponse( response ){
       }
       return res.json();
     })
-    .catch( err => {
-      // alert( `${ errMsgText } ${ err }` );
-      console.log( err );
-    });
 }
 
 // объекты классов
@@ -80,20 +74,21 @@ const popupAddCard = new PopupWithForm( popupAddPlaceConfig, ({
 );
 
 // Запуск скриптов
+
+// Примечание: сначала получить id, затем генерировать карточки. Возможно стоит попробовать заюзать Promise.All. Дело в том, что иногда почему-то myId отсутствует. Ранее это были два отдельных вызова. Сначала - данные профиля, затем карточки, но иногда багало.
 handleResponse( api.getUserDataFromServer() )
   .then( data => {
     userInfo.setInitialUserInfo( data );
     myId = data._id;
   })
+  .then( () => handleResponse( api.getInitialCards() ) ) 
+  .then( data => cards.renderCards( data ) )
   .catch( err => console.log( err ) )
 
 popupWithImage.setEventListeners();
 popupAddCard.setEventListeners();
 popupEditProfile.setEventListeners();
 popupConfirmDeleteCard.setEventListeners();
-handleResponse( api.getInitialCards() )
-  .then( data => cards.renderCards( data ) )
-  .catch( err => console.log( err ) )
 
 Array.from( document.forms ).forEach( form => {
   const newValidator = new FormValidator ( validateConfig, form );
