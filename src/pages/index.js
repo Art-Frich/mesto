@@ -8,10 +8,12 @@ import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
 import PopupCardDelete from '../components/PopupCardDelete';
+import PopupEditAvatar from '../components/PopupEditAvatar';
 import {
-  btnEditProfile, btnAddPlace, cardConfig, validateConfig,
+  btnEditProfile, btnAddPlace, cardConfig, btnEditAvatar, validateConfig,
   popupWithImageConfig, popupAddPlaceConfig, popupEditProfileConfig,
-  selectorCards, userInfoConfig, apiConfig, popupConfirmDeleteConfig
+  selectorCards, userInfoConfig, apiConfig, popupConfirmDeleteConfig,
+  popupEditAvatarConfig,
  } from '../utils/constants.js';
 
 // Переменные
@@ -53,6 +55,7 @@ function handleResponse( response ){
 }
 
 // объекты классов
+const popupEditAvatar = new PopupEditAvatar( popupEditAvatarConfig );
 const popupConfirmDeleteCard = new PopupCardDelete( popupConfirmDeleteConfig );
 const popupWithImage = new PopupWithImage( popupWithImageConfig ); 
 const userInfo = new UserInfo( userInfoConfig );
@@ -89,13 +92,17 @@ popupWithImage.setEventListeners();
 popupAddCard.setEventListeners();
 popupEditProfile.setEventListeners();
 popupConfirmDeleteCard.setEventListeners();
+popupEditAvatar.setEventListeners();
 
+// Примечание: имеется форма без инпутов, для которой валидация ненужна. Соответственно, её следовало бы исключить. Это можно сделать, составив список исключений и сверяться внутри перебора, но т.к. она не содержит инпутов, а следовательно и некуда установить листенеры, система потратит ресурсы только на попытку подключить валидацию. Создание списка исключений же задействует еще немного памяти и я не уверен, что это стоящая оптимизация.
+// Также можно попробовать сверяться с содержимым формы: если есть инпуты, то... через form.elements, но это также ресурсы на проверку того, что в принципе не будет потреблять ресурсы, т.к. не существует (нельзя установить валидацию на то, чего нет)
 Array.from( document.forms ).forEach( form => {
   const newValidator = new FormValidator ( validateConfig, form );
   newValidator.enableValidation();
 } );
 
-btnAddPlace.addEventListener( 'click', () => popupAddCard.open() );
+btnEditAvatar.addEventListener( 'click', popupEditAvatar.open )
+btnAddPlace.addEventListener( 'click', popupAddCard.open );
 btnEditProfile.addEventListener( 'click', () => {
   popupEditProfile.setInputValues( userInfo.getUserInfo() );
   popupEditProfile.open() 

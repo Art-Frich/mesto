@@ -1,6 +1,7 @@
 // Кнопки
 export const btnEditProfile = document.querySelector('.profile__btn-edit');
 export const btnAddPlace = document.querySelector('.profile__btn-add');
+export const btnEditAvatar = document.querySelector('.profile__avatar-edit');
 
 // Селекторы
 export const selectorCards = '.places__grid';
@@ -73,4 +74,9 @@ export const popupConfirmDeleteConfig = {
   popupConfig: popupConfig,
   popupSelector: '.popup_type_confirmDelete',
   nameForm: 'confirmCardDelete'
+}
+
+export const popupEditAvatarConfig = {
+  popupConfig: popupConfig,
+  popupSelector: '.popup_type_editAvatar',
 }
