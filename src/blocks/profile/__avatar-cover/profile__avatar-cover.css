@@ -1,0 +1,15 @@
+.profile__avatar-cover{
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.profile__avatar-container:hover .profile__avatar-cover {
+  opacity: 1;
+}
