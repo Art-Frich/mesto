@@ -85,9 +85,9 @@ export const popupConfirmDeleteConfig = {
 
 export const popupEditAvatarConfig = {
   popupConfig: popupConfig,
-  popupSelector: '.popup_type_editAvatar',
   inputSelector: inputSelector,
-  formName: 'avatarUpdate',
+  popupSelector: '.popup_type_editAvatar',
+  nameForm: 'avatarUpdate',
   btnSubmitSelector: popupBtnSubmitSelector,
   btnSubmitFetchCondition: btnSubmitFetchCondition,
 }

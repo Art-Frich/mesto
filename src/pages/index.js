@@ -8,7 +8,6 @@ import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
 import PopupCardDelete from '../components/PopupCardDelete';
-import PopupEditAvatar from '../components/PopupEditAvatar';
 import {
   btnEditProfile, btnAddPlace, cardConfig, btnEditAvatar, validateConfig,
   popupWithImageConfig, popupAddPlaceConfig, popupEditProfileConfig,
@@ -73,8 +72,8 @@ const popupAddCard = new PopupWithForm( popupAddPlaceConfig, ({
       .then( data => renderer( data ) )
 });
 
-const popupEditAvatar = new PopupEditAvatar( popupEditAvatarConfig, () => {
-  return handleResponse( api.updateAvatar( popupEditAvatar.getNewUrl() ) )
+const popupEditAvatar = new PopupWithForm( popupEditAvatarConfig, ( inputValue ) => {
+  return handleResponse( api.updateAvatar( inputValue ) )
     .then( data => userInfo.setAvatar( data.avatar ) )
 });
 
