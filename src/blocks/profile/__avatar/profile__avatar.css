@@ -5,8 +5,5 @@
 
   object-fit: cover;
   aspect-ratio: 1/1;
-}
-
-.profile__avatar-container:hover .profile__avatar {
   z-index: -1;
 }
