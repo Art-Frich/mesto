@@ -67,7 +67,8 @@ export const apiConfig = {
   urlServer: 'https://mesto.nomoreparties.co/v1/cohort-65/',
   qUsersMe: 'users/me',
   qCards: 'cards/',
-  qLikes: '/likes/'
+  qLikes: '/likes/',
+  qAvatar: '/avatar'
 }
 
 export const popupConfirmDeleteConfig = {
@@ -79,4 +80,6 @@ export const popupConfirmDeleteConfig = {
 export const popupEditAvatarConfig = {
   popupConfig: popupConfig,
   popupSelector: '.popup_type_editAvatar',
+  inputSelector: inputSelector,
+  formName: 'avatarUpdate',
 }

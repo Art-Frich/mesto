@@ -55,7 +55,6 @@ function handleResponse( response ){
 }
 
 // объекты классов
-const popupEditAvatar = new PopupEditAvatar( popupEditAvatarConfig );
 const popupConfirmDeleteCard = new PopupCardDelete( popupConfirmDeleteConfig );
 const popupWithImage = new PopupWithImage( popupWithImageConfig ); 
 const userInfo = new UserInfo( userInfoConfig );
@@ -66,15 +65,21 @@ const popupEditProfile = new PopupWithForm(
   popupEditProfileConfig, ( { nameUser, aboutUser } ) => {
     userInfo.setUserInfo( nameUser, aboutUser );
     handleResponse( api.updateUserData( nameUser, aboutUser ) );
-} );
+});
 
 const popupAddCard = new PopupWithForm( popupAddPlaceConfig, ({
   namePlace, urlImage }) => {
     handleResponse( api.addNewCard( namePlace, urlImage ) )
       .then( data => renderer( data ) )
-      .catch( err => console.log( err ) )
-  }
-);
+      .catch( err => console.log( err ) );
+});
+
+const popupEditAvatar = new PopupEditAvatar( popupEditAvatarConfig, () => {
+  handleResponse( api.updateAvatar( popupEditAvatar.getNewUrl() ) )
+    .then( data => userInfo.setAvatar( data.avatar ) )
+    .catch( err => console.log( err ) );
+});
+
 
 // Запуск скриптов
 

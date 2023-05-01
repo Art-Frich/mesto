@@ -4,7 +4,7 @@ export default class Api {
   // url servera https://mesto.nomoreparties.co/v1/cohort-65/
 
   constructor({ 
-    token, myId, urlServer, qUsersMe, qCards, qLikes 
+    token, myId, urlServer, qUsersMe, qCards, qLikes, qAvatar
   }) {
     this._token = token;
     this._urlServer = urlServer;
@@ -12,6 +12,7 @@ export default class Api {
     this._qUsersMe = qUsersMe;
     this._qCards = qCards;
     this._qLikes = qLikes;
+    this._qAvatar = qAvatar;
   }
 
   getUserDataFromServer() {
@@ -82,6 +83,19 @@ export default class Api {
       headers: {
         authorization: this._token,
       }
+    })
+  }
+
+  updateAvatar( newAvatarUrl ) {
+    return fetch( this._urlServer + this._qUsersMe + this._qAvatar , {
+      method: 'PATCH',
+      headers: {
+        authorization: this._token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        avatar: newAvatarUrl
+      })
     })
   }
 }
