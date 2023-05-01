@@ -64,20 +64,18 @@ const cards = new Section( renderer, selectorCards );
 const popupEditProfile = new PopupWithForm( 
   popupEditProfileConfig, ( { nameUser, aboutUser } ) => {
     userInfo.setUserInfo( nameUser, aboutUser );
-    handleResponse( api.updateUserData( nameUser, aboutUser ) );
+    return handleResponse( api.updateUserData( nameUser, aboutUser ) )
 });
 
 const popupAddCard = new PopupWithForm( popupAddPlaceConfig, ({
   namePlace, urlImage }) => {
-    handleResponse( api.addNewCard( namePlace, urlImage ) )
+    return handleResponse( api.addNewCard( namePlace, urlImage ) )
       .then( data => renderer( data ) )
-      .catch( err => console.log( err ) );
 });
 
 const popupEditAvatar = new PopupEditAvatar( popupEditAvatarConfig, () => {
-  handleResponse( api.updateAvatar( popupEditAvatar.getNewUrl() ) )
+  return handleResponse( api.updateAvatar( popupEditAvatar.getNewUrl() ) )
     .then( data => userInfo.setAvatar( data.avatar ) )
-    .catch( err => console.log( err ) );
 });
 
 

@@ -13,17 +13,20 @@ export default class PopupWithForm extends Popup {
    * @param {Function} callbackSubmit - обработчик submit события
    */
   constructor ( { 
-    popupConfig, inputSelector, popupSelector, nameForm
+    popupConfig, inputSelector, popupSelector, nameForm, 
+    btnSubmitSelector, btnSubmitFetchCondition
   }, callbackSubmit ) {
 
     super( popupConfig, popupSelector );
     this._callbackSubmit = callbackSubmit;
     this._classInput = inputSelector;
+    this._btnSubmitFetchCondition = btnSubmitFetchCondition;
     
     this._form = document.forms[nameForm];
     this._inputs = Array.from( 
       this._form.querySelectorAll( this._classInput )
     );
+    this._btnSubmit = this._form.querySelector( btnSubmitSelector );
   }
 
   /**
@@ -55,9 +58,17 @@ export default class PopupWithForm extends Popup {
     super.setEventListeners();
     this._form.addEventListener( 'submit', (ev) => {
       ev.preventDefault();
-      this._callbackSubmit( this._getInputValues() );
-      this.close();
+      this._fetchCondition();
     });
+  }
+
+  _fetchCondition() {
+    const btnSubmitOriginalText = this._btnSubmit.textContent;
+    this._btnSubmit.textContent = this._btnSubmitFetchCondition;
+    this._callbackSubmit( this._getInputValues() )
+      .then( () => this._btnSubmit.textContent = btnSubmitOriginalText )
+      .catch( err => console.log( err ) )
+      .finally( () => this.close() );
   }
 
   /**

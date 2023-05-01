@@ -2,23 +2,34 @@ import Popup from "./Popup.js";
 
 export default class PopupEditAvatar extends Popup {
   constructor( { 
-    popupConfig, popupSelector, inputSelector, formName 
+    popupConfig, popupSelector, inputSelector, formName, 
+    btnSubmitSelector, btnSubmitFetchCondition,
   }, updateUrlOnServer ){
     super( popupConfig, popupSelector );
-    this._inputSelector = inputSelector;
     this._formName = formName;
     this._form = document.forms[ formName ];
-    this._input = this._form.querySelector( inputSelector );
     this._updateUrlOnserver = updateUrlOnServer;
+    this._btnSubmitFetchCondition = btnSubmitFetchCondition;
+
+    this._input = this._form.querySelector( inputSelector );
+    this._btnSubmit = this._form.querySelector( btnSubmitSelector );
   }
 
   setEventListeners() {
     super.setEventListeners();
     this._form.addEventListener( 'submit', (ev) => {
       ev.preventDefault();
-      this._updateUrlOnserver();
-      this.close();
-    });
+      this._fetchCondition();
+   });
+  }
+
+  _fetchCondition() {
+    const btnSubmitOriginalText = this._btnSubmit.textContent;
+    this._btnSubmit.textContent = this._btnSubmitFetchCondition;
+    this._updateUrlOnserver()
+      .then( () => this._btnSubmit.textContent = btnSubmitOriginalText )
+      .catch( err => console.log( err ) )
+      .finally( () => this.close() );
   }
 
   getNewUrl() {

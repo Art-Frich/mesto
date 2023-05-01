@@ -8,7 +8,9 @@ export const selectorCards = '.places__grid';
 
 // Служебные
 const inputSelector = '.popup__input';
-export const popupConfig = {
+const popupBtnSubmitSelector = '.popup__btn-submit';
+const btnSubmitFetchCondition = 'Сохранение...';
+const popupConfig = {
   classBtnClose: 'popup__btn-close',
   classPopupOpened: 'to-visible'
 }
@@ -26,14 +28,18 @@ export const popupAddPlaceConfig = {
   popupConfig: popupConfig,
   inputSelector: inputSelector,
   popupSelector: '.popup_type_add-place',
-  nameForm: 'addNewPlace'
+  nameForm: 'addNewPlace',
+  btnSubmitSelector: popupBtnSubmitSelector,
+  btnSubmitFetchCondition: btnSubmitFetchCondition,
 }
 
 export const popupEditProfileConfig = {
   popupConfig: popupConfig,
   inputSelector: inputSelector,
   popupSelector: '.popup_type_edit-profile',
-  nameForm: 'editProfileText'
+  nameForm: 'editProfileText',
+  btnSubmitSelector: popupBtnSubmitSelector,
+  btnSubmitFetchCondition: btnSubmitFetchCondition,
 }
 
 export const userInfoConfig = {
@@ -82,4 +88,6 @@ export const popupEditAvatarConfig = {
   popupSelector: '.popup_type_editAvatar',
   inputSelector: inputSelector,
   formName: 'avatarUpdate',
+  btnSubmitSelector: popupBtnSubmitSelector,
+  btnSubmitFetchCondition: btnSubmitFetchCondition,
 }
