@@ -12,14 +12,15 @@ export default class Card {
    * @param {function} handeCardClick - callback клика по картинке
    */
   constructor({ 
-    placeName, placeImgSrc, countLike,
+    placeName, placeImgSrc, likes,
     config, ownerId, myId, handleCardClick,
     confirmDelete, setLikeOnServer, deleteLikeFromServer 
   }) {
     // Примечание: очень громоздкий конструктор
     this._placeName = placeName;
     this._placeImgSrc = placeImgSrc; 
-    this._countLike = countLike;
+    this._likes = likes;
+    this._countLike = likes.length || 0;
     this._ownerCardId = ownerId;
     this._myId = myId;
     this._handeCardClick = handleCardClick;
@@ -38,6 +39,8 @@ export default class Card {
     this._imgLike = this._placeElement.querySelector( config.likeSelector );
     this._btnPlaceDel = this._placeElement.querySelector( config.btnDelSelector );
     this._countLikeConitainer = this._placeElement.querySelector( config.countLikeSelector );
+
+    this._isLikeInProcess = false; // флаг для корректной обработки дабл-клика по лайку
   }
 
   _getPlaceElement = () => {
@@ -55,12 +58,16 @@ export default class Card {
   }
 
   _toggleLikeCondition = () => {
-    this._toggleLikeConditionOnserver()
-      .then( data => {
-        this._countLikeConitainer.textContent = data.likes.length;
-        this._imgLike.classList.toggle( this._classLikeActive );
-      })
-      .catch( err => console.log( err ) );
+    if ( this._isLikeInProcess === false ) {
+      this._isLikeInProcess = true;
+      this._toggleLikeConditionOnserver()
+        .then( data => {
+          this._countLikeConitainer.textContent = data.likes.length;
+          this._doLikeActive();
+        })
+        .catch( err => console.log( err ) )
+        .finally( () => this._isLikeInProcess = false );
+    }
   }
 
   _setEventListeners = () => {
@@ -81,9 +88,26 @@ export default class Card {
     this._img.alt += ` ${ this._placeName }`; 
     this._imgTitle.textContent = this._placeName;
     this._countLikeConitainer.textContent = this._countLike;
+    this._checkOwner();
+    this._checkMyLike();
+  }
+
+  _checkOwner = () => {
     if ( this._ownerCardId === this._myId ) {
       this._btnPlaceDel.classList.add( this._btnDellHiddenClass );
     }
+  }
+
+  _doLikeActive = () => {
+    this._imgLike.classList.toggle( this._classLikeActive );
+  }
+
+  _checkMyLike = () => {
+    this._likes.forEach( element => {
+      if ( element._id === this._myId ) {
+        this._doLikeActive();
+      }
+    });
   }
 
   /**

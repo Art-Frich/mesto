@@ -9,7 +9,7 @@ export default class FormValidator {
    * @param {Node} form - форма
    */
   constructor( config, form ) {
-    this._inputUnvalidateClass = config.inputUnvalidateSelector;
+    this._inputUnvalidateClass = config.inputUnvalidateClass;
     this._form = form;
     this._inputList = this._getFormElements( form, config.inputSelector );
     this._errorList = this._getFormElements( form, config.errorSelector );

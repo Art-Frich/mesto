@@ -26,7 +26,7 @@ function renderer( data ) {
   const cardObject = new Card({
     placeName: data.name,
     placeImgSrc: data.link,
-    countLike: data.likes.length || 0,
+    likes: data.likes,
     config: cardConfig,
     ownerId: data.owner._id,
     myId: myId,
@@ -72,8 +72,8 @@ const popupAddCard = new PopupWithForm( popupAddPlaceConfig, ({
       .then( data => renderer( data ) )
 });
 
-const popupEditAvatar = new PopupWithForm( popupEditAvatarConfig, ( inputValue ) => {
-  return handleResponse( api.updateAvatar( inputValue ) )
+const popupEditAvatar = new PopupWithForm( popupEditAvatarConfig, ( { urlImage } ) => {
+  return handleResponse( api.updateAvatar( urlImage ) )
     .then( data => userInfo.setAvatar( data.avatar ) )
 });
 

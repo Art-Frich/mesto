@@ -58,14 +58,14 @@ export default class PopupWithForm extends Popup {
     super.setEventListeners();
     this._form.addEventListener( 'submit', (ev) => {
       ev.preventDefault();
-      this._fetchCondition( this._getInputValues() );
+      this._fetchCondition();
     });
   }
 
-  _fetchCondition( { urlImage } ) {
+  _fetchCondition() {
     const btnSubmitOriginalText = this._btnSubmit.textContent;
     this._btnSubmit.textContent = this._btnSubmitFetchCondition;
-    this._callbackSubmit( urlImage )
+    this._callbackSubmit( this._getInputValues() )
       .then( () => this._btnSubmit.textContent = btnSubmitOriginalText )
       .catch( err => console.log( err ) )
       .finally( () => this.close() );

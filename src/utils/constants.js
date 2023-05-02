@@ -51,7 +51,7 @@ export const userInfoConfig = {
 export const validateConfig = {
   inputSelector: inputSelector,
   submitBtnSelector: '.popup__btn-submit',
-  inputUnvalidateSelector: '.popup__input_type_error',
+  inputUnvalidateClass: 'popup__input_type_error',
   errorSelector: '.popup__error',
 };
 
