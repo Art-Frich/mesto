@@ -1,4 +1,3 @@
-/* общие стили */
 @import url(../vendor/normalize.css);
 @import url(../vendor/fonts/fonts.css);
 @import url(../blocks/preload/preload.css);
@@ -8,43 +7,40 @@
 @import url(../blocks/text-overflow/text-overflow.css);
 @import url(../blocks/body/body.css);
 
-/* стили header */
 @import url(../blocks/header/header.css);
 @import url(../blocks/header/__logo/header__logo.css);
 
-/* стили для всего контенты */
 @import url(../blocks/main/main.css);
 
 /* блок профиля: 
 аватарка, имя, работа, кнопки изменения и добавления контента */
 @import url(../blocks/profile/profile.css);
-@import url(../blocks/profile/__avatar/profile__avatar.css);
 @import url(../blocks/profile/__avatar-container/profile__avatar-container.css);
+@import url(../blocks/profile/__avatar/profile__avatar.css);
 @import url(../blocks/profile/__avatar-cover/profile__avatar-cover.css);
 @import url(../blocks/profile/__avatar-edit/profile__avatar-edit.css);
 @import url(../blocks/profile/__text-about/profile__text-about.css);
 @import url(../blocks/profile/__title-container/profile__title-container.css);
 @import url(../blocks/profile/__title-name/profile__title-name.css);
-@import url(../blocks/profile/__btn-edit/profile__btn-edit.css);
 @import url(../blocks/profile/__subtitle/profile__subtitle.css);
+@import url(../blocks/profile/__btn-edit/profile__btn-edit.css);
 @import url(../blocks/profile/__btn-add/profile__btn-add.css);
 
-/* блок "мест" = сетка из фоток и описаний */
-@import url(../blocks/places/places.css);
-@import url(../blocks/places/__grid/places__grid.css);
-@import url(../blocks/places/__grid-item/places__grid-item.css);
+/* сетка карточек */
+@import url(../blocks/cards/cards.css);
+@import url(../blocks/cards/__grid/cards__grid.css);
+@import url(../blocks/cards/__grid-item/cards__grid-item.css);
 
 @import url(../blocks/card/card.css);
 @import url(../blocks/card/__photo/card__photo.css);
 @import url(../blocks/card/__figcaption/card__figcaption.css);
 @import url(../blocks/card/__title/card__title.css);
-@import url(../blocks/card/__like/card__like.css);
-@import url(../blocks/card/__like/_active/card__like_active.css);
 @import url(../blocks/card/__like-container/card__like-container.css);
+@import url(../blocks/card/__like/card__like.css);
 @import url(../blocks/card/__like-count/card__like-count.css);
+@import url(../blocks/card/__like/_active/card__like_active.css);
 @import url(../blocks/card/__del-card-btn/card__del-card-btn.css);
 
-/* стили подвала */
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__author/footer__author.css);
 
@@ -57,7 +53,6 @@
 @import url(../blocks/popup/__img/popup__img.css);
 @import url(../blocks/popup/__figure/popup__figure.css);
 @import url(../blocks/popup/__figcaption/popup__figcaption.css);
-@import url(../blocks/popup/__btn-close/popup__btn-close.css);
 @import url(../blocks/popup/__title/popup__title.css);
 @import url(../blocks/popup/__title/_type/popup__title_type_confirm-delete.css);
 @import url(../blocks/popup/__field/popup__field.css);
@@ -65,6 +60,7 @@
 @import url(../blocks/popup/__input/_type/popup__input_type_error.css);
 @import url(../blocks/popup/__error/popup__error.css);
 @import url(../blocks/popup/__btn-save-edit/popup__btn-submit.css);
+@import url(../blocks/popup/__btn-close/popup__btn-close.css);
 
 /* триггерные стили */
 @import url(../blocks/to-visible/to-visible.css);

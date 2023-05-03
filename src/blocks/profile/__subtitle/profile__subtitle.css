@@ -1,8 +1,7 @@
 .profile__subtitle {
   width: 100%;
   max-width: 400px;
-  /* вместо gap */
-  margin-top: 6px; 
+  margin: 0;
   padding: 0;
 
   font-style: normal;

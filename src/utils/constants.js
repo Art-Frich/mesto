@@ -4,7 +4,7 @@ export const btnAddPlace = document.querySelector('.profile__btn-add');
 export const btnEditAvatar = document.querySelector('.profile__avatar-edit');
 
 // Селекторы
-export const selectorCards = '.places__grid';
+export const selectorCards = '.cards__grid';
 
 // Служебные
 const inputSelector = '.popup__input';
@@ -56,7 +56,7 @@ export const validateConfig = {
 };
 
 export const cardConfig = {
-  cardSelector: '.places__grid-item',
+  cardSelector: '.cards__grid-item',
   imgSelector: '.card__photo',
   titleSelector: '.card__title',
   likeSelector: '.card__like',

@@ -101,7 +101,7 @@ export default class Card {
   /**
    * Метод удаляет карточку и обнуляет ссылку на ячейку памяти
    */
-  deleteCard() {
+  deleteCard = () => {
     this._placeElement.remove();
     this._placeElement = null;
   };

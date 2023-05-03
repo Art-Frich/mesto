@@ -1,3 +1,6 @@
+// Примечание: уточнить, что значит "Обрабатывайте ошибку внутри этого блока. Если нет времени писать сложную логику, хотя бы просто выведите ошибку в консоль." Что подразумевается под сложной логикой. Какую обработку ошибок имеют ввиду.
+// Примечание: уточнить на счет async/await и .then\.catch - есть ли преимущества? Как выбрать?
+
 // импорты
 import './index.css';
 import Card from '../components/Card.js';
@@ -30,23 +33,19 @@ function createCardConfigProperties( data ) {
   }
 }
 
-function createCardConfigMethods( data ) {
-  return {
-    handleCardClick: () => popupWithImage.open( data.link, data.name ),
-    confirmDelete: () => popupConfirmDeleteCard.open( () => {
-      handleResponse( api.deleteCard( data._id ) )
-        .then( () => cardObject.deleteCard() )
-        .catch( err => console.log( err ) )
-    }),
-    setLikeOnServer: () => handleResponse( api.setLike( data._id ) ),
-    deleteLikeFromServer: () => handleResponse( api.deleteLike( data._id ) ),
-  }
-}
-
 function renderer( data ) {
   const cardObject = new Card(
     createCardConfigProperties( data ),
-    createCardConfigMethods( data )
+    {
+      handleCardClick: () => popupWithImage.open( data.link, data.name ),
+      setLikeOnServer: () => handleResponse( api.setLike( data._id ) ),
+      deleteLikeFromServer: () => handleResponse( api.deleteLike( data._id ) ),
+      confirmDelete: () => popupConfirmDeleteCard.open( () => {
+        handleResponse( api.deleteCard( data._id ) )
+          .then( () => cardObject.deleteCard() )
+          .catch( err => console.log( err ) )
+      }),
+    }
   );
   const newCard = cardObject.getPlaceCard();
   cards.addItem( newCard );
