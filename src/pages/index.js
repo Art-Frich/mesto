@@ -15,7 +15,7 @@ import {
   btnEditProfile, btnAddPlace, cardConfig, btnEditAvatar, validateConfig,
   popupWithImageConfig, popupAddPlaceConfig, popupEditProfileConfig,
   selectorCards, userInfoConfig, apiConfig, popupConfirmDeleteConfig,
-  popupEditAvatarConfig,
+  popupEditAvatarConfig, errMsg,
  } from '../utils/constants.js';
 
 // Переменные
@@ -40,10 +40,22 @@ function renderer( data ) {
       handleCardClick: () => popupWithImage.open( data.link, data.name ),
       setLikeOnServer: () => handleResponse( api.setLike( data._id ) ),
       deleteLikeFromServer: () => handleResponse( api.deleteLike( data._id ) ),
+      handleLikeClick: () =>  {
+        cardObject._toggleLikeConditionOnserver()
+          .then( data => {
+            cardObject._countLikeContainer.textContent = data.likes.length;
+            cardObject._doLikeActive();
+          })
+          .catch( err => alert( errMsg + err ) )
+          .finally( () => cardObject._isLikeInProcess = false );
+      },
       confirmDelete: () => popupConfirmDeleteCard.open( () => {
-        handleResponse( api.deleteCard( data._id ) )
-          .then( () => cardObject.deleteCard() )
-          .catch( err => console.log( err ) )
+        return handleResponse( api.deleteCard( data._id ) )
+          .then( () => {
+            cardObject.deleteCard();
+            popupConfirmDeleteCard.close();
+          })
+          .catch( err => alert( errMsg + err ) )
       }),
     }
   );
@@ -61,6 +73,36 @@ function handleResponse( response ){
     })
 }
 
+const handlerSubmitPopupEditProfile =  ({ nameUser, aboutUser }) => {
+  handleResponse( api.updateUserData( nameUser, aboutUser ) )
+    .then( () => {
+      userInfo.setUserInfo( nameUser, aboutUser );
+      popupEditProfile.close();
+    })
+    .catch( err => alert( errMsg + err ) )
+    .finally( () => popupEditProfile._btnSubmit.textContent = popupEditProfile._btnSubmitOriginalText );
+}
+
+const handlerSubmitPopupAddCard = ({ namePlace, urlImage }) => {
+    handleResponse( api.addNewCard( namePlace, urlImage ) )
+      .then( data => {
+        renderer( data );
+        popupAddCard.close();
+      })
+      .catch( err => alert( 'Произошла какая-то ошибка...\n' + err ) )
+      .finally( () => popupAddCard._btnSubmit.textContent = popupAddCard._btnSubmitOriginalText );
+}
+
+const handlerSubmitPopupEditAvatar = ( { urlImage } ) => {
+  handleResponse( api.updateAvatar( urlImage ) )
+    .then( data => {
+      userInfo.setAvatar( data.avatar );
+      popupEditAvatar.close();
+    })
+    .catch( err => alert( 'Произошла какая-то ошибка...\n' + err ) )
+    .finally( () => popupEditAvatar._btnSubmit.textContent = popupEditAvatar._btnSubmitOriginalText );
+}
+
 // объекты классов
 const popupConfirmDeleteCard = new PopupCardDelete( popupConfirmDeleteConfig );
 const popupWithImage = new PopupWithImage( popupWithImageConfig ); 
@@ -68,28 +110,11 @@ const userInfo = new UserInfo( userInfoConfig );
 const api = new Api( apiConfig );
 const cards = new Section( renderer, selectorCards );
 
-const popupEditProfile = new PopupWithForm( 
-  popupEditProfileConfig, ( { nameUser, aboutUser } ) => {
-    userInfo.setUserInfo( nameUser, aboutUser );
-    return handleResponse( api.updateUserData( nameUser, aboutUser ) )
-});
-
-const popupAddCard = new PopupWithForm( popupAddPlaceConfig, ({
-  namePlace, urlImage }) => {
-    return handleResponse( api.addNewCard( namePlace, urlImage ) )
-      .then( data => renderer( data ) )
-});
-
-const popupEditAvatar = new PopupWithForm( popupEditAvatarConfig, ( { urlImage } ) => {
-  return handleResponse( api.updateAvatar( urlImage ) )
-    .then( data => userInfo.setAvatar( data.avatar ) )
-});
-
+const popupEditProfile = new PopupWithForm( popupEditProfileConfig, handlerSubmitPopupEditProfile );
+const popupAddCard = new PopupWithForm( popupAddPlaceConfig, handlerSubmitPopupAddCard);
+const popupEditAvatar = new PopupWithForm( popupEditAvatarConfig, handlerSubmitPopupEditAvatar);
 
 // Запуск скриптов
-
-// Примечание: сначала получить id, затем генерировать карточки. 
-// Для решения вместо цепочки последовательных .then использовано Promise.all
 Promise.all([ 
   handleResponse( api.getUserDataFromServer() ), 
   handleResponse( api.getInitialCards() )
@@ -99,7 +124,7 @@ Promise.all([
     myId = dataOne._id;
     cards.renderCards( dataTwo );
   })
-  .catch( ([ errOne, errTwo ]) => console.log( errOne, errTwo ) )
+  .catch( ([ errOne, errTwo ]) => alert( errOne, errTwo ) )
 
 popupWithImage.setEventListeners();
 popupAddCard.setEventListeners();

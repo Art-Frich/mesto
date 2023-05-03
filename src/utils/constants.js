@@ -5,6 +5,7 @@ export const btnEditAvatar = document.querySelector('.profile__avatar-edit');
 
 // Селекторы
 export const selectorCards = '.cards__grid';
+export const errMsg = 'Произошла какая-то ошибка...\n';
 
 // Служебные
 const inputSelector = '.popup__input';
@@ -80,7 +81,9 @@ export const apiConfig = {
 export const popupConfirmDeleteConfig = {
   popupConfig: popupConfig,
   popupSelector: '.popup_type_confirmDelete',
-  nameForm: 'confirmCardDelete'
+  nameForm: 'confirmCardDelete',
+  btnSubmitSelector: popupBtnSubmitSelector,
+  btnSubmitFetchCondition: 'Удаление...',
 }
 
 export const popupEditAvatarConfig = {

@@ -21,7 +21,8 @@ export default class Card {
   // Примечание: очень громоздкий конструктор
   constructor(
     { placeName, placeImgSrc, likes, config, ownerId, myId },
-    { handleCardClick, confirmDelete, setLikeOnServer, deleteLikeFromServer }
+    { handleCardClick, confirmDelete, setLikeOnServer, 
+      deleteLikeFromServer, handleLikeClick }
   ) {
     this._placeName = placeName;
     this._placeImgSrc = placeImgSrc; 
@@ -34,6 +35,7 @@ export default class Card {
     this._confirmDelete = confirmDelete;
     this._setLikeOnServer = setLikeOnServer;
     this._deleteLikeFromServer = deleteLikeFromServer;
+    this._handleLikeClick = handleLikeClick;
 
     this._templateSelector = config.templateSelector;
     this._placesItemSelector = config.cardSelector;
@@ -80,13 +82,7 @@ export default class Card {
   _toggleLikeCondition = () => {
     if ( this._isLikeInProcess === false ) {
       this._isLikeInProcess = true;
-      this._toggleLikeConditionOnserver()
-        .then( data => {
-          this._countLikeContainer.textContent = data.likes.length;
-          this._doLikeActive();
-        })
-        .catch( err => console.log( err ) )
-        .finally( () => this._isLikeInProcess = false );
+      this._handleLikeClick();
     }
   }
 

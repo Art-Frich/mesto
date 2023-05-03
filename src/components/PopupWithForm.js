@@ -29,6 +29,7 @@ export default class PopupWithForm extends Popup {
       this._form.querySelectorAll( this._classInput )
     );
     this._btnSubmit = this._form.querySelector( btnSubmitSelector );
+    this._btnSubmitOriginalText = this._btnSubmit.textContent;
   }
 
   /**
@@ -73,12 +74,8 @@ export default class PopupWithForm extends Popup {
    * После возвращает её текст к исходному состоянию
    */
   _fetchCondition() {
-    const btnSubmitOriginalText = this._btnSubmit.textContent;
     this._btnSubmit.textContent = this._btnSubmitFetchCondition;
-    this._callbackSubmit( this._getInputValues() )
-      .then( () => this._btnSubmit.textContent = btnSubmitOriginalText )
-      .catch( err => console.log( err ) )
-      .finally( () => this.close() );
+    this._callbackSubmit( this._getInputValues() );
   }
 
   /**
