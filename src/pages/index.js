@@ -48,7 +48,7 @@ function renderer( data ) {
             cardObject.doLikeActive();
           })
           .catch( err => alert( errMsg + err ) )
-          .finally( cardObject.toggleflagCondition );
+          .finally( () => cardObject.toggleflagCondition() );
       },
       // примечание: vsc предложил переписать promise.then.catch на async\await\try\catch - зачем?
       confirmDelete: () => popupConfirmDeleteCard.open( async () => {
@@ -73,7 +73,7 @@ const handlerSubmitPopupEditProfile =  ({ nameUser, aboutUser }) => {
       popupEditProfile.close();
     })
     .catch( err => alert( errMsg + err ) )
-    .finally( popupEditProfile.toggleBtnSubmitText );
+    .finally( () => popupEditProfile.toggleBtnSubmitText() );
 }
 
 const handlerSubmitPopupAddCard = ({ namePlace, urlImage }) => {
@@ -83,7 +83,7 @@ const handlerSubmitPopupAddCard = ({ namePlace, urlImage }) => {
         popupAddCard.close();
       })
       .catch( err => alert( 'Произошла какая-то ошибка...\n' + err ) )
-      .finally( popupEditProfile.toggleBtnSubmitText );
+      .finally( () => popupAddCard.toggleBtnSubmitText() );
 }
 
 const handlerSubmitPopupEditAvatar = ( { urlImage } ) => {
@@ -93,7 +93,7 @@ const handlerSubmitPopupEditAvatar = ( { urlImage } ) => {
       popupEditAvatar.close();
     })
     .catch( err => alert( 'Произошла какая-то ошибка...\n' + err ) )
-    .finally( popupEditProfile.toggleBtnSubmitText );
+    .finally( () => popupEditAvatar.toggleBtnSubmitText() );
 }
 
 // объекты классов
