@@ -34,6 +34,7 @@ export default class Api {
         authorization: this._token
       }
     })
+      .then( res => this._handleResponse( res ) )
   }
 
   /**
@@ -46,6 +47,7 @@ export default class Api {
         authorization: this._token
       }
     })
+     .then( res => this._handleResponse( res ) )
   }
 
   /**
@@ -66,6 +68,7 @@ export default class Api {
         about: newAbout
       })
     })
+     .then( res => this._handleResponse( res ) )
   }
 
   /**
@@ -86,6 +89,7 @@ export default class Api {
         link: linkImg
       })
     })
+      .then( res => this._handleResponse( res ) )
   }
 
   /**
@@ -100,6 +104,7 @@ export default class Api {
         authorization: this._token,
       }
     })
+      .then( res => this._handleResponse( res ) )
   }
 
   /**
@@ -114,6 +119,7 @@ export default class Api {
         authorization: this._token,
       }
     })
+     .then( res => this._handleResponse( res ) )
   }
 
   /**
@@ -128,6 +134,7 @@ export default class Api {
         authorization: this._token,
       }
     })
+      .then( res => this._handleResponse( res ) )
   }
 
   /**
@@ -146,5 +153,12 @@ export default class Api {
         avatar: newAvatarUrl
       })
     })
+     .then( res => this._handleResponse( res ) )
+  }
+
+  _handleResponse( res ){
+    return !res.ok
+      ? Promise.reject( res.status )
+      : res.json();
   }
 }

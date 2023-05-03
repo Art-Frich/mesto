@@ -38,8 +38,8 @@ function renderer( data ) {
     createCardConfigProperties( data ),
     {
       handleCardClick: () => popupWithImage.open( data.link, data.name ),
-      setLikeOnServer: () => handleResponse( api.setLike( data._id ) ),
-      deleteLikeFromServer: () => handleResponse( api.deleteLike( data._id ) ),
+      setLikeOnServer: () => api.setLike( data._id ),
+      deleteLikeFromServer: () => api.deleteLike( data._id ),
       handleLikeClick: () =>  {
         cardObject._toggleLikeConditionOnserver()
           .then( data => {
@@ -50,7 +50,7 @@ function renderer( data ) {
           .finally( () => cardObject._isLikeInProcess = false );
       },
       confirmDelete: () => popupConfirmDeleteCard.open( () => {
-        return handleResponse( api.deleteCard( data._id ) )
+        return api.deleteCard( data._id )
           .then( () => {
             cardObject.deleteCard();
             popupConfirmDeleteCard.close();
@@ -63,18 +63,8 @@ function renderer( data ) {
   cards.addItem( newCard );
 }
 
-function handleResponse( response ){
-  return response
-    .then( res => {
-      if ( !res.ok ) {
-        throw new Error( res );
-      }
-      return res.json();
-    })
-}
-
 const handlerSubmitPopupEditProfile =  ({ nameUser, aboutUser }) => {
-  handleResponse( api.updateUserData( nameUser, aboutUser ) )
+  api.updateUserData( nameUser, aboutUser )
     .then( () => {
       userInfo.setUserInfo( nameUser, aboutUser );
       popupEditProfile.close();
@@ -84,7 +74,7 @@ const handlerSubmitPopupEditProfile =  ({ nameUser, aboutUser }) => {
 }
 
 const handlerSubmitPopupAddCard = ({ namePlace, urlImage }) => {
-    handleResponse( api.addNewCard( namePlace, urlImage ) )
+    api.addNewCard( namePlace, urlImage )
       .then( data => {
         renderer( data );
         popupAddCard.close();
@@ -94,7 +84,7 @@ const handlerSubmitPopupAddCard = ({ namePlace, urlImage }) => {
 }
 
 const handlerSubmitPopupEditAvatar = ( { urlImage } ) => {
-  handleResponse( api.updateAvatar( urlImage ) )
+  api.updateAvatar( urlImage )
     .then( data => {
       userInfo.setAvatar( data.avatar );
       popupEditAvatar.close();
@@ -116,8 +106,8 @@ const popupEditAvatar = new PopupWithForm( popupEditAvatarConfig, handlerSubmitP
 
 // Запуск скриптов
 Promise.all([ 
-  handleResponse( api.getUserDataFromServer() ), 
-  handleResponse( api.getInitialCards() )
+  api.getUserDataFromServer(), 
+  api.getInitialCards()
 ])
   .then( ([ dataOne, dataTwo ]) => {
     userInfo.setInitialUserInfo( dataOne );
