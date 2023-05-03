@@ -74,8 +74,14 @@ export default class PopupWithForm extends Popup {
    * После возвращает её текст к исходному состоянию
    */
   _fetchCondition() {
-    this._btnSubmit.textContent = this._btnSubmitFetchCondition;
+    this.toggleBtnSubmitText();
     this._callbackSubmit( this._getInputValues() );
+  }
+
+  toggleBtnSubmitText = () => {
+    this._btnSubmit.textContent === this._btnSubmitOriginalText
+      ? this._btnSubmit.textContent = this._btnSubmitFetchCondition
+      : this._btnSubmit.textContent = this._btnSubmitOriginalText;
   }
 
   /**

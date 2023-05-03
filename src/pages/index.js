@@ -33,6 +33,7 @@ function createCardConfigProperties( data ) {
   }
 }
 
+// Примечание: здесь я прописываю callback, который будет реализован внутри класса, разве нужно здесь использовать публичные методы класса? Ведь каждый из этих методов не будет реализован в index.js, они все будут исполнены внутри класса. Аналогично приватные свойства.
 function renderer( data ) {
   const cardObject = new Card(
     createCardConfigProperties( data ),
@@ -41,21 +42,23 @@ function renderer( data ) {
       setLikeOnServer: () => api.setLike( data._id ),
       deleteLikeFromServer: () => api.deleteLike( data._id ),
       handleLikeClick: () =>  {
-        cardObject._toggleLikeConditionOnserver()
+        cardObject.toggleLikeConditionOnserver()
           .then( data => {
-            cardObject._countLikeContainer.textContent = data.likes.length;
-            cardObject._doLikeActive();
+            cardObject.setCountLikes( data.likes );
+            cardObject.doLikeActive();
           })
           .catch( err => alert( errMsg + err ) )
-          .finally( () => cardObject._isLikeInProcess = false );
+          .finally( cardObject.toggleflagCondition );
       },
-      confirmDelete: () => popupConfirmDeleteCard.open( () => {
-        return api.deleteCard( data._id )
-          .then( () => {
-            cardObject.deleteCard();
-            popupConfirmDeleteCard.close();
-          })
-          .catch( err => alert( errMsg + err ) )
+      // примечание: vsc предложил переписать promise.then.catch на async\await\try\catch - зачем?
+      confirmDelete: () => popupConfirmDeleteCard.open( async () => {
+        try {
+          await api.deleteCard(data._id);
+          cardObject.deleteCard();
+          popupConfirmDeleteCard.close();
+        } catch (err) {
+          alert(errMsg + err);
+        }
       }),
     }
   );
@@ -70,7 +73,7 @@ const handlerSubmitPopupEditProfile =  ({ nameUser, aboutUser }) => {
       popupEditProfile.close();
     })
     .catch( err => alert( errMsg + err ) )
-    .finally( () => popupEditProfile._btnSubmit.textContent = popupEditProfile._btnSubmitOriginalText );
+    .finally( popupEditProfile.toggleBtnSubmitText );
 }
 
 const handlerSubmitPopupAddCard = ({ namePlace, urlImage }) => {
@@ -80,7 +83,7 @@ const handlerSubmitPopupAddCard = ({ namePlace, urlImage }) => {
         popupAddCard.close();
       })
       .catch( err => alert( 'Произошла какая-то ошибка...\n' + err ) )
-      .finally( () => popupAddCard._btnSubmit.textContent = popupAddCard._btnSubmitOriginalText );
+      .finally( popupEditProfile.toggleBtnSubmitText );
 }
 
 const handlerSubmitPopupEditAvatar = ( { urlImage } ) => {
@@ -90,7 +93,7 @@ const handlerSubmitPopupEditAvatar = ( { urlImage } ) => {
       popupEditAvatar.close();
     })
     .catch( err => alert( 'Произошла какая-то ошибка...\n' + err ) )
-    .finally( () => popupEditAvatar._btnSubmit.textContent = popupEditAvatar._btnSubmitOriginalText );
+    .finally( popupEditProfile.toggleBtnSubmitText );
 }
 
 // объекты классов

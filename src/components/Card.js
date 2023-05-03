@@ -27,7 +27,6 @@ export default class Card {
     this._placeName = placeName;
     this._placeImgSrc = placeImgSrc; 
     this._likes = likes;
-    this._countLike = likes.length;
     this._ownerCardId = ownerId;
     this._myId = myId;
 
@@ -69,7 +68,7 @@ export default class Card {
    * отправляет запрос установки или снятия лайка на сервер
    * @returns response об операции
    */
-  _toggleLikeConditionOnserver = () => {
+  toggleLikeConditionOnserver = () => {
     return this._imgLike.classList.contains( this._classLikeActive ) 
       ? this._deleteLikeFromServer()
       : this._setLikeOnServer()
@@ -80,8 +79,8 @@ export default class Card {
    * Обрабатывает response сервера.
    */
   _toggleLikeCondition = () => {
-    if ( this._isLikeInProcess === false ) {
-      this._isLikeInProcess = true;
+    if ( !this._isLikeInProcess ) {
+      this.toggleflagCondition();
       this._handleLikeClick();
     }
   }
@@ -106,7 +105,7 @@ export default class Card {
     this._img.src = this._placeImgSrc;
     this._img.alt += ` ${ this._placeName }`; 
     this._imgTitle.textContent = this._placeName;
-    this._countLikeContainer.textContent = this._countLike;
+    this.setCountLikes( this._likes );
     this._checkOwner();
     this._checkMyLike();
   }
@@ -121,9 +120,22 @@ export default class Card {
     }
   }
 
-  _doLikeActive = () => {
+  doLikeActive = () => {
     this._imgLike.classList.toggle( this._classLikeActive );
   }
+
+  setCountLikes( likes ){
+    this._countLikeContainer.textContent = likes.length;
+  }
+
+  toggleflagCondition = () => {
+    this._isLikeInProcess 
+      ? this._isLikeInProcess = false
+      : this._isLikeInProcess = true;
+  }
+
+  // setBtnSubmitText
+  // popupEditAvatar._btnSubmit.textContent = popupEditAvatar._btnSubmitOriginalText
 
   /**
    * Проверяет есть ли среди лайков карточки мой и рендерит его
@@ -131,7 +143,7 @@ export default class Card {
   _checkMyLike = () => {
     this._likes.forEach( element => {
       if ( element._id === this._myId ) {
-        this._doLikeActive();
+        this.doLikeActive();
       }
     });
   }
