@@ -3,9 +3,10 @@
  */
 export default class UserInfo {
   /**
-   * 
+   * @constructor
    * @param {string} selectorNameUserContainer
    * @param {string} selectorUserAboutContainer
+   * @param {string} selectorUserAvatar
    */
   constructor( { 
     selectorNameUserContainer, 
@@ -41,10 +42,18 @@ export default class UserInfo {
     this._aboutContainer.textContent = newAbout;
   }
 
+  /**
+   * Устанавливает ссылку на изображение для аватара
+   * @param {string} url 
+   */
   setAvatar( url ) {
     this._userAvatar.src = url;
   }
 
+  /**
+   * Устанавливает начальные значения "Имя", "Обо мне" и аватар
+   * @param {object} data данные о пользователе 
+   */
   setInitialUserInfo( data ){
     this.setUserInfo( data.name, data.about );
     this.setAvatar( data.avatar );

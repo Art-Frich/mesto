@@ -3,7 +3,7 @@
  */
 export default class Popup {
   /**
-   * 
+   * @constructor
    * @param {string} classBtnClose
    * @param {string} classPopupOpened
    * @param {string} popupSelector

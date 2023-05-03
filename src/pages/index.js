@@ -19,26 +19,35 @@ import {
 let myId;
 
 // функции
-
-// Примечание: можно прокинуть id в класс и вызывать его через this. Не знаю, что из этого лучше
-// Примечание2: создание класса Card выглядит громоздким и сложным
-function renderer( data ) {
-  const cardObject = new Card({
+function createCardConfigProperties( data ) {
+  return {
+    config: cardConfig,
     placeName: data.name,
     placeImgSrc: data.link,
     likes: data.likes,
-    config: cardConfig,
     ownerId: data.owner._id,
     myId: myId,
+  }
+}
+
+function createCardConfigMethods( data ) {
+  return {
     handleCardClick: () => popupWithImage.open( data.link, data.name ),
     confirmDelete: () => popupConfirmDeleteCard.open( () => {
       handleResponse( api.deleteCard( data._id ) )
-        .then( () => cardObject.deleteOnClick() )
+        .then( () => cardObject.deleteCard() )
         .catch( err => console.log( err ) )
     }),
     setLikeOnServer: () => handleResponse( api.setLike( data._id ) ),
     deleteLikeFromServer: () => handleResponse( api.deleteLike( data._id ) ),
-  });
+  }
+}
+
+function renderer( data ) {
+  const cardObject = new Card(
+    createCardConfigProperties( data ),
+    createCardConfigMethods( data )
+  );
   const newCard = cardObject.getPlaceCard();
   cards.addItem( newCard );
 }
@@ -80,15 +89,18 @@ const popupEditAvatar = new PopupWithForm( popupEditAvatarConfig, ( { urlImage }
 
 // Запуск скриптов
 
-// Примечание: сначала получить id, затем генерировать карточки. Возможно стоит попробовать заюзать Promise.All. Дело в том, что иногда почему-то myId отсутствует. Ранее это были два отдельных вызова. Сначала - данные профиля, затем карточки, но иногда багало.
-handleResponse( api.getUserDataFromServer() )
-  .then( data => {
-    userInfo.setInitialUserInfo( data );
-    myId = data._id;
+// Примечание: сначала получить id, затем генерировать карточки. 
+// Для решения вместо цепочки последовательных .then использовано Promise.all
+Promise.all([ 
+  handleResponse( api.getUserDataFromServer() ), 
+  handleResponse( api.getInitialCards() )
+])
+  .then( ([ dataOne, dataTwo ]) => {
+    userInfo.setInitialUserInfo( dataOne );
+    myId = dataOne._id;
+    cards.renderCards( dataTwo );
   })
-  .then( () => handleResponse( api.getInitialCards() ) ) 
-  .then( data => cards.renderCards( data ) )
-  .catch( err => console.log( err ) )
+  .catch( ([ errOne, errTwo ]) => console.log( errOne, errTwo ) )
 
 popupWithImage.setEventListeners();
 popupAddCard.setEventListeners();
@@ -96,8 +108,10 @@ popupEditProfile.setEventListeners();
 popupConfirmDeleteCard.setEventListeners();
 popupEditAvatar.setEventListeners();
 
-// Примечание: имеется форма без инпутов, для которой валидация ненужна. Соответственно, её следовало бы исключить. Это можно сделать, составив список исключений и сверяться внутри перебора, но т.к. она не содержит инпутов, а следовательно и некуда установить листенеры, система потратит ресурсы только на попытку подключить валидацию. Создание списка исключений же задействует еще немного памяти и я не уверен, что это стоящая оптимизация.
+// Примечание: нижестоящий код пытается повесить валиадцию на форму без инпутов.
+// Мысли: имеется форма без инпутов, для которой валидация ненужна. Соответственно, её следовало бы исключить. Это можно сделать, составив список исключений и сверяться внутри перебора, но т.к. она не содержит инпутов, а следовательно и некуда установить листенеры, система потратит ресурсы только на попытку подключить валидацию. Создание списка исключений же задействует еще немного памяти и я не уверен, что это стоящая оптимизация.
 // Также можно попробовать сверяться с содержимым формы: если есть инпуты, то... через form.elements, но это также ресурсы на проверку того, что в принципе не будет потреблять ресурсы, т.к. не существует (нельзя установить валидацию на то, чего нет)
+// Итог: оставить в текущем виде, ждать комментариев от ревьюера или позднее уточнить у наставника
 Array.from( document.forms ).forEach( form => {
   const newValidator = new FormValidator ( validateConfig, form );
   newValidator.enableValidation();

@@ -3,6 +3,7 @@
  */
 export default class Section {
   /**
+   * @constructor
    * @param {Function} funRenderer - callback для рендеринга исходного массива карточек
    * @param {string} selectorCards - селектор html-блока со всеми карточками
    */

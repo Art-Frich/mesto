@@ -1,8 +1,17 @@
+/**
+ * Класс, содержащий все необходимые fetch-запросы к серверу
+ */
 export default class Api {
-  // токен e07a98d9-da5b-4bb3-83f5-8be59ad95ea9
-  // id 7fe16738c600cfe949208d93
-  // url servera https://mesto.nomoreparties.co/v1/cohort-65/
-
+  /**
+   * @constructor
+   * @param {string} token токен для авторизации на сервере
+   * @param {string} myId личный id пользователя, назначенный сервером
+   * @param {string} urlServer
+   * @param {string} qUsersMe строка для запроса в users/me
+   * @param {string} qCards строка для запроса в cards
+   * @param {string} qLikes строка для запроса в likes
+   * @param {string} qAvatar строка для запроса в avatar
+   */
   constructor({ 
     token, myId, urlServer, qUsersMe, qCards, qLikes, qAvatar
   }) {
@@ -15,6 +24,10 @@ export default class Api {
     this._qAvatar = qAvatar;
   }
 
+  /**
+   * Позволяет получить данные пользователя, необходимые для рендера связанных разделов
+   * @returns response данных пользователя
+   */
   getUserDataFromServer() {
     return fetch( this._urlServer + this._qUsersMe, {
       headers: {
@@ -23,6 +36,10 @@ export default class Api {
     })
   }
 
+  /**
+   * Позволяет получить данные обо всех карточках с сервера
+   * @returns response начальных карточек
+   */
   getInitialCards() {
     return fetch( this._urlServer + this._qCards, {
       headers: {
@@ -31,6 +48,12 @@ export default class Api {
     })
   }
 
+  /**
+   * Позволяет обновить "Имя" и "О себе" пользователя
+   * @param {string} newName 
+   * @param {string} newAbout 
+   * @returns 
+   */
   updateUserData( newName, newAbout ) {
     return fetch( this._urlServer + this._qUsersMe, {
       method: 'PATCH',
@@ -45,6 +68,12 @@ export default class Api {
     })
   }
 
+  /**
+   * Позволяет отправить данные новой карточки на сервер
+   * @param {string} namePlace 
+   * @param {string} linkImg 
+   * @returns response сервера с данными новой карточки
+   */
   addNewCard( namePlace, linkImg ) {
     return fetch( this._urlServer + this._qCards, {
       method: 'POST',
@@ -59,6 +88,11 @@ export default class Api {
     })
   }
 
+  /**
+   * Позволяет удалить по id карточку с сервера
+   * @param {string} id 
+   * @returns response сервера об удалении
+   */
   deleteCard( id ) {
     return fetch( this._urlServer + this._qCards + id, {
       method: 'DELETE',
@@ -68,6 +102,11 @@ export default class Api {
     })
   }
 
+  /**
+   * позволяет установить по id карточки лайк пользователя
+   * @param {string} id 
+   * @returns response сервера с обновленными данными карточки (лайков)
+   */
   setLike( id ){
     return fetch( this._urlServer + this._qCards + id + this._qLikes, {
       method: 'PUT',
@@ -77,6 +116,11 @@ export default class Api {
     })
   }
 
+  /**
+  * позволяет удалить по id карточки лайк пользователя
+  * @param {string} id 
+  * @returns response сервера с обновленными данными карточки (лайков)
+  */
   deleteLike( id ) {
     return fetch( this._urlServer + this._qCards + id + this._qLikes, {
       method: 'DELETE',
@@ -86,6 +130,11 @@ export default class Api {
     })
   }
 
+  /**
+   * Позволяет обновить аватар пользователя
+   * @param {string} newAvatarUrl 
+   * @returns response сервера о смене аватара
+   */
   updateAvatar( newAvatarUrl ) {
     return fetch( this._urlServer + this._qUsersMe + this._qAvatar , {
       method: 'PATCH',

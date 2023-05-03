@@ -4,7 +4,7 @@
 export default class FormValidator {
   /**
    * Создать экземпляр формы под валидацию
-   * 
+   * @constructor
    * @param {Object} config - необходимые селекторы
    * @param {Node} form - форма
    */
@@ -21,7 +21,7 @@ export default class FormValidator {
   }
 
   _hasInvalidInput = () => {
-    return this._inputList.some( input => !input.validity.valid );
+    return this._inputList.some( input => !this._checkValidity( input ));
   }
 
   _showInputError = ( textError, errorElement, inputElement ) => {
@@ -35,7 +35,7 @@ export default class FormValidator {
   } 
 
   _checkInputValidity = ( inputElement, errorElement ) => {
-    inputElement.validity.valid 
+    this._checkValidity( inputElement )
       ? this._hideInputError ( errorElement, inputElement ) 
       : this._showInputError (
           inputElement.validationMessage, 
@@ -44,15 +44,20 @@ export default class FormValidator {
         );
   }
 
+  _checkValidity( item ) {
+    return item.validity.valid;
+  }
+
   _toggleButtonState = () => {
     this._hasInvalidInput() ?
       this._btnSubmit.setAttribute( 'disabled', true ):
       this._btnSubmit.removeAttribute( 'disabled' );
   }
 
+  // Примечание: если не использовать preventDefault, очищать инпуты не потребуется,
+  // но потребуется setTimeout (сначала reset, затем toggleButtonState)
+  // иначе reset выполнится после вложенного кода аналогично submit
   _setEventListeners = () => {
-    // Примечание: если не использовать preventDefault, очищать инпуты не потребуется,
-    // но потребуется setTimeout (сначала reset, затем toggleButtonState)
     this._form.addEventListener( 'reset', ev => {
       ev.preventDefault();
       this._inputList.forEach( ( inputElement, index ) => {

@@ -4,7 +4,7 @@ import Popup from "./Popup.js";
  */
 export default class PopupWithImage extends Popup {
   /**
-   * 
+   * @constructor
    * @param {object} popupConfig - классы передаваемые в Popup
    * @param {string} popupSelector - класс рабочего popup-окна
    * @param {string} figureSelector - селектор элемента с картинкой и подписью
