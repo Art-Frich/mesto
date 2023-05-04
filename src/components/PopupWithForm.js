@@ -44,13 +44,6 @@ export default class PopupWithForm extends Popup {
     );
   }
 
-  // Примечание: такая реализация не работает
-  // _getInputValues() {
-  //   return this._inputs.reduce((data, input) => 
-  //     data[input.getAttribute('name')] = input.value, 
-  //     {}
-  //   );
-  // }
   _getInputValues() {
     return this._inputs.reduce((data, input) => {
       data[input.getAttribute('name')] = input.value;

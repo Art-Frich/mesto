@@ -13,7 +13,6 @@ export default class UserInfo {
     selectorUserAboutContainer,
     selectorUserAvatar 
   } ) {
-    // Примечание: при увеличении количества полей данных, код линейно вырастет в объеме
     this._nameContainer = document.querySelector( selectorNameUserContainer );
     this._aboutContainer = document.querySelector( selectorUserAboutContainer );
     this._userAvatar = document.querySelector( selectorUserAvatar );

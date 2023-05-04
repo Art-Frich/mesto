@@ -134,9 +134,6 @@ export default class Card {
       : this._isLikeInProcess = true;
   }
 
-  // setBtnSubmitText
-  // popupEditAvatar._btnSubmit.textContent = popupEditAvatar._btnSubmitOriginalText
-
   /**
    * Проверяет есть ли среди лайков карточки мой и рендерит его
    */
