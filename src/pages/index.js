@@ -53,6 +53,8 @@ function renderer( data ) {
           popupConfirmDeleteCard.close();
         } catch (err) {
           alert(errMsg + err);
+        } finally {
+          popupConfirmDeleteCard.toggleBtnSubmitText();
         }
       }),
     }

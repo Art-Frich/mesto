@@ -28,10 +28,16 @@ export default class PopupCardDelete extends Popup{
   setEventListeners() {
     super.setEventListeners();
     this._form.addEventListener( 'submit', (ev) => {
-      this._btnSubmit.textContent = this._btnSubmitFetchCondition;
+      this.toggleBtnSubmitText();
       ev.preventDefault();
       this._delCard();
     });
+  }
+
+  toggleBtnSubmitText = () => {
+    this._btnSubmit.textContent === this._btnSubmitOriginalText
+      ? this._btnSubmit.textContent = this._btnSubmitFetchCondition
+      : this._btnSubmit.textContent = this._btnSubmitOriginalText;
   }
 
   /**
