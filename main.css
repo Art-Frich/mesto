@@ -28,7 +28,7 @@
 .card__figcaption{align-items:center;display:flex;flex-direction:row;justify-content:space-between;margin:22px 20px 19px 21px}
 .card__title{color:#000;display:inline-block;font-size:24px;font-style:normal;font-weight:900;line-height:29px;margin:0;max-width:188px;padding:0}
 .card__like-container{display:flex;flex-direction:column;gap:3px}
-.card__like{background:url(images/like.f9cbbc232f4ed178be38.svg);height:19px;-o-object-fit:cover;object-fit:cover;width:22px}.card__like:hover{opacity:.5}
+.card__like{background:url(images/like.f9cbbc232f4ed178be38.svg);cursor:pointer;height:19px;-o-object-fit:cover;object-fit:cover;width:22px}.card__like:hover{opacity:.5}
 .card__like-count{font-size:13px;font-style:normal;line-height:16px;text-align:center}
 .card__like_active{background:url(images/like-active.d750ae7834bd9bfe5181.svg);background-repeat:no-repeat;background-size:contain}
 .card__del-card-btn{background:url(images/trash.ce3b64935accf9b8212e.svg);cursor:pointer;height:19px;-o-object-fit:cover;object-fit:cover;opacity:0;position:absolute;right:20px;top:20px;visibility:hidden;width:18px;z-index:2}.card__del-card-btn:hover{opacity:.6}
